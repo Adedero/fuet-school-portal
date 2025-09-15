@@ -1,0 +1,20 @@
+import process from 'node:process';globalThis._importMeta_={url:import.meta.url,env:process.env};import 'node:http';
+import 'node:https';
+export { W as default } from './chunks/nitro/nitro.mjs';
+import 'node:events';
+import 'node:buffer';
+import 'node:fs';
+import 'node:path';
+import 'node:crypto';
+import 'node:url';
+import 'better-auth';
+import 'better-auth/adapters/drizzle';
+import 'drizzle-orm/libsql';
+import 'drizzle-orm/sqlite-core';
+import 'drizzle-orm';
+import 'ulid';
+import 'nodemailer';
+import '@iconify/utils';
+import 'consola';
+import 'ipx';
+//# sourceMappingURL=index.mjs.map
