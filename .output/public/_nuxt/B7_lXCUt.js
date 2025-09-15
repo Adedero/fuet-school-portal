@@ -1,0 +1,1 @@
+import{a3 as n,a6 as i}from"#entry";async function c(o,a){const{confirmAsync:e}=i();if(!o){await n(a);return}await e({title:"Changes not Saved",description:"Going back will remove any unsaved changes. Do you want to proceed?"})&&await n(a)}export{c as default};

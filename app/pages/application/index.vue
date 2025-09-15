@@ -34,10 +34,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
         </h1>
 
         <p class="text-muted max-w-96 text-center">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officiis
-          autem itaque pariatur quaerat unde? Unde odio aperiam neque
-          cupiditate. Enim excepturi fuga magni assumenda qui amet iusto libero
-          nesciunt non.
+         Applications for the 2024/2025 academic session are currently closed.
         </p>
 
         <div class="flex-col-center gap-1 text-center">
@@ -93,7 +90,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
           </h1>
 
           <p class="text-muted max-w-96 text-center">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Applications for the 2024/2025 academic session are now open.
           </p>
 
           <p class="mt-2 font-bold">Application dates</p>
@@ -130,7 +127,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
                 <span class="text-primary">New</span> Application
               </p>
               <p class="text-sm text-muted">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Applications for the 2024/2025 academic session are now open.
               </p>
 
               <NuxtModal
@@ -168,7 +165,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
                 <span class="text-primary">Existing</span> Application
               </p>
               <p class="text-sm text-muted">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Applications for the 2024/2025 academic session are now open.
               </p>
 
               <NuxtButton

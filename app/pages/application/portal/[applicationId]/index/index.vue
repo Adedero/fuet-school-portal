@@ -16,13 +16,13 @@ const { applicationId = "" } = useRouteParams();
         <h2 class="font-semibold">Overview</h2>
 
         <div>
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid sed,
-          ex totam repellendus nostrum numquam iste neque facilis iusto
-          inventore vero eos impedit laborum consequuntur dicta quaerat
-          temporibus esse officia! Ipsum obcaecati cum animi omnis corrupti esse
-          reiciendis at blanditiis natus aliquam! Enim ducimus voluptas fugiat
-          nam consectetur, commodi magni repellendus praesentium! Voluptate,
-          fugiat? Excepturi at consequuntur consectetur iste aspernatur.
+          The Federal University of Environment and Technology (FUET) is a
+          pioneering institution dedicated to advancing education, research, and
+          innovation in environmental science and technology. Established with a
+          vision to address global environmental challenges, FUET offers a range
+          of undergraduate and postgraduate programs designed to equip students
+          with the knowledge and skills needed to make a positive impact on the
+          world.
         </div>
       </section>
 
@@ -30,15 +30,15 @@ const { applicationId = "" } = useRouteParams();
         <h2 class="font-semibold">Requirements</h2>
 
         <div>
-          Quam nulla, recusandae dolorum adipisci, labore consequuntur dolor
-          corrupti sequi eveniet autem architecto cupiditate veniam dicta vel
-          similique incidunt id molestiae provident?
+          To apply for admission to FUET, please ensure you meet the following
+          requirements:
         </div>
 
         <div class="mt-5">
-          <p>
-            Please, ensure you have the following documents before applying.
-          </p>
+          <!-- <p>
+            <span class="font-medium">Note:</span> All documents must be
+            certified true copies by a Commissioner of Oaths or a Notary Public.
+          </p> -->
 
           <ul class="mt-2.5 list-disc list-inside">
             <li>

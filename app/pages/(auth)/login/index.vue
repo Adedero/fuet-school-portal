@@ -13,7 +13,7 @@ definePageMeta({
         <span class="text-primary-500">Log</span> In
       </h1>
       <p class="text-muted text-sm">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      Access your account to apply, track application status, and manage your student profile.
       </p>
     </header>
 

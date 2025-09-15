@@ -22,7 +22,7 @@ const config: runtime.GetPrismaClientConfig = {
       "value": "prisma-client"
     },
     "output": {
-      "value": "/home/Adedero/dev/school-portal/server/prisma/generated",
+      "value": "C:\\Users\\HP\\OneDrive\\Desktop\\Projects\\fuet-school-portal\\server\\prisma\\generated",
       "fromEnvVar": null
     },
     "config": {
@@ -31,12 +31,12 @@ const config: runtime.GetPrismaClientConfig = {
     "binaryTargets": [
       {
         "fromEnvVar": null,
-        "value": "debian-openssl-3.0.x",
+        "value": "windows",
         "native": true
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/Adedero/dev/school-portal/prisma/schema.prisma",
+    "sourceFilePath": "C:\\Users\\HP\\OneDrive\\Desktop\\Projects\\fuet-school-portal\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativePath": "../../../prisma",

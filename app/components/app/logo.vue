@@ -3,9 +3,10 @@ interface Props {
   width?: number;
 }
 
+
 const { width = 32 } = defineProps<Props>();
 </script>
 
 <template>
-  <NuxtImg src="/logo.png" :width />
+  <img src="/fuet_logo.png" :width />
 </template>

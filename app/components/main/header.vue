@@ -73,19 +73,24 @@ const navigateToPortal = async () => {
 
 <template>
   <header
-    class="sticky top-0 z-50 bg-white px-5 md:px-10 lg:px-20 py-2.5 border-b border-b-muted"
+    class="sticky top-0 z-50 bg-white px-5 md:px-10 lg:px-20 py-4 border-b border-b-muted"
   >
     <div class="flex items-center justify-between">
-      <NuxtLink to="/" class="flex items-end gap-2">
-        <AppLogo :width="28" />
-        <p class="font-extrabold text-xl">
+      <NuxtLink to="/" class="flex items-center gap-2">
+        <AppLogo :width="45" />
+        <div>
+        <p class="font-extrabold text-lg">
           <span class="text-primary-500">
+           <!-- Federal University of Engineering and Technology -->
             {{ appName.val1 }}
           </span>
-          <span class="text-muted">
-            {{ appName.val2 }}
-          </span>
         </p>
+          <p class="text-muted text-sm hidden md:block">
+          Koroma/Saakpenwa, Ogoni
+            <!-- {{ appName.val2 }} -->
+          </p>
+        
+        </div>
       </NuxtLink>
 
       <div>

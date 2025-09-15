@@ -44,24 +44,22 @@ const sponsors = [
 <template>
   <section id="hero">
     <div class="section-padding py-10">
-      <div
-        class="grid md:gap-x-10 lg:gap-x-20 gap-y-10 md:grid-cols-2 md:items-center"
-      >
+      <div class="grid md:gap-x-10 lg:gap-x-20 gap-y-10 md:grid-cols-2 md:items-center">
         <div class="text-center md:text-left space-y-5">
-          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          <h1 class="text-4xl md:text-5xl lg:text-5xl font-bold">
+            Federal University of Environment & Technology, Ogoni
+
           </h1>
+          <p>Pioneering Innovation • Nurturing Sustainability</p>
 
           <p class="text-muted">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-            Consequuntur alias repellat optio quo nostrum, eaque perspiciatis
-            blanditiis, laboriosam ipsam molestias quae. Ab, dolorum placeat ex
-            est pariatur nulla ipsa. Impedit?
+            We offer accredited programmes in environmental science, technology, and applied research—designed to
+            empower you for global impact.
           </p>
 
           <div class="flex items-center justify-center md:justify-normal gap-2">
             <NuxtButton label="Join us now" />
-            <NuxtButton label="Get to know more" variant="link" />
+            <NuxtButton label="Explore Programs" variant="link" />
           </div>
 
           <div class="flex items-center justify-center md:justify-normal gap-5">
@@ -79,26 +77,21 @@ const sponsors = [
 
         <div>
           <div class="bg-muted h-[28rem] overflow-hidden rounded">
-            <NuxtImg
-              src="https://media.gettyimages.com/id/1336667150/video/female-college-student-apologize-to-professor-for-late-arrival-to-class.jpg?s=640x640&k=20&c=n19Aj3x_5MZa6abztQdJzMfPiIsRJEJmVyas-rQ5Nmk="
-              placeholder
-              class="w-full h-full object-cover"
-            />
+            <img src="/images/admin_block.jpg" class="w-full h-full object-cover" />
           </div>
         </div>
       </div>
     </div>
 
     <div class="bg-primary py-2 section-padding">
-      <div
-        class="flex flex-wrap gap-x-10 items-center justify-center md:justify-between"
-      >
+      <div class="flex flex-wrap gap-x-10 items-center justify-center md:justify-between">
+
         <div
-          v-for="sponsor in sponsors"
-          :key="sponsor.url"
-          class="h-20 overflow-y-hidden flex-center"
-        >
-          <NuxtImg :src="sponsor.url" :width="sponsor.width" />
+          v-for="nav_link in [{ url: '/', label: 'Admissions' }, { url: '/', label: 'Academic Programs' }, { url: '/', label: 'News & Events' }, { url: 'https://fuet.netlify.app/portal', label: 'Student Portal' }, { url: '/staff-portal', label: 'Staff Portal' }]"
+          :key="nav_link.url" class="h-20 overflow-y-hidden flex-center">
+          <NuxtLink :to="nav_link.url" class="flex items-center gap-2 text-white hover:underline">
+            {{ nav_link.label }}
+          </NuxtLink>
         </div>
       </div>
     </div>

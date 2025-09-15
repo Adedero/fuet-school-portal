@@ -1,34 +1,86 @@
 <template>
-  <section>
-    <div class="section-padding py-20 space-y-10">
-      <h2 class="text-center text-2xl md:text-3xl lg:text-4xl font-semibold">
-        Accusantium qui amet, iste maxime voluptatem earum animi corrupti.
-      </h2>
+  <section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4">
+      <!-- Section Header -->
+      <div class="text-center space-y-4 mb-12">
+        <h2 class="text-3xl lg:text-4xl font-bold text-green-700">
+          Upcoming Events
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Stay informed about the latest conferences, tours, and academic collaborations at FUET.
+        </p>
+      </div>
 
-      <div class="grid gap-2.5 md:grid-cols-[repeat(auto-fit,minmax(24rem,1fr))]">
-        <div
-          v-for="i in 6"
-          :key="i"
-          class="bg-muted border border-default rounded-[1rem] p-5 space-y-4"
-        >
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Perspiciatis doloremque vero impedit dolorum inventore veniam
-            molestias aut consequuntur, facilis, fugiat officia corporis dicta
-            illum fuga illo facere voluptas, exercitationem ratione?
-          </p>
+      <!-- Events Grid -->
+      <div class="grid gap-8 md:grid-cols-3">
+        <div v-for="item in events" :key="item.title"
+          class="bg-white rounded-xl shadow-md overflow-hidden border border-gray-100 flex flex-col">
+          <!-- Image -->
+          <img :src="item.image" :alt="item.title" class="h-48 w-full object-cover object-center" />
 
-          <NuxtSeparator/>
-
-          <div class="flex items-center gap-2">
-            <NuxtAvatar src="https://github.com/benjamincanac.png" size="lg" />
-            <div>
-              <p class="text-sm font-semibold">John Doe</p>
-              <p class="text-xs text-muted">Lorem ipsum dolor sit.</p>
+          <!-- Content -->
+          <div class="p-5 flex-1 flex flex-col space-y-3">
+            <div class="flex items-center gap-3 text-sm text-gray-500">
+              <div class="text-center bg-green-700 text-white px-3 py-2 rounded-md">
+                <p class="text-lg font-bold leading-none">{{ item.day }}</p>
+                <p class="text-xs uppercase">{{ item.month }}</p>
+              </div>
+              <span>{{ item.date }}</span>
             </div>
+
+            <h3 class="font-semibold text-lg text-green-700">
+              {{ item.title }}
+            </h3>
+
+            <p class="text-sm text-gray-600">
+              <span class="font-medium">📍 Venue:</span> {{ item.venue }}
+            </p>
+
+            <span
+              class="inline-block mt-auto text-xs font-semibold px-3 py-1 rounded-md bg-green-100 text-green-700 w-max">
+              {{ item.category }}
+            </span>
           </div>
         </div>
       </div>
     </div>
   </section>
 </template>
+
+<script setup>
+const events = [
+  {
+    day: "02",
+    month: "Sep",
+    title: "FUET Signs MoU with Kenule Beeson Saro-Wiwa Polytechnic",
+    date: "2025-09-02 @ 10:30 AM",
+    venue: "Ken Saro-Wiwa Polytechnic",
+    category: "Conference",
+    image:
+      "/images/FUET Signs MoU with Kenule Beeson Saro-Wiwa Polytechnic.jpg", // education setting
+  },
+  {
+    day: "15",
+    month: "Aug",
+    title: "Facility Tour",
+    date: "2025-08-15 @ 10:00 AM",
+    venue:
+      "Federal University of Environment and Technology, Koroma/Sakpenwa, Rivers State.",
+    category: "Tour",
+    image:
+      "/images/Facility Tour.jpg", // campus/lab tour
+  }, // <-- Add comma here
+  {
+    day: "08",
+    month: "Aug",
+    title:
+      "FUET Signs MoU with Rivers State University for Academic Collaboration",
+    date: "2025-08-08 @ 10:00 AM",
+    venue:
+      "Rivers State University (RSU) Nkpolu – Oroworukwo, Port Harcourt, Rivers State.",
+    category: "Conference",
+    image:
+      "/images/FUET Signs MoU with Rivers State University for Academic Collaboration.jpg", // collaboration meeting
+  }
+];
+</script>
