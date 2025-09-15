@@ -18,15 +18,15 @@ export default function normalizeException(exception: unknown): Error {
     ) {
       normalizedException = new Error(exception.statusMessage);
     } else if (
-      "statusText" in exception &&
-      typeof exception.statusText === "string"
-    ) {
-      normalizedException = new Error(exception.statusText);
-    } else if (
       "message" in exception &&
       typeof exception.message === "string"
     ) {
       normalizedException = new Error(exception.message);
+    } else if (
+      "statusText" in exception &&
+      typeof exception.statusText === "string"
+    ) {
+      normalizedException = new Error(exception.statusText);
     } else {
       try {
         normalizedException = new Error(JSON.stringify(exception));

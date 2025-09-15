@@ -8,6 +8,15 @@ import env from "./env";
 export const auth = betterAuth({
   database: drizzleAdapter(db, { provider: "sqlite", schema }),
 
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        input: true
+      }
+    }
+  },
+
   session: {
     cookieCache: {
       enabled: true,
@@ -18,7 +27,6 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false,
-    requireEmailVerification: false,
     sendResetPassword: async ({ user, url /* token */ } /* request */) => {
       const { error } = await sendMail({
         from: {

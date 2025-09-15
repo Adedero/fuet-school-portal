@@ -12,7 +12,6 @@
 }
 
 @theme static {
-  --ui-radius: 0.275rem;
   --font-mono: "Geist Mono", monospace;
   --font-body: "Poppins", sans-serif;
 }
@@ -67,4 +66,8 @@ body {
   &:hover {
     text-decoration: underline;
   }
+}
+
+.section-padding {
+  @apply px-5 md:px-10 lg:px-20;
 }
