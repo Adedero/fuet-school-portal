@@ -9,6 +9,7 @@ export default defineEventHandler(async (event) => {
     columns: {
       id: true,
       course: true,
+      applicationNumber: true,
       degreeType: true,
       status: true,
       createdAt: true

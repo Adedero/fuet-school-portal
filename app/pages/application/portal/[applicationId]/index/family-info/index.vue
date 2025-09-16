@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import { VueMultiSelectButton } from "#components";
 import handlePreviousClick from "../../utils/handle-previous-click";
-import { applicationFamilySchema } from "~~/shared/schemas/application.schema";
+import { familySchema } from "~~/shared/schemas/application.schema";
 import { save } from "../../utils/handle-save-click";
+import kinRelationships from "~/utils/data/kin-relationships";
 
 const { applicationId = "" } = useRouteParams();
 const toast = useToast();
@@ -41,7 +42,7 @@ const saveProgress = async (successFn: () => void) => {
   await save<State>({
     applicationId,
     state: state,
-    schema: applicationFamilySchema,
+    schema: familySchema,
     toast,
     onSuccess: () => {
       successFn();
@@ -99,8 +100,8 @@ const items = [
         <NuxtForm
           v-else-if="app"
           :state
-          :schema="applicationFamilySchema"
-          :disabled="app.status === 'closed' || !!app.isSubmitted"
+          :schema="familySchema"
+          :disabled="app.status !== 'pending'"
         >
           <div class="grid md:grid-cols-2 gap-2.5">
             <div class="md:col-span-2">
@@ -124,7 +125,7 @@ const items = [
             </NuxtFormField>
 
             <NuxtFormField
-              name="otherNames"
+              name="firstParentAddress"
               label="Address"
               required
               class="md:col-span-2"
@@ -157,7 +158,7 @@ const items = [
             </NuxtFormField>
 
             <NuxtFormField
-              name="otherNames"
+              name="secondParentAddress"
               label="Address"
               required
               class="md:col-span-2"
@@ -185,8 +186,9 @@ const items = [
               label="Relationship"
               required
             >
-              <NuxtInput
+              <NuxtSelectMenu
                 v-model="state.nextOfKinRelationship"
+                :items="kinRelationships"
                 class="w-full"
                 size="lg"
               />
@@ -228,7 +230,7 @@ const items = [
           "
         />
         <NuxtButton
-          v-if="app.status === 'closed' || !!app.isSubmitted"
+          v-if="app.status !== 'pending'"
           :to="`/application/portal/${applicationId}/academic-info`"
           label="Next"
         />

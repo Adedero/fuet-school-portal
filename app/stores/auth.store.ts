@@ -6,6 +6,9 @@ export const useAuthStore = () => {
     "auth-session",
     () => null
   );
+  const isLoggedIn = function () {
+    return (user.value !== null) && (session.value !== null);
+  };
 
   // Load from sessionStorage on client only
   if (import.meta.client) {
@@ -42,6 +45,7 @@ export const useAuthStore = () => {
     user,
     setUser,
     session,
-    setSession
+    setSession,
+    isLoggedIn
   };
 };

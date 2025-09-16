@@ -14,6 +14,29 @@ export const auth = betterAuth({
         type: "string",
         input: true
       }
+    },
+
+    changeEmail: {
+      enabled: true,
+      sendChangeEmailVerification: async ({
+        user,
+        newEmail,
+        url /* token */
+      }) =>
+        /* request */
+        {
+          const { error } = await sendMail({
+            from: {
+              name: env.get("APP_NAME"),
+              address: env.get("EMAIL_USER")
+            },
+            to: user.email,
+            subject: "Approve email change",
+            html: `Hi ${user.name}! <br> You are about to change your email to ${newEmail}. <br> Click the link to approve the change: ${url}`
+          });
+
+          if (error) throw error;
+        }
     }
   },
 
@@ -35,7 +58,7 @@ export const auth = betterAuth({
         },
         to: user.email,
         subject: "Reset your password",
-        html: `Hi, ${user.name}!. <br> Click the link to reset your password: ${url}`
+        html: `Hi, ${user.name}! <br> Click the link to reset your password: ${url}`
       });
 
       if (error) throw error;
@@ -51,7 +74,7 @@ export const auth = betterAuth({
         },
         to: user.email,
         subject: "Verify your email address",
-        html: `Hi, ${user.name}!. <br> Click the link to verify your email: ${url}`
+        html: `Hi, ${user.name}! <br> Click the link to verify your email: ${url}`
       });
 
       if (error) throw error;
