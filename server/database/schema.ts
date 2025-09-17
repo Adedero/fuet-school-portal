@@ -2,7 +2,8 @@ import {
   sqliteTable,
   text,
   integer,
-  uniqueIndex
+  uniqueIndex,
+  real
 } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
 import { ulid } from "ulid";
@@ -179,6 +180,10 @@ export const application = sqliteTable(
       .notNull()
       .default("pending"),
 
+    admissionFeePaymentId: text("admission_fee_payment_id").references(
+      () => admissionFeePayment.id,
+      { onDelete: "set null" }
+    ),
     hasPaidAdmissionFees: integer("hasPaidAdmissionFees", {
       mode: "boolean"
     }).default(false),
@@ -261,8 +266,25 @@ export const applicationRelations = relations(application, ({ one }) => ({
   user: one(user, {
     fields: [application.userId],
     references: [user.id]
+  }),
+  admissionFeePayment: one(admissionFeePayment, {
+    fields: [application.admissionFeePaymentId],
+    references: [admissionFeePayment.id]
   })
 }));
+
+export const admissionFeePayment = sqliteTable("admission_fee_payment", {
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  applicationId: text("application_id")
+    .notNull()
+    .references(() => application.id)
+    .notNull(),
+  amount: real().notNull(),
+  transactionRef: text("transaction_ref").notNull(),
+  ...timestamps
+});
 
 export const settings = sqliteTable("settings", {
   id: text("id")
