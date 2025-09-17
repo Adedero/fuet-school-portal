@@ -84,7 +84,8 @@ const items = [
       <header>
         <h1 class="text-xl font-bold">Family Information</h1>
         <p class="text-sm muted">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          Please provide accurate information about your parents and next of kin.
+          This information is essential for your application process.
         </p>
       </header>
 

@@ -1,13 +1,14 @@
-import { h as eventHandler, f as getRouterParams, b as db, c as createError, r as readValidatedBody, e as application } from '../../../../../nitro/nitro.mjs';
+import { n as eventHandler, k as getRouterParams, h as db, g as createError, r as readValidatedBody, j as application } from '../../../../../_/nitro.mjs';
 import { and, eq } from 'drizzle-orm';
 import { a as applicationSchema } from '../../../../../_/application.schema.mjs';
+import 'node:path';
+import 'node:fs/promises';
+import 'node:crypto';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
-import 'node:crypto';
 import 'node:url';
 import 'better-auth';
 import 'better-auth/adapters/drizzle';
@@ -27,7 +28,6 @@ const index_put = eventHandler(async (event) => {
     where: (app, { eq: eq2 }) => eq2(app.id, applicationId),
     columns: {
       status: true,
-      isSubmitted: true,
       firstName: true,
       lastName: true,
       birthDay: true,
@@ -41,10 +41,10 @@ const index_put = eventHandler(async (event) => {
       statusMessage: "Application not found."
     });
   }
-  if (startedApplication.status === "closed" || startedApplication.isSubmitted) {
+  if (startedApplication.status !== "pending") {
     throw createError({
       status: 400,
-      statusMessage: "Application is closed and cannot be edited."
+      statusMessage: "Application has been submitted and cannot be edited."
     });
   }
   const body = await readValidatedBody(
@@ -65,7 +65,15 @@ const index_put = eventHandler(async (event) => {
     birthYear = startedApplication.birthYear,
     ...rest
   } = body.data;
-  const updatedApplication = await db.update(application).set({ firstName, lastName, birthDay, birthMonth, birthYear, ...rest }).where(
+  const updatedApplication = await db.update(application).set({
+    firstName,
+    lastName,
+    birthDay,
+    birthMonth,
+    birthYear,
+    ...rest,
+    updatedAt: /* @__PURE__ */ new Date()
+  }).where(
     and(eq(application.id, applicationId), eq(application.userId, user.id))
   ).returning();
   return {

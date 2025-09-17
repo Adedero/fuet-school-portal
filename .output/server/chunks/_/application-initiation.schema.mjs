@@ -1,6 +1,6 @@
 import z from 'zod';
 import { p as passwordSchema } from './password.schema.mjs';
-import { T as MIN_AGE } from '../nitro/nitro.mjs';
+import { Y as MIN_AGE } from './nitro.mjs';
 
 const applicationInitiationSchema = z.object({
   firstName: z.string().trim().nonempty("First name is required."),

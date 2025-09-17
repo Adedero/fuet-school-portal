@@ -1,5 +1,5 @@
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'vue-bundle-renderer/runtime';
-import { i as buildAssetsURL, u as useRuntimeConfig, j as getResponseStatusText, k as getResponseStatus, l as defineRenderHandler, p as publicAssetsURL, m as getQuery, c as createError, n as destr, o as getRouteRules, q as hasProtocol, s as relative, v as joinURL, w as useNitroApp } from '../nitro/nitro.mjs';
+import { o as buildAssetsURL, u as useRuntimeConfig, p as getResponseStatusText, q as getResponseStatus, v as defineRenderHandler, w as publicAssetsURL, x as getQuery, g as createError, d as destr, y as getRouteRules, z as hasProtocol, A as relative, B as joinURL, b as useNitroApp } from '../_/nitro.mjs';
 import { renderToString } from 'vue/server-renderer';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'unhead/server';
 import { stringify, uneval } from 'devalue';
@@ -71,7 +71,7 @@ function createHead(options = {}) {
   return head;
 }
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"School Portal"};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"FUET"};
 
 const appRootTag = "div";
 
@@ -251,7 +251,7 @@ async function renderInlineStyles(usedModules) {
 
 const renderSSRHeadOptions = {"omitLineBreaks":true};
 
-const entryFileName = "CjjPXqCn.js";
+const entryFileName = "BYSGjKRL.js";
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;

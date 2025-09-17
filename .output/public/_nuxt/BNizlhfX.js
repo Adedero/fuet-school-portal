@@ -1,1 +1,0 @@
-import{_ as t,c as o,a as e,o as a}from"#entry";const n={},c={class:"w-full"};function l(r,s){return a(),o("div",c,[...s[0]||(s[0]=[e("div",{class:"lg:max-w-[70%] mx-auto"},[e("header",null,[e("h1",{class:"text-xl font-bold"},"Admission Fees Payment")]),e("section",{class:"my-5"})],-1)])])}const i=t(n,[["render",l]]);export{i as default};

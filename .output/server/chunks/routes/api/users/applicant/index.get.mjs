@@ -1,11 +1,12 @@
-import { d as defineEventHandler, b as db } from '../../../../nitro/nitro.mjs';
+import { c as defineEventHandler, h as db } from '../../../../_/nitro.mjs';
+import 'node:path';
+import 'node:fs/promises';
+import 'node:crypto';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
-import 'node:crypto';
 import 'node:url';
 import 'better-auth';
 import 'better-auth/adapters/drizzle';
@@ -25,6 +26,7 @@ const index_get = defineEventHandler(async (event) => {
     columns: {
       id: true,
       course: true,
+      applicationNumber: true,
       degreeType: true,
       status: true,
       createdAt: true

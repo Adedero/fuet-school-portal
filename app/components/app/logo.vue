@@ -4,9 +4,10 @@ interface Props {
   width?: number;
 }
 
+
 const { width = 32 } = defineProps<Props>();
 </script>
 
 <template>
-  <img :src="logo" :width />
+  <img src="/fuet_logo.png" :width />
 </template>

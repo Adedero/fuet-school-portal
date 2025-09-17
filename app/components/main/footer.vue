@@ -27,32 +27,13 @@ const appName = computed(() => {
         </NuxtLink>
 
         <p class="text-sm text-muted">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-          blanditiis nulla.
+          Pioneering Innovation • Nurturing Sustainability
         </p>
 
         <div class="flex items-center gap-2.5">
-          <NuxtButton
-            to="#"
-            size="sm"
-            icon="lucide:facebook"
-            variant="soft"
-            class="rounded-full"
-          />
-          <NuxtButton
-            to="#"
-            size="sm"
-            icon="lucide:linkedin"
-            variant="soft"
-            class="rounded-full"
-          />
-          <NuxtButton
-            to="#"
-            size="sm"
-            icon="lucide:twitter"
-            variant="soft"
-            class="rounded-full"
-          />
+          <NuxtButton to="#" size="sm" icon="lucide:facebook" variant="soft" class="rounded-full" />
+          <NuxtButton to="#" size="sm" icon="lucide:linkedin" variant="soft" class="rounded-full" />
+          <NuxtButton to="#" size="sm" icon="lucide:twitter" variant="soft" class="rounded-full" />
         </div>
       </div>
 
@@ -89,11 +70,9 @@ const appName = computed(() => {
 
     <NuxtSeparator class="mt-5 mb-2.5" />
 
-    <div
-      class="text-xs text-muted flex flex-wrap gap-5 justify-between items-center"
-    >
+    <div class="text-xs text-muted flex flex-wrap gap-5 justify-between items-center">
       <p>&copy; {{ config.public.app.name }} 2025. All Rights Reserved.</p>
-      <p>Made by <b>Adedero</b></p>
+      <p>Made by <b>Z1 Technologies</b></p>
     </div>
   </footer>
 </template>

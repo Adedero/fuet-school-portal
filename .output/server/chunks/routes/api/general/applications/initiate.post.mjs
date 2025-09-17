@@ -1,12 +1,13 @@
-import { d as defineEventHandler, r as readValidatedBody, c as createError, b as db, a as auth, g as generateApplicationNumber, e as application } from '../../../../nitro/nitro.mjs';
+import { c as defineEventHandler, r as readValidatedBody, g as createError, h as db, e as auth, i as generateApplicationNumber, j as application } from '../../../../_/nitro.mjs';
 import { a as applicationInitiationSchema } from '../../../../_/application-initiation.schema.mjs';
+import 'node:path';
+import 'node:fs/promises';
+import 'node:crypto';
 import 'node:http';
 import 'node:https';
 import 'node:events';
 import 'node:buffer';
 import 'node:fs';
-import 'node:path';
-import 'node:crypto';
 import 'node:url';
 import 'better-auth';
 import 'better-auth/adapters/drizzle';
@@ -110,6 +111,7 @@ const initiate_post = defineEventHandler(async (event) => {
     userId,
     applicationNumber,
     schoolSessionId: currentSchoolSession.id,
+    status: "pending",
     firstName: body.data.firstName,
     middleName: body.data.middleName,
     otherNames: body.data.otherNames,

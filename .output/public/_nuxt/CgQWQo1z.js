@@ -1,0 +1,1 @@
+import{f as n,c as _,b as o,i as t,o as a,ax as m}from"#entry";import{_ as c,a as r}from"./BwdwXIdX.js";import"./CuPKMK4g.js";import"./COu7Z6cq.js";import"./mYEHh15E.js";import"./BgDtHKcg.js";const B=n({__name:"academics",setup(p){return(s,i)=>{const e=m;return a(),_("main",null,[o(t(c)),o(e),o(t(r))])}}});export{B as default};
