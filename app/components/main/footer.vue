@@ -72,7 +72,7 @@ const appName = computed(() => {
 
     <div class="text-xs text-muted flex flex-wrap gap-5 justify-between items-center">
       <p>&copy; {{ config.public.app.name }} 2025. All Rights Reserved.</p>
-      <p>Made by <b>Adedero</b></p>
+      <p>Made by <b>Z1 Technologies</b></p>
     </div>
   </footer>
 </template>

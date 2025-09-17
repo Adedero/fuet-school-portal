@@ -2,13 +2,13 @@
 const stats = [
   {
     id: 1,
-    value: "60",
-    label: "Teachers"
+    value: "10",
+    label: "Professors"
   },
   {
     id: 2,
-    value: "5k",
-    label: "Students"
+    value: "5",
+    label: "Certified Programs"
   },
   {
     id: 3,
@@ -45,12 +45,12 @@ const sponsors = [
   <section id="hero">
     <div class="section-padding py-10">
       <div class="grid md:gap-x-10 lg:gap-x-20 gap-y-10 md:grid-cols-2 md:items-center">
-        <div class="text-center md:text-left space-y-5">
-          <h1 class="text-4xl md:text-5xl lg:text-5xl font-bold">
-            Federal University of Environment & Technology, Ogoni
+        <div class="text-center md:text-left space-y-5 ">
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
+            Pioneering <span class="text-primary-500">Innovation</span>- <br />
+            <span>Nurturing Sustainability</span>
 
           </h1>
-          <p>Pioneering Innovation • Nurturing Sustainability</p>
 
           <p class="text-muted">
             We offer accredited programmes in environmental science, technology, and applied research—designed to
