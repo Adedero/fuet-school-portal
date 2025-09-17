@@ -1,5 +1,8 @@
 import { c as defineEventHandler, r as readValidatedBody, g as createError, h as db, e as auth, i as generateApplicationNumber, j as application } from '../../../../_/nitro.mjs';
 import { a as applicationInitiationSchema } from '../../../../_/application-initiation.schema.mjs';
+import 'node:path';
+import 'node:fs/promises';
+import 'node:crypto';
 import 'node:http';
 import 'node:https';
 import 'node:events';
@@ -14,10 +17,8 @@ import 'drizzle-orm';
 import 'ulid';
 import 'nodemailer';
 import '@iconify/utils';
-import 'node:crypto';
 import 'consola';
 import 'ipx';
-import 'node:path';
 import 'zod';
 import '../../../../_/password.schema.mjs';
 
@@ -110,6 +111,7 @@ const initiate_post = defineEventHandler(async (event) => {
     userId,
     applicationNumber,
     schoolSessionId: currentSchoolSession.id,
+    status: "pending",
     firstName: body.data.firstName,
     middleName: body.data.middleName,
     otherNames: body.data.otherNames,

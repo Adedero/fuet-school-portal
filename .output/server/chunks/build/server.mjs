@@ -1,5 +1,5 @@
-import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { defineComponent, mergeModels, useModel, computed, unref, mergeProps, withCtx, renderSlot, createVNode, createBlock, createCommentVNode, openBlock, createTextVNode, toDisplayString, toValue, getCurrentInstance, onServerPrefetch, toRef, isRef, shallowRef, h, resolveComponent, useSlots, ref, inject, toHandlers, provide, hasInjectionContext, watch, resolveDynamicComponent, Suspense, nextTick, shallowReactive, Fragment, useAttrs, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, createApp, renderList, useId, onErrorCaptured, reactive, effectScope, isReadonly, isShallow, isReactive, toRaw, withModifiers, getCurrentScope, markRaw } from 'vue';
-import { A as serialize, B as isEqual, C as parseQuery, D as defu, E as klona, F as defuFn, g as createError$1, x as hasProtocol, G as isScriptProtocol, z as joinURL, H as withQuery, I as sanitizeStatusCode, J as withTrailingSlash, K as withoutTrailingSlash, L as getContext, M as withLeadingSlash, N as parseURL, $ as $fetch$1, O as baseURL, P as createHooks, Q as executeAsync, R as encodeParam, S as encodePath, T as toRouteMatcher, U as createRouter$1 } from '../_/nitro.mjs';
+import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { defineComponent, inject, computed, toValue, mergeModels, useModel, unref, mergeProps, withCtx, renderSlot, createVNode, createBlock, createCommentVNode, openBlock, createTextVNode, toDisplayString, getCurrentInstance, onServerPrefetch, toRef, isRef, shallowRef, h, resolveComponent, useSlots, ref, toHandlers, hasInjectionContext, provide, watch, resolveDynamicComponent, Suspense, nextTick, shallowReactive, Fragment, useAttrs, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, createApp, renderList, useId, onErrorCaptured, reactive, effectScope, isReadonly, isShallow, isReactive, toRaw, withModifiers, getCurrentScope, markRaw } from 'vue';
+import { C as serialize, D as isEqual, E as parseQuery, F as defu, g as createError$1, G as klona, H as defuFn, z as hasProtocol, I as isScriptProtocol, B as joinURL, J as withQuery, K as sanitizeStatusCode, L as withTrailingSlash, M as withoutTrailingSlash, N as getContext, O as withLeadingSlash, P as parseURL, $ as $fetch$1, Q as baseURL, R as createHooks, S as executeAsync, T as encodeParam, U as encodePath, V as toRouteMatcher, W as createRouter$1 } from '../_/nitro.mjs';
 import { RouterView, useRoute as useRoute$1, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { createAuthClient } from 'better-auth/vue';
 import { adminClient, inferAdditionalFields } from 'better-auth/client/plugins';
@@ -7,10 +7,13 @@ import colors from 'tailwindcss/colors';
 import { Icon, getIcon, loadIcon as loadIcon$1, _api, addAPIProvider, setCustomIconsLoader } from '@iconify/vue';
 import { ssrRenderComponent, ssrRenderSlot, ssrRenderClass, ssrInterpolate, ssrRenderVNode, ssrRenderAttrs, ssrRenderList, ssrRenderSuspense, ssrRenderStyle } from 'vue/server-renderer';
 import { Primitive, Slot, useForwardProps, useForwardPropsEmits, DialogRoot, DialogTrigger, DialogPortal, DialogOverlay, DialogContent, VisuallyHidden, DialogTitle, DialogDescription, DialogClose, ToastProvider, ToastPortal, ToastViewport, ConfigProvider, TooltipProvider, ToastRoot, ToastTitle, ToastDescription, ToastAction, ToastClose, ProgressRoot, ProgressIndicator } from 'reka-ui';
-import { reactivePick, useDebounceFn, reactiveOmit, createSharedComposable } from '@vueuse/core';
+import { reactivePick, reactiveOmit, useDebounceFn, createSharedComposable } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
 import { getIconCSS } from '@iconify/utils/lib/css/icon';
 import { u as useHead$1, h as headSymbol } from '../routes/renderer.mjs';
+import 'node:path';
+import 'node:fs/promises';
+import 'node:crypto';
 import 'node:http';
 import 'node:https';
 import 'node:events';
@@ -25,10 +28,8 @@ import 'drizzle-orm';
 import 'ulid';
 import 'nodemailer';
 import '@iconify/utils';
-import 'node:crypto';
 import 'consola';
 import 'ipx';
-import 'node:path';
 import 'vue-bundle-renderer/runtime';
 import 'unhead/server';
 import 'devalue';
@@ -580,17 +581,23 @@ async function getRouteRules(arg) {
     return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
   }
 }
-const __nuxt_page_meta$8 = {
+const __nuxt_page_meta$a = {
   layout: "main"
 };
-const __nuxt_page_meta$7 = {
+const __nuxt_page_meta$9 = {
   layout: "main"
+};
+const __nuxt_page_meta$8 = {
+  layout: "auth"
+};
+const __nuxt_page_meta$7 = {
+  layout: "application"
 };
 const __nuxt_page_meta$6 = {
   layout: "auth"
 };
 const __nuxt_page_meta$5 = {
-  layout: "application"
+  layout: "auth"
 };
 const __nuxt_page_meta$4 = {
   layout: "auth"
@@ -611,8 +618,13 @@ const _routes = [
   {
     name: "index",
     path: "/",
-    meta: __nuxt_page_meta$8 || {},
-    component: () => import('./index-Cdf2y2n8.mjs')
+    meta: __nuxt_page_meta$a || {},
+    component: () => import('./index-CbndTUyt.mjs')
+  },
+  {
+    name: "about",
+    path: "/about",
+    component: () => import('./index-DaEr9WtA.mjs')
   },
   {
     name: "contact",
@@ -620,99 +632,136 @@ const _routes = [
     component: () => import('./index-CEKsLRwf.mjs')
   },
   {
+    name: "about-leadership",
+    path: "/about/leadership",
+    component: () => import('./leadership-BH_MzweS.mjs')
+  },
+  {
     name: "application",
     path: "/application",
-    meta: __nuxt_page_meta$7 || {},
-    component: () => import('./index-DgSkHDBu.mjs')
+    meta: __nuxt_page_meta$9 || {},
+    component: () => import('./index-B3E_CbeB.mjs')
   },
   {
     name: "login",
     path: "/login",
-    meta: __nuxt_page_meta$6 || {},
-    component: () => import('./index-CZrdHpA5.mjs')
+    meta: __nuxt_page_meta$8 || {},
+    component: () => import('./index-BA78nW33.mjs')
   },
   {
     name: "login-login-form",
     path: "/login/login-form",
-    component: () => import('./login-form-DDvAXdiT.mjs')
+    component: () => import('./login-form-Bm6MU9ox.mjs')
+  },
+  {
+    name: "academics-undergraduate",
+    path: "/academics/undergraduate",
+    component: () => import('./undergraduate-CJvnpLW3.mjs')
   },
   {
     name: "application-portal",
     path: "/application/portal",
-    meta: __nuxt_page_meta$5 || {},
-    component: () => import('./index-v51ylYq7.mjs')
+    meta: __nuxt_page_meta$7 || {},
+    component: () => import('./index-CSwm1GIc.mjs')
+  },
+  {
+    name: "change-email",
+    path: "/change-email",
+    meta: __nuxt_page_meta$6 || {},
+    component: () => import('./index-zouznnD5.mjs')
   },
   {
     name: "reset-password",
     path: "/reset-password",
+    meta: __nuxt_page_meta$5 || {},
+    component: () => import('./index-1X8AfFm9.mjs')
+  },
+  {
+    name: "change-password",
+    path: "/change-password",
     meta: __nuxt_page_meta$4 || {},
-    component: () => import('./index-CWSGlKX_.mjs')
+    component: () => import('./index-BnKZumjo.mjs')
   },
   {
     name: "forgot-password",
     path: "/forgot-password",
     meta: __nuxt_page_meta$3 || {},
-    component: () => import('./index-D3VPtMBj.mjs')
+    component: () => import('./index-BpPBRlO6.mjs')
   },
   {
     name: "token-validation",
     path: "/token-validation",
     meta: __nuxt_page_meta$2 || {},
-    component: () => import('./index-yqbRelKY.mjs')
+    component: () => import('./index-acXUuyJW.mjs')
   },
   {
     name: "email-verification",
     path: "/email-verification",
     meta: __nuxt_page_meta$1 || {},
-    component: () => import('./index-BbO7T2Zw.mjs')
+    component: () => import('./index-Q89Rgdia.mjs')
+  },
+  {
+    name: "change-email-change-email-form",
+    path: "/change-email/change-email-form",
+    component: () => import('./change-email-form-K7nabniM.mjs')
   },
   {
     name: __nuxt_page_meta?.name,
     path: "/application/portal/:applicationId()",
     meta: __nuxt_page_meta || {},
-    component: () => import('./index-DkqQrYkG.mjs'),
+    component: () => import('./index-BMDyRuGl.mjs'),
     children: [
       {
         name: "application-portal-applicationId-index",
         path: "",
-        component: () => import('./index-CtkRAok6.mjs')
+        component: () => import('./index-B9kSCjAz.mjs')
       },
       {
         name: "application-portal-applicationId-index-review",
         path: "review",
-        component: () => import('./index-LISUf8u1.mjs')
+        component: () => import('./index-CTOfH4wt.mjs')
       },
       {
         name: "application-portal-applicationId-index-payment",
         path: "payment",
-        component: () => import('./index-Bwa6T0Z5.mjs')
+        component: () => import('./index-BT2LaHVY.mjs')
+      },
+      {
+        name: "application-portal-applicationId-index-documents",
+        path: "documents",
+        component: () => import('./index-BlgKKAIA.mjs')
       },
       {
         name: "application-portal-applicationId-index-family-info",
         path: "family-info",
-        component: () => import('./index-BHldQJYM.mjs')
+        component: () => import('./index-CdmXkmmx.mjs')
       },
       {
         name: "application-portal-applicationId-index-academic-info",
         path: "academic-info",
-        component: () => import('./index-B9EBi-Sj.mjs')
+        component: () => import('./index-DZ3mm1co.mjs')
       },
       {
         name: "application-portal-applicationId-index-personal-info",
         path: "personal-info",
-        component: () => import('./index-DZvXKDNx.mjs')
+        component: () => import('./index-7ioS9MF_.mjs')
       },
       {
         name: "application-portal-applicationId-index-admission-status",
         path: "admission-status",
-        component: () => import('./index-CsfhcHq7.mjs')
+        component: () => import('./index-_E5f3cGX.mjs')
       }
     ]
   },
   {
     name: "reset-password-reset-password-form",
     path: "/reset-password/reset-password-form",
-    component: () => import('./reset-password-form-B_Dl94MS.mjs')
+    component: () => import('./reset-password-form-BF4paiVQ.mjs')
+  },
+  {
+    name: "change-password-change-password-form",
+    path: "/change-password/change-password-form",
+    component: () => import('./change-password-form-CDUAJ9BY.mjs')
   },
   {
     name: "application-portal-applicationId-utils-handle-save-click",
@@ -722,7 +771,7 @@ const _routes = [
   {
     name: "application-portal-applicationId-utils-handle-previous-click",
     path: "/application/portal/:applicationId()/utils/handle-previous-click",
-    component: () => import('./handle-previous-click-DgwluTFj.mjs')
+    component: () => import('./handle-previous-click-D1g6YUzP.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -849,6 +898,32 @@ const authClient = createAuthClient({
   },
   plugins: [adminClient(), inferAdditionalFields()]
 });
+const useStateKeyPrefix = "$s";
+function useState(...args) {
+  const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
+  if (typeof args[0] !== "string") {
+    args.unshift(autoKey);
+  }
+  const [_key, init] = args;
+  if (!_key || typeof _key !== "string") {
+    throw new TypeError("[nuxt] [useState] key must be a string: " + _key);
+  }
+  if (init !== void 0 && typeof init !== "function") {
+    throw new Error("[nuxt] [useState] init must be a function: " + init);
+  }
+  const key = useStateKeyPrefix + _key;
+  const nuxtApp = useNuxtApp();
+  const state = toRef(nuxtApp.payload.state, key);
+  if (state.value === void 0 && init) {
+    const initialValue = init();
+    if (isRef(initialValue)) {
+      nuxtApp.payload.state[key] = initialValue;
+      return initialValue;
+    }
+    state.value = initialValue;
+  }
+  return state;
+}
 const auth_45global = /* @__PURE__ */ defineNuxtRouteMiddleware(async (to) => {
   return;
 });
@@ -1788,32 +1863,6 @@ function usePortal(portal) {
     to: to.value,
     disabled: disabled.value
   }));
-}
-const useStateKeyPrefix = "$s";
-function useState(...args) {
-  const autoKey = typeof args[args.length - 1] === "string" ? args.pop() : void 0;
-  if (typeof args[0] !== "string") {
-    args.unshift(autoKey);
-  }
-  const [_key, init] = args;
-  if (!_key || typeof _key !== "string") {
-    throw new TypeError("[nuxt] [useState] key must be a string: " + _key);
-  }
-  if (init !== void 0 && typeof init !== "function") {
-    throw new Error("[nuxt] [useState] init must be a function: " + init);
-  }
-  const key = useStateKeyPrefix + _key;
-  const nuxtApp = useNuxtApp();
-  const state = toRef(nuxtApp.payload.state, key);
-  if (state.value === void 0 && init) {
-    const initialValue = init();
-    if (isRef(initialValue)) {
-      nuxtApp.payload.state[key] = initialValue;
-      return initialValue;
-    }
-    state.value = initialValue;
-  }
-  return state;
 }
 function useToast() {
   const toasts = useState("toasts", () => []);
@@ -6739,9 +6788,11 @@ _sfc_main$3.setup = (props, ctx) => {
 };
 const __nuxt_component_3 = Object.assign(_sfc_main$3, { __name: "VueConfirmDialog" });
 const layouts = {
-  application: defineAsyncComponent(() => import('./application-BJix03sW.mjs').then((m) => m.default || m)),
-  auth: defineAsyncComponent(() => import('./auth-koyRIaeW.mjs').then((m) => m.default || m)),
-  main: defineAsyncComponent(() => import('./main-DsFpgUAh.mjs').then((m) => m.default || m))
+  academics: defineAsyncComponent(() => import('./academics-JZ7fSGf5.mjs').then((m) => m.default || m)),
+  application: defineAsyncComponent(() => import('./application-CCa35qQ2.mjs').then((m) => m.default || m)),
+  auth: defineAsyncComponent(() => import('./auth-BYYyG2V2.mjs').then((m) => m.default || m)),
+  default: defineAsyncComponent(() => import('./default-Dt9y2z5_.mjs').then((m) => m.default || m)),
+  main: defineAsyncComponent(() => import('./main-DV3wYzKv.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -7113,5 +7164,5 @@ let entry;
 }
 const entry$1 = (ssrContext) => entry(ssrContext);
 
-export { compare as A, _sfc_main$e as B, getDisplayValue as C, buttonGroupInjectionKey as D, fetchDefaults as E, useAsyncData as F, useRequestFetch as G, formBusInjectionKey as H, formErrorsInjectionKey as I, formInputsInjectionKey as J, formLoadingInjectionKey as K, formOptionsInjectionKey as L, inputIdInjectionKey as M, formFieldInjectionKey as N, looseToNumber as O, omit as P, useState as Q, _export_sfc as _, __nuxt_component_0 as a, _sfc_main$a as b, _sfc_main$g as c, _sfc_main$4 as d, entry$1 as default, useAppConfig as e, useFormField as f, useRoute as g, useToast as h, authClient as i, createError as j, useRuntimeConfig as k, useConfirm as l, usePortal as m, navigateTo as n, isArrayOfArray as o, _sfc_main$d as p, get as q, _sfc_main$b as r, pickLinkProps as s, tv as t, useHead as u, _sfc_main$c as v, __nuxt_component_1 as w, useButtonGroup as x, useComponentIcons as y, useLocale as z };
+export { useButtonGroup as A, buttonGroupInjectionKey as B, useComponentIcons as C, _sfc_main$e as D, getDisplayValue as E, compare as F, fetchDefaults as G, useAsyncData as H, useRequestFetch as I, formBusInjectionKey as J, formErrorsInjectionKey as K, formInputsInjectionKey as L, formLoadingInjectionKey as M, formOptionsInjectionKey as N, inputIdInjectionKey as O, formFieldInjectionKey as P, looseToNumber as Q, useState as R, omit as S, _export_sfc as _, __nuxt_component_0 as a, _sfc_main$a as b, _sfc_main$g as c, _sfc_main$4 as d, entry$1 as default, useRoute as e, useToast as f, authClient as g, createError as h, useRuntimeConfig as i, useAppConfig as j, usePortal as k, isArrayOfArray as l, _sfc_main$d as m, navigateTo as n, get as o, _sfc_main$b as p, pickLinkProps as q, _sfc_main$c as r, __nuxt_component_1 as s, tv as t, useHead as u, useFormField as v, useNuxtApp as w, injectHead as x, useLocale as y, useConfirm as z };
 //# sourceMappingURL=server.mjs.map

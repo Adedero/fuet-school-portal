@@ -1,0 +1,1 @@
+import{p as t,f as e,c as s,o as n}from"#entry";const _=t("/fuet_logo.png"),p=["width"],c=e({__name:"logo",props:{width:{default:32}},setup(a){return(o,i)=>(n(),s("img",{src:_,width:o.width},null,8,p))}}),m=Object.assign(c,{__name:"AppLogo"});export{m as _};
