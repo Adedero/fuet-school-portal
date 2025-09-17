@@ -44,8 +44,8 @@ const state = computed(() => {
     <section class="space-y-16">
       <div class="grid gap-5">
         <NuxtCard v-for="doc in state" :key="doc.label" class="rounded-none">
-          <div>
-            <div class="flex items-center gap-2">
+          <div class="flex items-center gap-1 justify-between">
+            <div class="flex items-center gap-1">
               <NuxtIcon
                 v-if="doc.value"
                 name="lucide:circle-check"
@@ -58,14 +58,23 @@ const state = computed(() => {
                 class="text-error"
                 size="1.5rem"
               />
-              <div>
-                <p class="text-sm font-semibold">
-                  {{ doc.label }}
-                </p>
-                <p class="text-xs text-muted">
-                  {{ doc.value ? "submitted" : "not submitted" }}
-                </p>
-              </div>
+              <p class="text-sm font-semibold text-muted">
+                {{ doc.label }}
+              </p>
+            </div>
+
+            <div
+              v-if="doc.value"
+              class="print:hidden flex items-center gap-2.5"
+            >
+              <a :href="doc.value" download>
+                <NuxtButton
+                  icon="lucide:download"
+                  size="sm"
+                  color="neutral"
+                  variant="soft"
+                />
+              </a>
             </div>
           </div>
         </NuxtCard>

@@ -13,7 +13,7 @@ const { data } = defineProps<Props>();
     <h1 class="text-xl font-bold flex items-end justify-center gap-2.5">
       <AppLogo size="24" />
       <span>
-        FUET UNDEGRADUATE APPLICATION ({{ data.schoolSession?.name }})
+        FUET UNDEGRADUATE APPLICATION ({{ data.schoolSessionName }})
       </span>
     </h1>
     <p>Federal University of Environment and Technology</p>

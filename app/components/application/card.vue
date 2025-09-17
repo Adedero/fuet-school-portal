@@ -26,7 +26,7 @@ const emit = defineEmits<{
         </h4>
         <p class="font-mono">
           Session:
-          {{ application.schoolSession?.name ?? "Unknown Session" }}
+          {{ application.schoolSessionName }}
         </p>
         <NuxtBadge
           :label="

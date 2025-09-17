@@ -85,13 +85,13 @@ async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
           break;
 
         case "admin":
-          alert(role);
+          await navigateTo("/portal/admin");
           break;
         default:
           toast.add({
             color: "error",
             title: "Error",
-            description: "runtimeConfig.public.defaultErrorMsg"
+            description: runtimeConfig.public.defaultErrorMsg
           });
           break;
       }

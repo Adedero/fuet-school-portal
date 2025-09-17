@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
     const existingApplication = await db.query.application.findFirst({
       where: (app, { eq, and }) => {
         return and(
-          eq(app.schoolSessionId, currentSchoolSession.id),
+          eq(app.schoolSessionName, currentSchoolSession.name),
           eq(app.userId, existingUser.id)
         );
       }
@@ -110,6 +110,7 @@ export default defineEventHandler(async (event) => {
   await db.insert(application).values({
     userId: userId,
     applicationNumber,
+    schoolSessionName: currentSchoolSession.name,
     schoolSessionId: currentSchoolSession.id,
     status: "pending",
     firstName: body.data.firstName,

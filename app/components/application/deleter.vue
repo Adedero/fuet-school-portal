@@ -51,8 +51,6 @@ const handleDelete = async () => {
       description: normalizeException(error).message
     });
   }
-
-  emit("remove", "12323");
 };
 </script>
 
