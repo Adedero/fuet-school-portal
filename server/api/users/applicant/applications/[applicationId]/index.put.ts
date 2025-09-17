@@ -7,11 +7,11 @@ import type { EventContextUser } from "~~/types";
 export default eventHandler(async (event) => {
   const user = event.context.user as EventContextUser;
   const { applicationId } = getRouterParams(event);
+
   const startedApplication = await db.query.application.findFirst({
     where: (app, { eq }) => eq(app.id, applicationId),
     columns: {
       status: true,
-      isSubmitted: true,
       firstName: true,
       lastName: true,
       birthDay: true,
@@ -27,13 +27,10 @@ export default eventHandler(async (event) => {
     });
   }
 
-  if (
-    startedApplication.status === "closed" ||
-    startedApplication.isSubmitted
-  ) {
+  if (startedApplication.status !== "pending") {
     throw createError({
       status: 400,
-      statusMessage: "Application is closed and cannot be edited."
+      statusMessage: "Application has been submitted and cannot be edited."
     });
   }
 
@@ -60,7 +57,15 @@ export default eventHandler(async (event) => {
 
   const updatedApplication = await db
     .update(application)
-    .set({ firstName, lastName, birthDay, birthMonth, birthYear, ...rest })
+    .set({
+      firstName,
+      lastName,
+      birthDay,
+      birthMonth,
+      birthYear,
+      ...rest,
+      updatedAt: new Date()
+    })
     .where(
       and(eq(application.id, applicationId), eq(application.userId, user.id))
     )

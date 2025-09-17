@@ -8,3 +8,11 @@ export interface EventContextUser {
   image?: string | null | undefined;
   role: string;
 }
+
+export interface ServerFile {
+  name: string;
+  type: string;
+  size: number;
+  ext: string | null;
+  data: string;
+}

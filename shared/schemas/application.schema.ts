@@ -1,6 +1,7 @@
 import z from "zod";
+import formatBytes from "../utils/format-bytes";
 
-export const applicationPersonalSchema = z.object({
+export const personalSchema = z.object({
   firstName: z
     .string("Invalid first name")
     .nonempty("First name cannot be empty")
@@ -33,94 +34,107 @@ export const applicationPersonalSchema = z.object({
   nin: z
     .string("Invalid ID nunmmber")
     .trim()
-    .nonempty("ID number cannot be empty")
+    .nonempty("NIN/ID number cannot be empty")
 });
 
-export const applicationFamilySchema = z.object({
-  firstParentName: z.string().nonempty(),
-  firstParentAddress: z.string().nonempty(),
+export const familySchema = z.object({
+  firstParentName: z.string().nonempty("Full name of first parent is required"),
+  firstParentAddress: z
+    .string()
+    .nonempty("Address of first parent is required"),
   firstParentStatus: z.enum(["living", "deceased"]),
 
-  secondParentName: z.string().nonempty(),
-  secondParentAddress: z.string().nonempty(),
+  secondParentName: z
+    .string()
+    .nonempty("Full name of second parent is required"),
+  secondParentAddress: z
+    .string()
+    .nonempty("Address of second parent is required"),
   secondParentStatus: z.enum(["living", "deceased"]),
 
-  nextOfKinName: z.string().nonempty(),
-  nextOfKinAddress: z.string().nonempty(),
-  nextOfKinRelationship: z.string().nonempty(),
-  nextOfKinPhoneNumber: z.string().nonempty()
+  nextOfKinName: z.string().nonempty("Full name of next of kin is required"),
+  nextOfKinAddress: z.string().nonempty("Address of next of kin is required"),
+  nextOfKinRelationship: z
+    .string()
+    .nonempty("Relationship with next of kin is required"),
+  nextOfKinPhoneNumber: z
+    .string()
+    .nonempty("Phone number of next of kin is required")
 });
 
-export type ApplicatiobPersonalSchema = z.infer<
-  typeof applicationPersonalSchema
->;
+export const academicSchema = z.object({
+  course: z.string().nonempty("Course is required"),
+  degreeType: z.string().nonempty("Degree type is required"),
+  jambRegNumber: z.string().nonempty("JAMB registration number is required"),
+  secondarySchoolName: z.string().nonempty("Secondary school name is required"),
+  secondarySchoolAddress: z
+    .string()
+    .nonempty("Secondary school address is required"),
+  secondarySchoolGraduationMonth: z
+    .string()
+    .nonempty("Secondary school graduation month is required"),
+  secondarySchoolGraduationYear: z
+    .int("Secondary school graduation year is required")
+    .refine((value) => {
+      return value.toString().split("").length >= 4;
+    }, "Invalid graduation year")
+});
 
-export const applicationSchema = applicationPersonalSchema;
+export const documentsSchema = z.object({
+  passportUrl: z
+    .string("No passport photograph uploaded")
+    .nonempty("No passport photograph uploaded"),
+  birthCertificateUrl: z
+    .string("No birth certificate uploaded")
+    .nonempty("No birth certificate uploaded"),
+  stateOfOriginUrl: z
+    .string("No state of origin document uploaded")
+    .nonempty("No state of origin document uploaded"),
+  oLevelResultUrl: z
+    .string("No O'Level result uploaded")
+    .nonempty("No O'Level result uploaded"),
+  postUTMESlipUrl: z
+    .string("No post UTME slip uploaded")
+    .nonempty("No post UTME slip uploaded"),
+  admissionFormPaymentReceiptUrl: z
+    .string("No admission form payment slip uploaded")
+    .nonempty("No admission form payment slip uploaded")
+});
 
-/* export const application = sqliteTable(
-  "application",
-  {
-    id: text("id")
-      .primaryKey()
-      .$defaultFn(() => ulid()),
-
-    userId: text("userId")
-      .notNull()
-      .references(() => user.id, { onDelete: "cascade" }),
-
-    applicationNumber: text("applicationNumber").notNull().unique(),
-
-    schoolSessionId: text("schoolSessionId").references(
-      () => schoolSession.id,
-      { onDelete: "set null" }
+export const documentUploadSchema = ({
+  maxFileSize,
+  acceptedFileTypes
+}: {
+  maxFileSize: number;
+  acceptedFileTypes: string[];
+}) =>
+  z.object({
+    documentType: z.object(
+      {
+        label: z.string(),
+        value: z.string()
+      },
+      "Document type is required"
     ),
+    file: z
+      .instanceof(File, {
+        message: "Please select a file to upload."
+      })
+      .refine((file) => file.size <= maxFileSize, {
+        message: `The file is too large. Please choose an file smaller than ${formatBytes(
+          maxFileSize
+        )}.`
+      })
+      .refine((file) => acceptedFileTypes.includes(file.type), {
+        message: "Please upload a valid file (PDF, JPEG, PNG, or WebP)."
+      })
+  });
 
-    course: text("course"),
-    degreeType: text("degreeType"),
+export const applicationSchema = z.object({
+  ...personalSchema.shape,
+  ...familySchema.shape,
+  ...academicSchema.shape,
+  ...documentsSchema.shape
+});
 
-    status: text("status", { enum: ["open", "closed"] })
-      .notNull()
-      .default("open"),
-
-    isComplete: integer("isComplete", { mode: "boolean" })
-      .notNull()
-      .default(false),
-
-    firstName: text("firstName").notNull(),
-    middleName: text("middleName"),
-    otherNames: text("otherNames"),
-    lastName: text("lastName").notNull(),
-
-    phoneNumber: text("phoneNumber"),
-
-    birthDay: integer("birthDay").notNull(),
-    birthMonth: text("birthMonth").notNull(),
-    birthYear: integer("birthYear").notNull(),
-    gender: text("gender", { enum: ["male", "female"] }),
-
-    stateOfOrigin: text("stateOfOrigin"),
-    lga: text("lga"),
-    nationality: text("nationality"),
-
-    nin: text("nin").unique(),
-
-    passportUrl: text("passportUrl"),
-    birthCertificateUrl: text("birthCirtificateUrl"),
-    stateOfOriginUrl: text("stateOfOriginUrl"),
-    oLevelResultUrl: text("oLevelResultUrl"),
-
-    createdAt: integer("createdAt", { mode: "timestamp" })
-      .notNull()
-      .default(sql`(strftime('%s','now') * 1000)`),
-    updatedAt: integer("updatedAt", { mode: "timestamp" })
-      .notNull()
-      .default(sql`(strftime('%s','now') * 1000)`)
-  },
-  (table) => [
-    // Ensure each user can only have one application per session
-    uniqueIndex("application_user_session_unique").on(
-      table.userId,
-      table.schoolSessionId
-    )
-  ]
-); */
+export type Application = z.infer<typeof applicationSchema>;

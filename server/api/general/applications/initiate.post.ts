@@ -111,6 +111,7 @@ export default defineEventHandler(async (event) => {
     userId: userId,
     applicationNumber,
     schoolSessionId: currentSchoolSession.id,
+    status: "pending",
     firstName: body.data.firstName,
     middleName: body.data.middleName,
     otherNames: body.data.otherNames,

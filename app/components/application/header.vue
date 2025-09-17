@@ -1,12 +1,10 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from "@nuxt/ui";
-import { authClient } from "~/lib/auth";
 import { useAuthStore } from "~/stores/auth.store";
 
 const config = useRuntimeConfig();
-const { confirmAsync } = useConfirm();
-const { user } = useAuth();
 const authStore = useAuthStore();
+const { logout } = useLogout();
 
 const appName = computed(() => {
   const [first, ...rest] = config.public.app.name.split(" ");
@@ -16,55 +14,29 @@ const appName = computed(() => {
   };
 });
 
-const logout = async () => {
-  const confirm = await confirmAsync({
-    title: "Log Out",
-    description: "Are you sure you want to proceed?",
-    acceptProps: {
-      label: "Proceed"
-    },
-    rejectProps: {
-      label: "Cancel",
-      color: "neutral",
-      variant: "soft"
-    }
-  });
-
-  if (!confirm) return;
-
-  await authClient.signOut({
-    fetchOptions: {
-      onSuccess: async () => {
-        await authClient.revokeSessions();
-        authStore.setSession(null);
-        authStore.setUser(null);
-        window.location.href = "/";
-      }
-    }
-  });
-};
-
 /* Dropdown Menu Items */
 const items: DropdownMenuItem[][] = [
   [
     {
-      label: user.value?.name ?? "Anonymous",
+      label: authStore.user.value?.name ?? "Anonymous",
       type: "label",
       icon: "lucide:circle-user"
     },
     {
-      label: user.value?.email ?? "unverified",
+      label: authStore.user.value?.email ?? "unverified",
       icon: "lucide:mail"
     }
   ],
   [
     {
       label: "Update email",
-      icon: "lucide:mail-plus"
+      icon: "lucide:mail-plus",
+      to: "/change-email"
     },
     {
       label: "Change password",
-      icon: "lucide:lock"
+      icon: "lucide:lock",
+      to: "/change-password"
     }
   ],
   [

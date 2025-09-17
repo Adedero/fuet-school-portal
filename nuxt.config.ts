@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2025-07-15",
   css: ["./app/assets/css/main.css"],
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "@nuxt/image", "@nuxt/ui"],
+  modules: ["@nuxt/eslint", "@nuxt/image", "@nuxt/ui", "@nuxt/scripts"],
   pages: true,
   runtimeConfig: {
     public: {

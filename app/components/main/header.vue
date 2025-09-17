@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { authClient } from "~/lib/auth";
 import { useAuthStore } from "~/stores/auth.store";
 
 const config = useRuntimeConfig();
-const { isLoggedIn, user } = useAuth();
-const { confirmAsync } = useConfirm();
 const authStore = useAuthStore();
+const { logout } = useLogout();
 
 const appName = computed(() => {
   const [first, ...rest] = config.public.app.name.split(" ");
@@ -15,56 +13,30 @@ const appName = computed(() => {
   };
 });
 
-const logout = async () => {
-  const confirm = await confirmAsync({
-    title: "Log Out",
-    description: "Are you sure you want to proceed?",
-    acceptProps: {
-      label: "Proceed"
-    },
-    rejectProps: {
-      label: "Cancel",
-      color: "neutral",
-      variant: "soft"
-    }
-  });
-
-  if (!confirm) return;
-
-  await authClient.signOut({
-    fetchOptions: {
-      onSuccess: async () => {
-        await authClient.revokeSessions();
-        authStore.setSession(null);
-        authStore.setUser(null);
-        window.location.href = "/";
-      }
-    }
-  });
-};
-
 const navigateToPortal = async () => {
-  if (!isLoggedIn.value) {
+  if (!authStore.isLoggedIn()) {
     await navigateTo("/login");
     return;
   }
-  if (!user.value || !user.value.role) {
+  if (!authStore.user.value || !authStore.user.value.role) {
     await navigateTo("/login");
     return;
   }
-  if (user.value.role === "applicant") {
+  const role = authStore.user.value.role;
+
+  if (role === "applicant") {
     await navigateTo("/application/portal");
     return;
   }
-  if (user.value.role === "student") {
+  if (role === "student") {
     await navigateTo("/portal/student");
     return;
   }
-  if (user.value.role === "admin") {
+  if (role === "admin") {
     await navigateTo("/portal/admin");
     return;
   }
-  if (user.value.role === "staff") {
+  if (role === "staff") {
     await navigateTo("/portal/staff");
     return;
   }
@@ -94,7 +66,7 @@ const navigateToPortal = async () => {
       </NuxtLink>
 
       <div>
-        <div v-if="isLoggedIn" class="flex items-center gap-2">
+        <div v-if="authStore.isLoggedIn()" class="flex items-center gap-2">
           <NuxtButton label="Logout" variant="link" @click="logout" />
           <NuxtButton label="Portal" @click="navigateToPortal" />
         </div>

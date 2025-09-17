@@ -1,20 +1,34 @@
 import { authClient } from "~/lib/auth";
-
-const rolePathMap = {
-  applicant: "/application",
-  student: "/portal/student",
-  staff: "/portal/staff",
-  admin: "/portal/admin"
-};
+import { useAuthStore } from "~/stores/auth.store";
 
 export default defineNuxtRouteMiddleware(async (to) => {
   if (import.meta.server) return;
 
-  const { fullPath } = to;
-  const securedPaths = Object.values(rolePathMap);
-  const currentSecuredPath = "";
+  const authStore = useAuthStore();
 
-  // get the exact path
-  const { data } = await authClient.getSession();
-  data?.user.role// check roles and 
+  const { fullPath } = to;
+
+  const isApplicantRoute = fullPath.startsWith("/application/portal");
+  const isStudentRoute = fullPath.startsWith("/portal/student");
+  const isStaffRoute = fullPath.startsWith("/portal/staff");
+  const isAdminRoute = fullPath.startsWith("/portal/admin");
+
+  if (isApplicantRoute || isStudentRoute || isStaffRoute || isAdminRoute) {
+    let expectedRole: string = "";
+
+    if (isApplicantRoute) expectedRole = "applicant";
+    if (isStudentRoute) expectedRole = "student";
+    if (isStaffRoute) expectedRole = "staff";
+    if (isAdminRoute) expectedRole = "admin";
+
+    const { data } = await authClient.getSession();
+
+    if (!data || data.user.role !== expectedRole) {
+      await navigateTo(`/login?redirect=${fullPath}`);
+      return;
+    }
+
+    authStore.setSession(data.session);
+    authStore.setUser(data.user);
+  }
 });

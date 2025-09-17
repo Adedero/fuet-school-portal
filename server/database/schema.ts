@@ -125,15 +125,11 @@ export const application = sqliteTable(
       { onDelete: "set null" }
     ),
 
-    status: text("status", { enum: ["open", "closed"] })
+    status: text("status", {
+      enum: ["pending", "submitted", "accepted", "rejected"]
+    })
       .notNull()
-      .default("open"),
-
-    // Status
-    isComplete: integer("isComplete", { mode: "boolean" })
-      .notNull()
-      .default(false),
-    isSubmitted: integer("isSubmitted", { mode: "boolean" }),
+      .default("pending"),
 
     firstName: text("firstName").notNull(),
     middleName: text("middleName"),
@@ -176,9 +172,10 @@ export const application = sqliteTable(
     course: text("course"),
     degreeType: text("degreeType"),
     jambRegNumber: text("jambRegNumber"),
-    secondarySchoolName: text("jambRegNumber"),
+    secondarySchoolName: text("secondarySchoolName"),
+    secondarySchoolAddress: text("secondarySchoolAddress"),
     secondarySchoolGraduationMonth: text("secondarySchoolGraduationMonth"),
-    secondarySchoolGraduationYear: text("secondarySchoolGraduationYear"),
+    secondarySchoolGraduationYear: integer("secondarySchoolGraduationYear"),
 
     // Documents
     passportUrl: text("passportUrl"),

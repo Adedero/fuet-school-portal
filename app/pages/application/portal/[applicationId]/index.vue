@@ -55,7 +55,8 @@ const items: NavigationMenuItem[][] = [
     },
     {
       label: "Documents",
-      icon: "lucide:file-up"
+      icon: "lucide:file-up",
+      to: `/application/portal/${applicationId}/documents`
     },
     {
       label: "Review Application",
@@ -83,12 +84,12 @@ const items: NavigationMenuItem[][] = [
 </script>
 
 <template>
-  <div class="md:flex h-[calc(100dvh-3.5rem)]">
+  <div class="md:flex md:h-[calc(100dvh-4rem)]">
     <nav class="hidden md:block border-r border-r-default p-2.5">
       <NuxtNavigationMenu :items orientation="vertical" />
     </nav>
 
-    <div class="grow">
+    <div class="grow overflow-y-auto">
       <div class="md:hidden px-5 py-2.5">
         <NuxtDropdownMenu :items>
           <NuxtButton

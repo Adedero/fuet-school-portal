@@ -4,7 +4,7 @@ import { Calendar } from "~/utils/data/calendar";
 import countries from "~/utils/data/countries";
 import { getLGAs, states } from "~/utils/data/states-and-lgas";
 import handlePreviousClick from "../../utils/handle-previous-click";
-import { applicationPersonalSchema } from "~~/shared/schemas/application.schema";
+import { personalSchema } from "~~/shared/schemas/application.schema";
 import { save } from "../../utils/handle-save-click";
 
 const { applicationId = "" } = useRouteParams();
@@ -48,7 +48,7 @@ const saveProgress = async (successFn: () => void) => {
   await save<State>({
     applicationId,
     state: state,
-    schema: applicationPersonalSchema,
+    schema: personalSchema,
     toast,
     onSuccess: () => {
       successFn();
@@ -107,8 +107,8 @@ const items = [
         <NuxtForm
           v-else-if="app"
           :state
-          :schema="applicationPersonalSchema"
-          :disabled="app.status === 'closed' || !!app.isSubmitted"
+          :schema="personalSchema"
+          :disabled="app.status !== 'pending'"
         >
           <div class="grid md:grid-cols-2 gap-2.5">
             <NuxtFormField name="firstName" label="First Name" required>
@@ -252,7 +252,7 @@ const items = [
           "
         />
         <NuxtButton
-          v-if="app.status === 'closed' || !!app.isSubmitted"
+          v-if="app.status !== 'pending'"
           :to="`/application/portal/${applicationId}/family-info`"
           label="Next"
         />
