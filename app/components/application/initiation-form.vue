@@ -4,11 +4,14 @@ import type {
   RouteLocationAsPathGeneric,
   RouteLocationAsRelativeGeneric
 } from "vue-router";
+import { useAuthStore } from "~/stores/auth.store";
 import { Calendar } from "~/utils/data/calendar";
 import {
   applicationInitiationSchema,
   type ApplicationInitiationSchema
 } from "~~/shared/schemas/application-initiation.schema";
+
+const authStore = useAuthStore();
 
 interface Props {
   redirect?:
@@ -32,7 +35,7 @@ const state = reactive<ApplicationInitiationSchema>({
   middleName: "",
   otherNames: "",
   lastName: "",
-  email: "",
+  email: authStore.user.value?.email ?? "",
   password: "",
   confirmPassword: "",
   birthDay: 1,
@@ -126,19 +129,34 @@ const handleSubmit = async (
         required
         class="md:col-span-2"
       >
-        <NuxtInput v-model="state.email" size="lg" class="w-full" />
+        <NuxtInput
+          v-model="state.email"
+          :disabled="!!authStore.user.value"
+          size="lg"
+          class="w-full"
+        />
       </NuxtFormField>
 
-      <NuxtFormField name="password" label="Password" required>
+      <NuxtFormField
+        v-if="!authStore.user.value"
+        name="password"
+        label="Password"
+        required
+      >
         <VuePassword v-model="state.password" size="lg" class="w-full" />
       </NuxtFormField>
 
-      <NuxtFormField name="confirmPassword" label="Confirm Password" required>
+      <NuxtFormField
+        v-if="!authStore.user.value"
+        name="confirmPassword"
+        label="Confirm Password"
+        required
+      >
         <VuePassword v-model="state.confirmPassword" size="lg" class="w-full" />
       </NuxtFormField>
     </div>
 
-    <div class="flex justify-end gap-2.5 mt-2.5">
+    <div class="flex justify-end gap-2.5 mt-5">
       <NuxtButton
         type="button"
         label="Cancel"

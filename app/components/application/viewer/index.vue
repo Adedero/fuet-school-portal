@@ -1,29 +1,14 @@
 <script setup lang="ts">
 interface Props {
-  applicationId: string;
+ applicationId: string
 }
 
 const { applicationId } = defineProps<Props>();
 
-const { data, error, execute, pending } = useFetch(
-  `/api/users/applicant/applications/${applicationId}`
-);
+const { data, error, execute, pending } = useFetch(`/api/general/applications/review/${applicationId}`);
 
-/* const dataWithMissingFields = computed(() => {
-  return Object.fromEntries(
-    Object.entries(data.value ?? {}).map(([key, value]) => {
-      if (key === "middleName" || key === "otherNames") {
-        return [key, value];
-      } else if (typeof value === "string" && !value) {
-        return [key, "missing"];
-      } else {
-        return [key, value];
-      }
-    })
-  );
-}); */
+export type ApplicationData = NonNullable<typeof data.value>
 
-export type ApplicationData = NonNullable<typeof data.value>;
 
 const print = () => {
   window.print();

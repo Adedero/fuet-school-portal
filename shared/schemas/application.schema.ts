@@ -1,5 +1,6 @@
 import z from "zod";
 import formatBytes from "../utils/format-bytes";
+import { querySchema } from "./query.schema";
 
 export const personalSchema = z.object({
   firstName: z
@@ -138,3 +139,11 @@ export const applicationSchema = z.object({
 });
 
 export type Application = z.infer<typeof applicationSchema>;
+
+export const applicationQuerySchema = z.object({
+  schoolSessionName: z.string().nonempty(),
+  admissionStatus: z.enum(["submitted", "accepted", "rejected"]),
+  hasPaidAdmissionFees: z.coerce.boolean(),
+  orderBy: z.union([z.array(z.string()), z.string()]),
+  ...querySchema.shape
+});

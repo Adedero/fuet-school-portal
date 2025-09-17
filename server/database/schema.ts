@@ -6,6 +6,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
 import { ulid } from "ulid";
+import { timestamps } from "./timestamps";
 
 /**
  * BETTER-AUTH AUTHENTICATION TABLES
@@ -107,6 +108,51 @@ export const schoolSession = sqliteTable("school_session", {
     .default(sql`(strftime('%s','now') * 1000)`)
 });
 
+export const studentClass = sqliteTable("student_class", {
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  className: text("class_name").notNull(),
+  enrolmentYear: integer("enrolment_year").notNull(),
+  currentLevel: integer("current_level").notNull(),
+  isActive: integer("is_active", { mode: "boolean" }),
+  ...timestamps
+});
+
+export const course = sqliteTable("course", {
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  semester: text({ enum: ["harmattan", "rain"] }).notNull(),
+  code: text().notNull().unique(),
+  level: integer().notNull(),
+  title: text().notNull(),
+  description: text(),
+  faculty: text().notNull(),
+  ...timestamps
+});
+
+export const semester = sqliteTable("semester", {
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  name: text({ enum: ["harmattan", "rain"] })
+    .notNull()
+    .unique(),
+  isCurrent: integer("is_current", { mode: "boolean" }).notNull().unique()
+});
+
+export const level = sqliteTable("level", {
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  name: integer().notNull().unique(),
+  minCreditUnitsHarmattan: integer("min_credit_units_harmattan").notNull(),
+  maxCreditUnitsHarmattan: integer("max_credit_units_harmattan").notNull(),
+  minCreditUnitsRain: integer("min_credit_units_rain").notNull(),
+  maxCreditUnitsRain: integer("max_credit_units_rain").notNull()
+});
+
 export const application = sqliteTable(
   "application",
   {
@@ -120,6 +166,8 @@ export const application = sqliteTable(
 
     applicationNumber: text("applicationNumber").notNull().unique(),
 
+    schoolSessionName: text("schoolSessionName").notNull(),
+
     schoolSessionId: text("schoolSessionId").references(
       () => schoolSession.id,
       { onDelete: "set null" }
@@ -130,6 +178,10 @@ export const application = sqliteTable(
     })
       .notNull()
       .default("pending"),
+
+    hasPaidAdmissionFees: integer("hasPaidAdmissionFees", {
+      mode: "boolean"
+    }).default(false),
 
     firstName: text("firstName").notNull(),
     middleName: text("middleName"),
@@ -196,7 +248,7 @@ export const application = sqliteTable(
     // Ensure each user can only have one application per session
     uniqueIndex("application_user_session_unique").on(
       table.userId,
-      table.schoolSessionId
+      table.schoolSessionName
     )
   ]
 );
@@ -238,3 +290,38 @@ export const settings = sqliteTable("settings", {
     .notNull()
     .default(sql`(strftime('%s','now') * 1000)`)
 });
+
+export const metadata = sqliteTable("metadata", {
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  totalApplications: integer("total_applications").notNull().default(0),
+  totalApplicants: integer("total_applicants").notNull().default(0),
+  totalStudents: integer("total_students").notNull().default(0),
+  ...timestamps
+});
+
+export const student = sqliteTable("student", {
+  id: text()
+    .primaryKey()
+    .$defaultFn(() => ulid()),
+  regNumber: text("reg_number").notNull(),
+  applicationId: text("application_id")
+    .notNull()
+    .references(() => application.id),
+  studentClassId: text("student_class_id")
+    .notNull()
+    .references(() => studentClass.id),
+  ...timestamps
+});
+
+export const studentRelations = relations(student, ({ one }) => ({
+  application: one(application, {
+    fields: [student.applicationId],
+    references: [application.id]
+  }),
+  studentClass: one(studentClass, {
+    fields: [student.studentClassId],
+    references: [studentClass.id]
+  })
+}));
