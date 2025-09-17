@@ -1,4 +1,5 @@
-import { c as defineEventHandler, h as db, g as createError } from '../../../_/nitro.mjs';
+import { d as defineEventHandler, g as getValidatedRouterParams, c as createError, b as db } from '../../../nitro/nitro.mjs';
+import { e as extendedSessionSchema } from '../../../_/session.schema.mjs';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';
@@ -18,16 +19,31 @@ import 'nodemailer';
 import '@iconify/utils';
 import 'consola';
 import 'ipx';
+import 'zod';
 
-const index_get = defineEventHandler(async () => {
-  const settings = await db.query.settings.findFirst();
-  if (!settings) {
+const index_get = defineEventHandler(async (event) => {
+  const result = await getValidatedRouterParams(
+    event,
+    extendedSessionSchema.partial().safeParse
+  );
+  if (!result.success) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Something happened and we're working on it. Try again later."
+      statusMessage: result.error.issues[0].message
     });
   }
-  return settings;
+  const { name, startYear, isCurrent } = result.data;
+  const sessions = await db.query.schoolSession.findMany({
+    where: (sesh, { and, eq }) => {
+      return and(
+        name ? eq(sesh.name, name) : void 0,
+        startYear ? eq(sesh.startYear, startYear) : void 0,
+        isCurrent ? eq(sesh.isCurrent, isCurrent) : void 0
+      );
+    },
+    orderBy: (sesh, { desc }) => desc(sesh.startYear)
+  });
+  return sessions;
 });
 
 export { index_get as default };

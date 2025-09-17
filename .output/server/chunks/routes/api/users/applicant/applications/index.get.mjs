@@ -1,4 +1,4 @@
-import { n as eventHandler, k as getRouterParams, h as db, g as createError } from '../../../../../_/nitro.mjs';
+import { h as eventHandler, i as getRouterParams, b as db, c as createError } from '../../../../../nitro/nitro.mjs';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

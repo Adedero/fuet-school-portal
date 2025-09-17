@@ -1,4 +1,4 @@
-import { c as defineEventHandler, h as db } from '../../../../_/nitro.mjs';
+import { d as defineEventHandler, b as db } from '../../../../nitro/nitro.mjs';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';
@@ -29,7 +29,8 @@ const index_get = defineEventHandler(async (event) => {
       applicationNumber: true,
       degreeType: true,
       status: true,
-      createdAt: true
+      createdAt: true,
+      schoolSessionName: true
     },
     with: {
       schoolSession: {

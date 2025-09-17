@@ -1,6 +1,6 @@
 import { defineComponent, mergeProps, useSSRContext } from 'vue';
 import { ssrRenderAttrs } from 'vue/server-renderer';
-import { w as publicAssetsURL } from '../_/nitro.mjs';
+import { q as publicAssetsURL } from '../nitro/nitro.mjs';
 
 const _imports_0 = publicAssetsURL("/fuet_logo.png");
 const _sfc_main = /* @__PURE__ */ defineComponent({

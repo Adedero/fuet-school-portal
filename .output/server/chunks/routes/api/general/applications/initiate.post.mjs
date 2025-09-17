@@ -1,4 +1,4 @@
-import { c as defineEventHandler, r as readValidatedBody, g as createError, h as db, e as auth, i as generateApplicationNumber, j as application } from '../../../../_/nitro.mjs';
+import { d as defineEventHandler, r as readValidatedBody, c as createError, b as db, a as auth, e as generateApplicationNumber, f as application } from '../../../../nitro/nitro.mjs';
 import { a as applicationInitiationSchema } from '../../../../_/application-initiation.schema.mjs';
 import 'node:path';
 import 'node:fs/promises';
@@ -73,7 +73,7 @@ const initiate_post = defineEventHandler(async (event) => {
     const existingApplication = await db.query.application.findFirst({
       where: (app, { eq, and }) => {
         return and(
-          eq(app.schoolSessionId, currentSchoolSession.id),
+          eq(app.schoolSessionName, currentSchoolSession.name),
           eq(app.userId, existingUser.id)
         );
       }
@@ -110,6 +110,7 @@ const initiate_post = defineEventHandler(async (event) => {
   await db.insert(application).values({
     userId,
     applicationNumber,
+    schoolSessionName: currentSchoolSession.name,
     schoolSessionId: currentSchoolSession.id,
     status: "pending",
     firstName: body.data.firstName,

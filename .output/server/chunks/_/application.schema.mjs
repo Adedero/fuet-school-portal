@@ -1,5 +1,10 @@
 import z from 'zod';
-import { _ as formatBytes } from './nitro.mjs';
+import { _ as formatBytes } from '../nitro/nitro.mjs';
+
+const querySchema = z.object({
+  limit: z.coerce.number("Limit query must be a number").positive("Limit query must be a positive number"),
+  offset: z.coerce.number("Limit query must be a number").nonnegative("Offset query must be a 0 or greater")
+});
 
 const personalSchema = z.object({
   firstName: z.string("Invalid first name").nonempty("First name cannot be empty").trim(),
@@ -74,6 +79,13 @@ const applicationSchema = z.object({
   ...academicSchema.shape,
   ...documentsSchema.shape
 });
+const applicationQuerySchema = z.object({
+  schoolSessionName: z.string().nonempty(),
+  admissionStatus: z.enum(["submitted", "accepted", "rejected"]),
+  hasPaidAdmissionFees: z.coerce.boolean(),
+  orderBy: z.union([z.array(z.string()), z.string()]),
+  ...querySchema.shape
+});
 
-export { applicationSchema as a, academicSchema as b, documentUploadSchema as d, familySchema as f, personalSchema as p };
+export { applicationQuerySchema as a, applicationSchema as b, academicSchema as c, documentUploadSchema as d, familySchema as f, personalSchema as p };
 //# sourceMappingURL=application.schema.mjs.map
