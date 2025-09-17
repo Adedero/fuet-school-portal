@@ -16,6 +16,9 @@ export default defineNuxtConfig({
       app: {
         name: process.env.APP_NAME
       },
+      schoolNameLong: process.env.SCHOOL_NAME_LONG,
+      schoolNameShort: process.env.SCHOOL_NAME_SHORT,
+      schoolLocation: process.env.SCHOOL_LOCATION,
       defaultErrorMsg:
         "Something happened and we're currently working on it. Try again later."
     }

@@ -29,20 +29,11 @@ const skills = [
             Academics and Programs
           </h2>
         </div>
-
-        <div>
-          <!-- <p class="text-dimmed text-sm">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet
-            pariatur recusandae quidem nostrum, animi eius vero, nisi est
-            doloribus laudantium exercitationem? Quae inventore error distinctio
-            quas, tempore quod saepe quia.
-          </p> -->
-        </div>
       </div>
 
       <!-- <div class=""> -->
       <ul class="space-y-5 grid gap-10 lg:grid-cols-3 ">
-        <li v-for="(skill, index) in skills" :key="skill.title" class="space-y-2 border-1 p-8">
+        <li v-for="(skill) in skills" :key="skill.title" class="space-y-2 border-1 p-8">
           <div class="font-mono text-lg font-semibold flex items-baseline gap-2">
 
             <p class="text-white">{{ skill.title }}</p>
