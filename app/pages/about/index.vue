@@ -1,5 +1,6 @@
+
 <script setup lang="ts">
-import { Building2, ChevronRight, GraduationCap, Target, Eye, User } from 'lucide-vue-next';
+import { Building2, ChevronRight, GraduationCap, Target, Eye, User, ArrowRight, ArrowDown } from 'lucide-vue-next';
 
 const aboutFuet = `The Federal University of Environment and Technology (FUET), located at Koroma/Sakpenwa in Rivers State, is a specialized institution committed to advancing knowledge in environmental sciences, engineering, technology, and sustainable development. FUET is designed to be a hub for cutting-edge research, innovation, and capacity building—equipping graduates with the skills needed to tackle global and national challenges in sustainability and environmental management.`;
 
@@ -40,25 +41,30 @@ const quickLinks = [
       </div>
     </div>
 
+
+    <!-- Divider -->
+    <div class="w-full h-1 bg-gradient-to-r from-green-200 via-green-100 to-green-200 my-10 rounded-full"></div>
+
     <!-- About Section -->
-    <div class="section-padding py-20 bg-white">
+    <div class="section-padding py-20 bg-slate-950">
       <div class="max-w-5xl mx-auto space-y-6 text-center">
-        <p class="text-lg text-gray-700 leading-relaxed">
+        <p class="text-lg text-white leading-relaxed">
           {{ aboutFuet }}
         </p>
       </div>
     </div>
 
+
     <!-- Mission & Vision -->
     <div class="section-padding py-20 bg-gradient-to-br from-green-50 via-white to-green-100">
       <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-10">
-        <div class="bg-white p-8 border rounded shadow-sm">
+        <div class="bg-white p-8 border rounded-2xl shadow-md hover:shadow-xl transition">
           <h2 class="flex items-center gap-2 text-2xl font-bold text-primary-600 mb-4">
             <Target class="w-6 h-6" /> Mission
           </h2>
           <p class="text-gray-700 leading-relaxed">{{ mission }}</p>
         </div>
-        <div class="bg-white p-8 border rounded shadow-sm">
+        <div class="bg-white p-8 border rounded-2xl shadow-md hover:shadow-xl transition">
           <h2 class="flex items-center gap-2 text-2xl font-bold text-primary-600 mb-4">
             <Eye class="w-6 h-6" /> Vision
           </h2>
@@ -67,15 +73,26 @@ const quickLinks = [
       </div>
     </div>
 
+    <!-- Divider -->
+    <div class="w-full h-1 bg-gradient-to-r from-green-200 via-green-100 to-green-200 my-10 rounded-full"></div>
+
+
     <!-- VC Welcome Note -->
-    <div class="section-padding py-20 bg-white">
-      <div class="max-w-4xl mx-auto text-center space-y-6">
-        <h2 class="text-3xl font-bold text-primary-600 flex items-center justify-center gap-2">
-          <User class="w-8 h-8 text-primary-500" /> Vice Chancellor's Welcome Note
-        </h2>
-        <p class="text-lg text-gray-700 leading-relaxed italic">
-          “{{ vcMessage }}”
-        </p>
+    <div class="section-padding py-20 bg-gradient-to-br from-green-50 via-white to-green-100">
+      <div class="max-w-3xl mx-auto">
+        <div class="bg-white rounded-2xl shadow-xl p-8 flex flex-col md:flex-row items-center gap-8 border border-green-100">
+          <div class="flex-shrink-0 w-32 h-32 rounded-full overflow-hidden border-4 border-primary-500 bg-gray-100 flex items-center justify-center">
+            <img src="/images/Professor-Prince-Chinedu-Mmom-JP-DSSRS.webp" alt="Vice Chancellor" class="w-full h-full object-cover" @error="(e) => (e.target as HTMLImageElement).src = 'https://placehold.co/128x128?text=VC'" />
+          </div>
+          <div class="flex-1 text-center md:text-left space-y-3">
+            <h2 class="text-2xl font-bold text-primary-600 flex items-center gap-2 justify-center md:justify-start">
+              <User class="w-7 h-7 text-primary-500" /> Vice Chancellor's Welcome Note
+            </h2>
+            <p class="text-lg text-gray-700 leading-relaxed italic">
+              “{{ vcMessage }}”
+            </p>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -85,9 +102,9 @@ const quickLinks = [
         <div v-for="link in quickLinks" :key="link.url" class="h-16 overflow-y-hidden flex-center">
           <NuxtLink
             :to="link.url"
-            class="flex items-center gap-2 text-white hover:underline text-base font-medium"
+            class="flex items-center gap-2 text-white hover:underline text-base font-medium group"
           >
-            <ChevronRight class="w-4 h-4 text-white opacity-70" />
+            <ArrowRight class="w-4 h-4 text-white opacity-70 group-hover:translate-x-1 transition-transform" />
             {{ link.label }}
           </NuxtLink>
         </div>
