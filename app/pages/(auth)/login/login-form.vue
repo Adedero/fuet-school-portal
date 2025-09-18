@@ -82,7 +82,7 @@ async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
           if (isLoggingInToApplicationPortal.value) {
             await navigateTo("/application/portal");
           } else {
-            alert(role);
+            await navigateTo("/portal/student");
           }
           break;
 

@@ -43,6 +43,41 @@
       "when": 1758213583815,
       "tag": "0005_gray_fat_cobra",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1758221705713,
+      "tag": "0006_bumpy_infant_terrible",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1758221722934,
+      "tag": "0007_windy_gabe_jones",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "6",
+      "when": 1758224695222,
+      "tag": "0008_modern_beast",
+      "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "6",
+      "when": 1758224811611,
+      "tag": "0009_windy_mole_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "6",
+      "when": 1758224881328,
+      "tag": "0010_magenta_silk_fever",
+      "breakpoints": true
     }
   ]
 }

@@ -12,7 +12,7 @@ const items: NavigationMenuItem[][] = [
     {
       label: "Dashboard",
       icon: "lucide:table-2",
-      to: "/portal/admin"
+      to: "/portal/student"
     }
   ],
   [
@@ -23,7 +23,6 @@ const items: NavigationMenuItem[][] = [
     {
       label: "Applications",
       icon: "lucide:file-pen",
-      to: "/portal/admin/applications"
     },
     {
       label: "Current Students",
@@ -82,11 +81,6 @@ const items: NavigationMenuItem[][] = [
     {
       label: "Academic Sessions",
       icon: "lucide:calendar",
-      to: "/portal/admin/academic-sessions"
-    },
-    {
-      label: "Events",
-      icon: "lucide:calendar-clock"
     }
   ],
   [
