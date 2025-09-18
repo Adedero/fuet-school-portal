@@ -22,11 +22,11 @@ export const links = ref<NavigationMenuItem[][]>([
       icon: "lucide:graduation-cap",
       children: [
         { label: "Undergraduate Programmes", to: "/academics/undergraduate" },
-        { label: "Postgraduate Programmes", to: "/academics/postgraduate" },
+        // { label: "Postgraduate Programmes", to: "/academics/postgraduate" },
         { label: "Research Centres & Institutes", to: "/academics/research" },
         { label: "Academic Calendar", to: "/academics/calendar" },
         { label: "Admissions", to: "/admissions" },
-        { label: "Scholarships", to: "/academics/scholarships" },
+        // { label: "Scholarships", to: "/academics/scholarships" },
         { label: "Academic Policies", to: "/academics/policies" }
       ]
     },
@@ -34,13 +34,13 @@ export const links = ref<NavigationMenuItem[][]>([
       label: "About FUET",
       icon: "lucide:info",
       children: [
-        { label: "Vision & Mission", to: "/about/vision-mission" },
-        { label: "History", to: "/about/history" },
+        { label: "About Us", to: "/about" },
+        // { label: "History", to: "/about/history" },
         { label: "Leadership / Management", to: "/about/leadership" },
         { label: "Campus & Facilities", to: "/about/facilities" },
         { label: "Accreditation", to: "/about/accreditation" },
         { label: "Contacts", to: "/about/contact" },
-        { label: "Location & Maps", to: "/about/location" }
+        // { label: "Location & Maps", to: "/about/location" }
       ]
     }
   ]

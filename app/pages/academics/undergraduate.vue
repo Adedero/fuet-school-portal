@@ -9,59 +9,79 @@ import {
 } from "lucide-vue-next";
 const faculties = [
   {
-    name: "Faculty of Science",
+    name: "Faculty of Nature and Applied Sciences",
     departments: [
       "Biochemistry",
-      "Biology & Biotechnology",
-      "Mathematics",
-      "Forensic Science",
-      "Geology",
-      "Chemical Sciences",
       "Microbiology",
-      "Physics",
+      "Physics & Electronics",
+      "Mathematics",
+      "Chemistry",
+      "Biology",
       "Statistics",
-      "Animal & Environmental Biology"
+      "Computer Science"
     ]
   },
   {
-    name: "Faculty of Engineering",
+    name: "Faculty of Agriculture Technology",
     departments: [
-      "Agricultural & Biosystems Engineering",
-      "Biomedical Engineering",
-      "Mining Engineering",
-      "Civil & Environmental Engineering",
-      "Computer Engineering",
-      "Electrical & Electronics Engineering",
-      "Mechanical Engineering",
-      "Robotics & Mechatronics Engineering"
+      "Agriculture (General)",
+      "Crop Science",
+      "Soil Science",
+      "Animal Science",
+      "Fisheries & Aquaculture",
+      "Forestry & Wildlife Management",
+      "Agricultural Extension & Rural Development"
     ]
   },
   {
-    name: "Faculty of Environmental Science",
+    name: "Faculty of Environmental Management Sciences",
     departments: [
+      "Environmental Management",
+      "Estate Management",
+      "Urban & Regional Planning",
+      "Surveying & Geoinformatics",
       "Architecture",
       "Building Technology",
-      "Estate Management & Valuation",
-      "Environmental Science & Management",
-      "Industrial Design",
-      "Quantity Surveying",
-      "Surveying & Geoinformatics",
-      "Urban & Regional Planning",
-      "Forestry & Climate Smart Studies",
-      "Environmental Chemistry & Toxicology"
+      "Geography & Environmental Studies"
     ]
   },
   {
-    name: "Faculty of ICT",
+    name: "Faculty of Engineering Technology",
     departments: [
-      "Software Engineering",
-      "Cyber Security",
-      "Artificial Intelligence",
-      "Data Science",
-      "Information Technology"
+      "Civil & Environmental Engineering",
+      "Electrical & Electronics Engineering",
+      "Mechanical Engineering",
+      "Computer Engineering",
+      "Petroleum Engineering",
+      "Chemical Engineering",
+      "Mining Engineering"
+    ]
+  },
+  {
+    name: "Faculty of Educational Technology",
+    departments: [
+      "Educational Foundations",
+      "Science Education",
+      "Mathematics Education",
+      "Curriculum & Instructional Technology",
+      "Educational Management",
+      "Guidance & Counselling"
+    ]
+  },
+  {
+    name: "Faculty of Management Technology",
+    departments: [
+      "Business Administration",
+      "Accounting",
+      "Banking & Finance",
+      "Marketing",
+      "Entrepreneurship",
+      "Public Administration",
+      "Management Information Systems"
     ]
   }
 ];
+
 
 const requirements = [
   "Choose FUET as your first choice on JAMB CAPS.",
