@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const config = useRuntimeConfig();
 const { applicationId = "" } = useRouteParams();
 </script>
 
@@ -16,13 +17,14 @@ const { applicationId = "" } = useRouteParams();
         <h2 class="font-semibold">Overview</h2>
 
         <div>
-          The Federal University of Environment and Technology (FUET) is a
-          pioneering institution dedicated to advancing education, research, and
-          innovation in environmental science and technology. Established with a
-          vision to address global environmental challenges, FUET offers a range
-          of undergraduate and postgraduate programs designed to equip students
-          with the knowledge and skills needed to make a positive impact on the
-          world.
+          The {{ config.public.schoolNameLong }} ({{
+            config.public.schoolNameShort
+          }}) is a pioneering institution dedicated to advancing education,
+          research, and innovation in environmental science and technology.
+          Established with a vision to address global environmental challenges,
+          FUET offers a range of undergraduate and postgraduate programs
+          designed to equip students with the knowledge and skills needed to
+          make a positive impact on the world.
         </div>
       </section>
 
@@ -30,8 +32,8 @@ const { applicationId = "" } = useRouteParams();
         <h2 class="font-semibold">Requirements</h2>
 
         <div>
-          To apply for admission to FUET, please ensure you meet the following
-          requirements:
+          To apply for admission to {{ config.public.schoolNameShort }}, please
+          ensure you meet the following requirements:
         </div>
 
         <div class="mt-5">

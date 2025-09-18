@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "create:migrations": "bunx primsa generate",
-    "migrations:run": "bunx primsa"
+    "migrations:run": "bunx primsa",
+    "seed": "bun database/seed.ts"
   },
   "dependencies": {
     "@libsql/client": "^0.15.15",

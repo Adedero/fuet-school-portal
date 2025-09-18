@@ -21,7 +21,7 @@ const query = computed(() => {
   }
   if (filters.value.admissionFees !== "all") {
     searchParams.set(
-      "hasPaidAdmissionFees",
+      "hasPaidAdmissionFee",
       filters.value.admissionFees === "paid" ? "true" : ""
     );
   }

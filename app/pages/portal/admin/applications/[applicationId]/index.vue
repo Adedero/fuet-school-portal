@@ -162,6 +162,33 @@ const handleDelete = async () => {
       </div>
 
       <div v-else-if="application">
+        <div v-if="application.status === 'accepted'" class="mb-5">
+          <NuxtAlert
+            v-if="application.hasPaidAdmissionFee"
+            title="Admission fee"
+            description="Applicant has paid the admission fee"
+            icon="lucide:info"
+            color="success"
+            variant="subtle"
+            orientation="horizontal"
+            :actions="[
+              {
+                label: 'Approve',
+                icon: 'lucide:circle-check',
+                size: 'sm'
+              }
+            ]"
+          />
+          <NuxtAlert
+            v-else
+            title="Admission Fee"
+            description="Applicant has not paid the admission fee"
+            icon="lucide:info"
+            color="warning"
+            variant="subtle"
+          />
+        </div>
+
         <div>
           <ApplicationViewer ref="viewer" :application-id="application.id" />
         </div>

@@ -33,7 +33,13 @@ const initiatePayment = () => {
           <div class="flex items-baseline gap-2.5 justify-between">
             <p>Total</p>
 
-            <p class="text-2xl">₦ 67,850.00</p>
+            <AppSettings>
+              <template #default="{ data }">
+                <p class="text-2xl font-semibold">
+                  ₦ {{ data.admissionFee?.toLocaleString() }}
+                </p>
+              </template>
+            </AppSettings>
           </div>
         </div>
 

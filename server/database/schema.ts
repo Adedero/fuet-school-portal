@@ -7,7 +7,7 @@ import {
 } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
 import { ulid } from "ulid";
-import { timestamps } from "./timestamps";
+import { id, timestamps } from "./mixins";
 
 /**
  * BETTER-AUTH AUTHENTICATION TABLES
@@ -18,19 +18,14 @@ export const user = sqliteTable("user", {
   id: text("id").primaryKey(), // PK
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
-  emailVerified: integer("emailVerified", { mode: "boolean" })
+  emailVerified: integer("email_verified", { mode: "boolean" })
     .notNull()
     .default(false),
   image: text("image"),
   role: text("role", { enum: ["admin", "student", "staff", "applicant"] })
     .notNull()
     .default("applicant"),
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`)
+  ...timestamps
 });
 
 // Session Table
@@ -40,15 +35,10 @@ export const session = sqliteTable("session", {
     .notNull()
     .references(() => user.id),
   token: text("token").notNull(),
-  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
   ipAddress: text("ipAddress"),
   userAgent: text("userAgent"),
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`)
+  ...timestamps
 });
 
 // Account Table
@@ -57,23 +47,20 @@ export const account = sqliteTable("account", {
   userId: text("userId")
     .notNull()
     .references(() => user.id),
-  accountId: text("accountId").notNull(),
-  providerId: text("providerId").notNull(),
-  accessToken: text("accessToken"),
-  refreshToken: text("refreshToken"),
-  accessTokenExpiresAt: integer("accessTokenExpiresAt", { mode: "timestamp" }),
-  refreshTokenExpiresAt: integer("refreshTokenExpiresAt", {
+  accountId: text("account_id").notNull(),
+  providerId: text("provider_id").notNull(),
+  accessToken: text("access_token"),
+  refreshToken: text("refresh_token"),
+  accessTokenExpiresAt: integer("access_token_expires_at", {
+    mode: "timestamp"
+  }),
+  refreshTokenExpiresAt: integer("refresh_token_expires_at", {
     mode: "timestamp"
   }),
   scope: text("scope"),
-  idToken: text("idToken"),
+  idToken: text("id_token"),
   password: text("password"),
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`)
+  ...timestamps
 });
 
 // Verification Table
@@ -81,39 +68,37 @@ export const verification = sqliteTable("verification", {
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
-  expiresAt: integer("expiresAt", { mode: "timestamp" }).notNull(),
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`)
+  expiresAt: integer("expires_at", { mode: "timestamp" }).notNull(),
+  ...timestamps
 });
 
 /**
  * APPLICATION TABLES
  */
-export const schoolSession = sqliteTable("school_session", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => ulid()),
-  name: text("name").notNull().unique(),
-  startYear: integer("startYear").notNull(),
-  currentYear: integer("currentYear").notNull(),
-  isCurrent: integer("isCurrent", { mode: "boolean" }).notNull().default(false),
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`)
-});
+export const schoolSession = sqliteTable(
+  "school_session",
+  {
+    ...id,
+    name: text("name")
+      .$defaultFn(() => sql`start_year || '\' || end_year`)
+      .notNull(),
+    startYear: integer("start_year").notNull(),
+    endYear: integer("end_year").$defaultFn(() => sql`start_year + 1`),
+    currentYear: integer("current_year").notNull(),
+    isCurrent: integer("is_current", { mode: "boolean" })
+      .notNull()
+      .default(false),
+
+    ...timestamps
+  },
+  (table) => [
+    uniqueIndex("school_session_start_year_unique").on(table.startYear)
+  ]
+);
 
 export const studentClass = sqliteTable("student_class", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
-  className: text("class_name").notNull(),
+  ...id,
+  className: text("class_name").notNull().unique(),
   enrolmentYear: integer("enrolment_year").notNull(),
   currentLevel: integer("current_level").notNull(),
   isActive: integer("is_active", { mode: "boolean" }),
@@ -121,22 +106,75 @@ export const studentClass = sqliteTable("student_class", {
 });
 
 export const course = sqliteTable("course", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
+  ...id,
   semester: text({ enum: ["harmattan", "rain"] }).notNull(),
   code: text().notNull().unique(),
   level: integer().notNull(),
   title: text().notNull(),
   description: text(),
-  faculty: text().notNull(),
+  departmentId: text("department_id")
+    .notNull()
+    .references(() => department.id),
+  facultyId: text("faculty_id")
+    .notNull()
+    .references(() => faculty.id),
   ...timestamps
 });
 
+export const courseRelations = relations(course, ({ one }) => ({
+  department: one(department, {
+    fields: [course.departmentId],
+    references: [department.id]
+  }),
+  faculty: one(faculty, {
+    fields: [course.facultyId],
+    references: [faculty.id]
+  })
+}));
+
+export const faculty = sqliteTable("faculty", {
+  ...id,
+  name: text().notNull().unique(),
+  code: text().notNull().unique(),
+  ...timestamps
+});
+
+export const facultyRelations = relations(faculty, ({ many }) => ({
+  departments: many(department)
+}));
+
+export const department = sqliteTable(
+  "department",
+  {
+    ...id,
+    name: text().notNull(),
+    code: text().notNull(),
+    facultyId: text("faculty_id")
+      .notNull()
+      .references(() => faculty.id),
+    ...timestamps
+  },
+  (table) => [
+    uniqueIndex("department_faculty_name_unique").on(
+      table.facultyId,
+      table.name
+    ),
+    uniqueIndex("department_faculty_code_unique").on(
+      table.facultyId,
+      table.code
+    )
+  ]
+);
+
+export const departmentRelations = relations(department, ({ one }) => ({
+  faculty: one(faculty, {
+    fields: [department.facultyId],
+    references: [faculty.id]
+  })
+}));
+
 export const semester = sqliteTable("semester", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
+  ...id,
   name: text({ enum: ["harmattan", "rain"] })
     .notNull()
     .unique(),
@@ -144,9 +182,7 @@ export const semester = sqliteTable("semester", {
 });
 
 export const level = sqliteTable("level", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
+  ...id,
   name: integer().notNull().unique(),
   minCreditUnitsHarmattan: integer("min_credit_units_harmattan").notNull(),
   maxCreditUnitsHarmattan: integer("max_credit_units_harmattan").notNull(),
@@ -154,27 +190,33 @@ export const level = sqliteTable("level", {
   maxCreditUnitsRain: integer("max_credit_units_rain").notNull()
 });
 
+export const admissionFeePayment = sqliteTable("admission_fee_payment", {
+  ...id,
+  applicationId: text("application_id").notNull().notNull(),
+  amount: real().notNull(),
+  transactionRef: text("transaction_ref").notNull(),
+  ...timestamps
+});
+
 export const application = sqliteTable(
   "application",
   {
-    id: text("id")
-      .primaryKey()
-      .$defaultFn(() => ulid()),
+    ...id,
 
-    userId: text("userId")
+    userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
 
-    applicationNumber: text("applicationNumber").notNull().unique(),
+    applicationNumber: text("application_number").notNull().unique(),
 
-    schoolSessionName: text("schoolSessionName").notNull(),
+    schoolSessionName: text("school_session_name").notNull(),
 
-    schoolSessionId: text("schoolSessionId").references(
+    schoolSessionId: text("school_session_id").references(
       () => schoolSession.id,
       { onDelete: "set null" }
     ),
 
-    status: text("status", {
+    status: text({
       enum: ["pending", "submitted", "accepted", "rejected"]
     })
       .notNull()
@@ -184,70 +226,65 @@ export const application = sqliteTable(
       () => admissionFeePayment.id,
       { onDelete: "set null" }
     ),
-    hasPaidAdmissionFees: integer("hasPaidAdmissionFees", {
+    hasPaidAdmissionFee: integer("has_paid_admission_fee", {
       mode: "boolean"
     }).default(false),
 
-    firstName: text("firstName").notNull(),
-    middleName: text("middleName"),
-    otherNames: text("otherNames"),
-    lastName: text("lastName").notNull(),
+    firstName: text("first_name").notNull(),
+    middleName: text("middle_name"),
+    otherNames: text("other_names"),
+    lastName: text("last_name").notNull(),
 
-    phoneNumber: text("phoneNumber"),
+    phoneNumber: text("phone_number"),
 
-    birthDay: integer("birthDay").notNull(),
-    birthMonth: text("birthMonth").notNull(),
-    birthYear: integer("birthYear").notNull(),
-    gender: text("gender", { enum: ["male", "female"] }),
+    birthDay: integer("birth_day").notNull(),
+    birthMonth: text("birth_month").notNull(),
+    birthYear: integer("birth_year").notNull(),
+    gender: text({ enum: ["male", "female"] }),
 
     // Identification
-    stateOfOrigin: text("stateOfOrigin"),
-    lga: text("lga"),
-    nationality: text("nationality"),
-    nin: text("nin").unique(),
+    stateOfOrigin: text("state_of_origin"),
+    lga: text(),
+    nationality: text(),
+    nin: text().unique(),
     /* address: text("address"), */
 
     // Family Info
-    firstParentName: text("firstParentName"),
-    firstParentAddress: text("firstParentAddress"),
-    firstParentStatus: text("firstParentStatus", {
+    firstParentName: text("first_parent_name"),
+    firstParentAddress: text("first_parent_address"),
+    firstParentStatus: text("first_parent_status", {
       enum: ["living", "deceased"]
     }),
 
-    secondParentName: text("secondParentName"),
-    secondParentAddress: text("secondParentAddress"),
-    secondParentStatus: text("secondParentStatus", {
+    secondParentName: text("second_parent_name"),
+    secondParentAddress: text("second_parent_address"),
+    secondParentStatus: text("second_parent_status", {
       enum: ["living", "deceased"]
     }),
 
-    nextOfKinName: text("nextOfKinName"),
-    nextOfKinAddress: text("nextOfKinAddress"),
-    nextOfKinRelationship: text("nextOfKinRelationship"),
-    nextOfKinPhoneNumber: text("nextOfKinPhoneNumber"),
+    nextOfKinName: text("next_of_kin_name"),
+    nextOfKinAddress: text("next_of_kin_address"),
+    nextOfKinRelationship: text("next_of_kin_relationship"),
+    nextOfKinPhoneNumber: text("next_of_kin_phone_number"),
 
     // Academic Info
-    course: text("course"),
-    degreeType: text("degreeType"),
-    jambRegNumber: text("jambRegNumber"),
-    secondarySchoolName: text("secondarySchoolName"),
-    secondarySchoolAddress: text("secondarySchoolAddress"),
-    secondarySchoolGraduationMonth: text("secondarySchoolGraduationMonth"),
-    secondarySchoolGraduationYear: integer("secondarySchoolGraduationYear"),
+    course: text(),
+    degreeType: text("degree_type"),
+    jambRegNumber: text("jamb_reg_number"),
+    secondarySchoolName: text("secondary_school_name"),
+    secondarySchoolAddress: text("secondary_school_address"),
+    secondarySchoolGraduationMonth: text("secondary_school_graduation_month"),
+    secondarySchoolGraduationYear: integer("secondary_school_graduation_year"),
 
     // Documents
-    passportUrl: text("passportUrl"),
-    birthCertificateUrl: text("birthCirtificateUrl"),
-    stateOfOriginUrl: text("stateOfOriginUrl"),
-    oLevelResultUrl: text("oLevelResultUrl"),
-    postUTMESlipUrl: text("postUTMESlipUrl"),
-    admissionFormPaymentReceiptUrl: text("admissionFormPaymentReceiptUrl"),
+    passportUrl: text("passport_url"),
+    birthCertificateUrl: text("birth_certificate_url"),
+    stateOfOriginUrl: text("state_of_origin_url"),
+    oLevelResultUrl: text("o_level_result_url"),
+    postUTMESlipUrl: text("post_utme_slip_url"),
+    admissionFormPaymentReceiptUrl: text("admission_form_payment_receipt_url"),
 
-    createdAt: integer("createdAt", { mode: "timestamp" })
-      .notNull()
-      .default(sql`(strftime('%s','now') * 1000)`),
-    updatedAt: integer("updatedAt", { mode: "timestamp" })
-      .notNull()
-      .default(sql`(strftime('%s','now') * 1000)`)
+    ...timestamps
   },
   (table) => [
     // Ensure each user can only have one application per session
@@ -273,60 +310,35 @@ export const applicationRelations = relations(application, ({ one }) => ({
   })
 }));
 
-export const admissionFeePayment = sqliteTable("admission_fee_payment", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
-  applicationId: text("application_id")
-    .notNull()
-    .references(() => application.id)
-    .notNull(),
-  amount: real().notNull(),
-  transactionRef: text("transaction_ref").notNull(),
-  ...timestamps
-});
-
 export const settings = sqliteTable("settings", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => ulid()),
+  ...id,
 
-  applicationsOpen: integer("applicationsOpen", { mode: "boolean" }),
-  applicationsOpenAt: integer("applicationsOpenAt", { mode: "timestamp" }),
-  applicationsClosedAt: integer("applicationsClosedAt", { mode: "timestamp" }),
+  applicationsOpen: integer("applications_open", { mode: "boolean" }),
+  applicationsOpenAt: integer("applications_open_at", { mode: "timestamp" }),
+  applicationsClosedAt: integer("applications_closed_at", {
+    mode: "timestamp"
+  }),
 
-  courseRegistrationsOpen: integer("courseRegistrationsOpen", {
+  courseRegistrationsOpen: integer("course_registrations_open", {
     mode: "boolean"
   }),
-  courseRegistrationsOpenAt: integer("courseRegistrationsOpenAt", {
+  courseRegistrationsOpenAt: integer("course_registrations_open_at", {
     mode: "timestamp"
   }),
-  courseRegistrationsClosedAt: integer("courseRegistrationsClosedAt", {
+  courseRegistrationsClosedAt: integer("course_registrations_closed_at", {
     mode: "timestamp"
   }),
 
-  createdAt: integer("createdAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`),
-  updatedAt: integer("updatedAt", { mode: "timestamp" })
-    .notNull()
-    .default(sql`(strftime('%s','now') * 1000)`)
-});
+  admissionFee: real("admission_fee").default(0),
+  admissionFeePaymentDeadline: integer("admission_fee_payment_deadline", {
+    mode: "timestamp"
+  }),
 
-export const metadata = sqliteTable("metadata", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
-  totalApplications: integer("total_applications").notNull().default(0),
-  totalApplicants: integer("total_applicants").notNull().default(0),
-  totalStudents: integer("total_students").notNull().default(0),
   ...timestamps
 });
 
 export const student = sqliteTable("student", {
-  id: text()
-    .primaryKey()
-    .$defaultFn(() => ulid()),
+  ...id,
   regNumber: text("reg_number").notNull(),
   applicationId: text("application_id")
     .notNull()

@@ -85,7 +85,7 @@ const items: NavigationMenuItem[][] = [
 
 <template>
   <div class="md:flex md:h-[calc(100dvh-4rem)]">
-    <nav class="hidden md:block border-r border-r-default p-2.5">
+    <nav class="hidden md:block md:w-72 border-r border-r-default p-2.5">
       <NuxtNavigationMenu :items orientation="vertical" />
     </nav>
 

@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
   const {
     schoolSessionName,
     admissionStatus,
-    hasPaidAdmissionFees,
+    hasPaidAdmissionFee,
     limit,
     offset
   } = query.data;
@@ -43,8 +43,8 @@ export default defineEventHandler(async (event) => {
               eq(app.status, "accepted"),
               eq(app.status, "rejected")
             ),
-        typeof hasPaidAdmissionFees !== "undefined"
-          ? eq(app.hasPaidAdmissionFees, hasPaidAdmissionFees)
+        typeof hasPaidAdmissionFee !== "undefined"
+          ? eq(app.hasPaidAdmissionFee, hasPaidAdmissionFee)
           : undefined
       );
     },
