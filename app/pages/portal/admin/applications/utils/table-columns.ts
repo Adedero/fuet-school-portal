@@ -3,7 +3,7 @@ import type { ApplicationItem } from "../index.vue";
 import { useDateFormat } from "@vueuse/core";
 
 export const columns: TableColumn<ApplicationItem>[] = [
- /*  {
+  /*  {
     header: "S/N",
     cell: ({ row }) => row.index
   }, */
@@ -41,6 +41,13 @@ export const columns: TableColumn<ApplicationItem>[] = [
   {
     accessorKey: "course",
     header: "Course"
+  },
+  {
+    header: "Admission fee",
+    cell: ({ row }) => {
+      const hasPaid: boolean = row.getValue("hasPaidAdmissionFee");
+      return hasPaid ? "Paid" : "Unpaid";
+    }
   },
   {
     accessorKey: "updatedAt",

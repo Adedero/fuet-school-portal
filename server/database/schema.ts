@@ -143,28 +143,15 @@ export const facultyRelations = relations(faculty, ({ many }) => ({
   departments: many(department)
 }));
 
-export const department = sqliteTable(
-  "department",
-  {
-    ...id,
-    name: text().notNull(),
-    code: text().notNull(),
-    facultyId: text("faculty_id")
-      .notNull()
-      .references(() => faculty.id),
-    ...timestamps
-  },
-  (table) => [
-    uniqueIndex("department_faculty_name_unique").on(
-      table.facultyId,
-      table.name
-    ),
-    uniqueIndex("department_faculty_code_unique").on(
-      table.facultyId,
-      table.code
-    )
-  ]
-);
+export const department = sqliteTable("department", {
+  ...id,
+  name: text().notNull().unique(),
+  code: text().notNull().unique(),
+  facultyId: text("faculty_id")
+    .notNull()
+    .references(() => faculty.id),
+  ...timestamps
+});
 
 export const departmentRelations = relations(department, ({ one }) => ({
   faculty: one(faculty, {
@@ -307,7 +294,8 @@ export const applicationRelations = relations(application, ({ one }) => ({
   admissionFeePayment: one(admissionFeePayment, {
     fields: [application.admissionFeePaymentId],
     references: [admissionFeePayment.id]
-  })
+  }),
+  student: one(student)
 }));
 
 export const settings = sqliteTable("settings", {
@@ -342,7 +330,7 @@ export const student = sqliteTable("student", {
   regNumber: text("reg_number").notNull(),
   applicationId: text("application_id")
     .notNull()
-    .references(() => application.id),
+    .references(() => application.id, { onDelete: "cascade" }),
   studentClassId: text("student_class_id")
     .notNull()
     .references(() => studentClass.id),

@@ -7,6 +7,11 @@ export default eventHandler(async (event) => {
     where: (app, { eq }) => eq(app.id, applicationId),
     with: {
       schoolSession: true,
+      student: {
+        columns: {
+          id: true
+        }
+      },
       user: {
         columns: {
           email: true

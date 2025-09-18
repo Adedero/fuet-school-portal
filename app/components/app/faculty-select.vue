@@ -22,7 +22,8 @@ const departments = computed(() => {
   return (data.value ?? []).flatMap((faculty) =>
     faculty.departments.map((dept) => ({
       label: dept.name,
-      value: dept.code
+      value: dept.code,
+      faculty: faculty.name
     }))
   );
 });
@@ -32,6 +33,20 @@ export type Department = (typeof departments.value)[number];
 
 const fac = defineModel<Faculty>("faculty", { default: undefined });
 const dept = defineModel<Department>("department", { default: undefined });
+
+const getDepartment = (by: "name" | "code" | "faculty", value: string) => {
+  if (by === "name") {
+    return departments.value.find((dept) => dept.label === value);
+  }
+  if (by === "code") {
+    return departments.value.find((dept) => dept.value === value);
+  }
+  if (by === "faculty") {
+    return departments.value.find((dept) => dept.faculty === value);
+  }
+};
+
+defineExpose({ getDepartment });
 
 onMounted(async () => {
   await execute();

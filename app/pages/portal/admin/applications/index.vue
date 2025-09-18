@@ -13,6 +13,7 @@ const filters = ref<ApplicationFilter>({ status: "all", admissionFees: "all" });
 const limit = ref<number>(20);
 const page = ref<number>(0);
 const offset = computed(() => limit.value * page.value);
+const search = ref<string>();
 
 const query = computed(() => {
   const searchParams = new URLSearchParams();
@@ -27,6 +28,9 @@ const query = computed(() => {
   }
   if (selectedSession.value) {
     searchParams.set("schoolSessionName", selectedSession.value.name);
+  }
+  if (search.value) {
+    searchParams.set("search", search.value);
   }
   searchParams.set("limit", limit.value.toString());
   searchParams.set("offset", offset.value.toString());
@@ -64,6 +68,23 @@ function onSelect(row: TableRow<ApplicationItem>) {
           <ApplicationFilterSelect v-model:filters="filters" />
           <!-- <ApplicationSortSelect /> -->
         </div>
+      </div>
+
+      <div class="mt-3">
+        <NuxtButtonGroup class="w-full md:w-fit">
+          <NuxtInput
+            v-model="search"
+            size="sm"
+            placeholder="Search..."
+            class="w-full md:w-fit"
+          />
+          <NuxtButton
+            icon="lucide:search"
+            color="neutral"
+            variant="outline"
+            size="sm"
+          />
+        </NuxtButtonGroup>
       </div>
     </header>
 
