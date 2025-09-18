@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ShieldCheck, Building2, CheckCircle, ChevronRight } from 'lucide-vue-next';
+import { ShieldCheck, Building2, CheckCircle, ChevronRight } from "lucide-vue-next";
 
 const approvedFaculties = [
   "Faculty of Nature and Applied Sciences",
@@ -7,7 +7,7 @@ const approvedFaculties = [
   "Faculty of Environmental Management Sciences",
   "Faculty of Engineering Technology",
   "Faculty of Educational Technology",
-  "Faculty of Management Technology"
+  "Faculty of Management Technology",
 ];
 
 const accDetails = `These faculties have been approved by the National Universities Commission (NUC) for the commencement of academic activities at FUET. It means that FUET meets the regulatory standards for governance, quality of curriculum, staff qualifications, and infrastructure under these faculties.`;
@@ -17,13 +17,16 @@ const quickLinks = [
   { url: "/application", label: "Admissions" },
   { url: "/academic-calendar", label: "Academic Calendar" },
   { url: "/news", label: "News & Events" },
-  { url: "/portal/student", label: "Student Portal" }
+  { url: "/portal/student", label: "Student Portal" },
 ];
 </script>
 
 <template>
   <!-- Breadcrumbs -->
-  <nav class="section-padding pt-8 pb-2 flex items-center text-sm text-gray-500 gap-1" aria-label="Breadcrumb">
+  <nav
+    class="section-padding pt-8 pb-2 flex items-center text-sm text-gray-500 gap-1"
+    aria-label="Breadcrumb"
+  >
     <NuxtLink to="/" class="hover:underline text-primary-500 font-medium">Home</NuxtLink>
     <ChevronRight class="w-4 h-4 mx-1 text-gray-400" />
     <span class="text-gray-700 font-semibold">Accreditation & NUC Approval</span>
@@ -31,7 +34,10 @@ const quickLinks = [
 
   <section id="accreditation-start" class="overflow-hidden">
     <!-- Hero -->
-    <div class="relative section-padding py-32 bg-cover bg-center text-center text-white" style="background-image: url('/images/Federal-University-Ogoni.jpg')">
+    <div
+      class="relative section-padding py-32 bg-cover bg-center text-center text-white"
+      style="background-image: url('/images/Federal-University-Ogoni.jpg')"
+    >
       <div class="absolute inset-0 bg-black/60"></div>
       <div class="relative z-10 max-w-3xl mx-auto">
         <ShieldCheck class="w-12 h-12 text-primary-400 mx-auto mb-4" />
@@ -39,13 +45,16 @@ const quickLinks = [
           NUC-Approved Faculties
         </h1>
         <p class="text-lg text-gray-200 mt-4">
-          FUET has obtained approval from the National Universities Commission to commence with the following faculties.
+          FUET has obtained approval from the National Universities Commission to commence
+          with the following faculties.
         </p>
       </div>
     </div>
 
     <!-- Approved Faculties List -->
-    <div class="section-padding py-20 bg-gradient-to-br from-green-50 via-white to-green-100">
+    <div
+      class="section-padding py-20 bg-gradient-to-br from-green-50 via-white to-green-100"
+    >
       <div class="max-w-5xl mx-auto">
         <h2 class="text-2xl font-bold text-primary-600 mb-6 flex items-center gap-2">
           <Building2 class="w-6 h-6 text-primary-400" />
@@ -72,9 +81,13 @@ const quickLinks = [
     <div class="bg-primary py-6 section-padding mt-10">
       <div class="flex flex-wrap gap-x-10 items-center justify-center md:justify-between">
         <div v-for="link in quickLinks" :key="link.url" class="h-16 flex-center">
-          <NuxtLink :to="link.url"
-            class="flex items-center gap-2 text-white hover:underline text-base font-medium group">
-            <ChevronRight class="w-4 h-4 text-white opacity-70 group-hover:translate-x-1 transition-transform" />
+          <NuxtLink
+            :to="link.url"
+            class="flex items-center gap-2 text-white hover:underline text-base font-medium group"
+          >
+            <ChevronRight
+              class="w-4 h-4 text-white opacity-70 group-hover:translate-x-1 transition-transform"
+            />
             {{ link.label }}
           </NuxtLink>
         </div>

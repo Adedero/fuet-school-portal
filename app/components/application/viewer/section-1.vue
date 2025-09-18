@@ -54,7 +54,7 @@ const { data } = defineProps<Props>();
                 </b>
               </li>
               <li>
-                Gender: <b class="uppercase">{{ data.lastName }}</b>
+                Gender: <b class="uppercase">{{ data.gender }}</b>
               </li>
               <li class="col-span-2 print:col-span-1">
                 Email: <b class="uppercase">{{ data.user.email }}</b>

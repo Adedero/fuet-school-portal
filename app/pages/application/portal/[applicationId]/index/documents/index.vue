@@ -49,7 +49,7 @@ const state = computed(() => {
       <header>
         <h1 class="text-xl font-bold">Documents</h1>
         <p class="text-sm muted">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+          Please upload the required documents to complete your application.
         </p>
       </header>
 
