@@ -327,6 +327,9 @@ export const settings = sqliteTable("settings", {
 
 export const student = sqliteTable("student", {
   ...id,
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id),
   regNumber: text("reg_number").notNull(),
   applicationId: text("application_id")
     .notNull()
@@ -344,6 +347,10 @@ export const student = sqliteTable("student", {
 });
 
 export const studentRelations = relations(student, ({ one }) => ({
+  user: one(user, {
+    fields: [student.userId],
+    references: [user.id]
+  }),
   application: one(application, {
     fields: [student.applicationId],
     references: [application.id]

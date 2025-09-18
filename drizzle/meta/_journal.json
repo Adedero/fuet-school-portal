@@ -36,6 +36,13 @@
       "when": 1758210321663,
       "tag": "0004_rich_firebird",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1758213583815,
+      "tag": "0005_gray_fat_cobra",
+      "breakpoints": true
     }
   ]
 }

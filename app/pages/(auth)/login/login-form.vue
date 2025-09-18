@@ -10,6 +10,8 @@ const route = useRoute();
 const authStore = useAuthStore();
 const toast = useToast();
 
+const isLoggingInToApplicationPortal = ref<boolean>(false);
+
 const state = reactive<LoginSchema>({
   email: "",
   password: "",
@@ -26,8 +28,6 @@ const error = ref<Error | null>(null);
 
 async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
   error.value = null;
-
-  const encodedEmail = btoa(event.data.email);
 
   await authClient.signIn.email(event.data, {
     onError(ctx) {
@@ -56,6 +56,8 @@ async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
       }
 
       if (!sessionData.data?.user.emailVerified) {
+        const encodedEmail = btoa(event.data.email);
+
         await navigateTo({
           name: "email-verification",
           query: { email: encodedEmail }
@@ -77,7 +79,11 @@ async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
           break;
 
         case "student":
-          alert(role);
+          if (isLoggingInToApplicationPortal.value) {
+            await navigateTo("/application/portal");
+          } else {
+            alert(role);
+          }
           break;
 
         case "staff":
@@ -105,6 +111,15 @@ async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
     <div v-if="error" class="mb-3">
       <FetchErrorAlert :message="error.message" />
     </div>
+
+    <div>
+      <NuxtCheckbox
+        v-model="isLoggingInToApplicationPortal"
+        label="Log in to application portal"
+      />
+    </div>
+
+    <NuxtSeparator class="my-5" />
 
     <NuxtForm
       :schema="loginSchema"

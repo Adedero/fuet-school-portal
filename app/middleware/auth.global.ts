@@ -14,17 +14,22 @@ export default defineNuxtRouteMiddleware(async (to) => {
   const isAdminRoute = fullPath.startsWith("/portal/admin");
 
   if (isApplicantRoute || isStudentRoute || isStaffRoute || isAdminRoute) {
-    let expectedRole: string = "";
+    let expectedRoles: string[] = [];
 
-    if (isApplicantRoute) expectedRole = "applicant";
-    if (isStudentRoute) expectedRole = "student";
-    if (isStaffRoute) expectedRole = "staff";
-    if (isAdminRoute) expectedRole = "admin";
+    if (isApplicantRoute) expectedRoles = ["applicant", "student"];
+    if (isStudentRoute) expectedRoles = ["student"];
+    if (isStaffRoute) expectedRoles = ["staff"];
+    if (isAdminRoute) expectedRoles = ["admin"];
 
     const { data } = await authClient.getSession();
 
-    if (!data || data.user.role !== expectedRole) {
+    if (!data) {
       await navigateTo(`/login?redirect=${fullPath}`);
+      return;
+    }
+
+    if (!expectedRoles.includes(data.user.role)) {
+      await navigateTo("/login");
       return;
     }
 

@@ -11,12 +11,12 @@ export default defineEventHandler(async (event) => {
   const isAdminRoute = requestUrl.pathname.startsWith("/api/users/admin");
 
   if (isApplicantRoute || isStudentRoute || isStaffRoute || isAdminRoute) {
-    let expectedRole: string = "";
+    let expectedRoles: string[] = [];
 
-    if (isApplicantRoute) expectedRole = "applicant";
-    if (isStudentRoute) expectedRole = "student";
-    if (isStaffRoute) expectedRole = "staff";
-    if (isAdminRoute) expectedRole = "admin";
+    if (isApplicantRoute) expectedRoles = ["applicant", "student"];
+    if (isStudentRoute) expectedRoles = ["student"];
+    if (isStaffRoute) expectedRoles = ["staff"];
+    if (isAdminRoute) expectedRoles = ["admin"];
 
     const session = await auth.api.getSession(event);
 
@@ -27,7 +27,7 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (session.user.role !== expectedRole) {
+    if (!expectedRoles.includes(session.user.role)) {
       throw createError({
         statusCode: 403,
         statusMessage:

@@ -1,5 +1,6 @@
+import { eq } from "drizzle-orm";
 import { db } from "~~/server/database/connection";
-import { student } from "~~/server/database/schema";
+import { user, student } from "~~/server/database/schema";
 import { studentCreationSchema } from "~~/shared/schemas/student.schema";
 
 export default defineEventHandler(async (event) => {
@@ -18,7 +19,8 @@ export default defineEventHandler(async (event) => {
     },
     columns: {
       id: true,
-      status: true
+      status: true,
+      userId: true
     }
   });
 
@@ -76,16 +78,26 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const newStudent = await db
-    .insert(student)
-    .values({
-      regNumber,
-      applicationId: application.id,
-      studentClassId: selectedClass.id,
-      departmentId: selectedDepartment.id,
-      facultyId: selectedDepartment.facultyId
-    })
-    .returning();
+  const newStudent = await db.transaction(async (tx) => {
+    const ns = await tx
+      .insert(student)
+      .values({
+        userId: application.userId,
+        regNumber,
+        applicationId: application.id,
+        studentClassId: selectedClass.id,
+        departmentId: selectedDepartment.id,
+        facultyId: selectedDepartment.facultyId
+      })
+      .returning();
+
+    await tx
+      .update(user)
+      .set({ role: "student", updatedAt: new Date() })
+      .where(eq(user.id, application.userId));
+
+    return ns;
+  });
 
   return {
     message: "Student account created",
