@@ -13,7 +13,9 @@ export default defineEventHandler(async (event) => {
       degreeType: true,
       status: true,
       createdAt: true,
-      schoolSessionName: true
+      schoolSessionName: true,
+      hasPaidAdmissionFee: true,
+      admissionFeePaymentId: true
     },
     with: {
       schoolSession: {

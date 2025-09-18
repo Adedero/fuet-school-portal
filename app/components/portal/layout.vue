@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { useLocalStorage, useWindowSize } from "@vueuse/core";
+import { useWindowSize } from "@vueuse/core";
 
 const { width } = useWindowSize();
-const open = useLocalStorage<boolean>("nav:open", false);
+
+const { isOpen, setIsOpen } = useNavOpen("nav:open");
 
 const isLargeScreen = computed(() => width.value >= 1024);
 </script>
@@ -12,7 +13,7 @@ const isLargeScreen = computed(() => width.value >= 1024);
     <aside
       :class="[
         'hidden overflow-hidden transition-[width] lg:shrink-0 lg:flex lg:flex-col lg:h-full lg:border-r lg:border-r-default',
-        open ? 'w-72' : 'w-0'
+        isOpen ? 'w-72' : 'w-0'
       ]"
     >
       <header class="p-5 shrink-0 border-b border-b-default">
@@ -26,7 +27,7 @@ const isLargeScreen = computed(() => width.value >= 1024);
 
     <NuxtSlideover
       v-if="!isLargeScreen"
-      v-model:open="open"
+      v-model:open="isOpen"
       :ui="{ content: 'max-w-96' }"
     >
       <template #title>
@@ -57,7 +58,7 @@ const isLargeScreen = computed(() => width.value >= 1024);
             icon="lucide:panel-left"
             color="neutral"
             variant="ghost"
-            @click="open = !open"
+            @click="setIsOpen(!isOpen)"
           />
         </div>
 

@@ -68,6 +68,7 @@ const emit = defineEmits<{
               icon="lucide:file-pen"
             />
             <ApplicationDeleter
+              v-if="!application.hasPaidAdmissionFee"
               :application-id="application.id"
               @remove="(id) => emit('remove', id)"
             >

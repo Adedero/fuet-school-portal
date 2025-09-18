@@ -6,14 +6,6 @@ const config = useRuntimeConfig();
 const authStore = useAuthStore();
 const { logout } = useLogout();
 
-const appName = computed(() => {
-  const [first, ...rest] = config.public.app.name.split(" ");
-  return {
-    val1: first,
-    val2: rest.join(" ")
-  };
-});
-
 /* Dropdown Menu Items */
 const items: DropdownMenuItem[][] = [
   [
@@ -56,16 +48,16 @@ const items: DropdownMenuItem[][] = [
     class="sticky top-0 z-50 bg-white px-5 md:px-10 lg:px-20 py-2.5 border-b border-b-muted"
   >
     <div class="flex items-center justify-between">
-      <NuxtLink to="/" class="flex items-end gap-2">
+      <NuxtLink to="/application/portal" class="flex items-end gap-2">
         <AppLogo :width="28" />
-        <p class="font-extrabold text-xl">
-          <span class="text-primary-500">
-            {{ appName.val1 }}
-          </span>
-          <span class="text-muted">
-            {{ appName.val2 }}
-          </span>
-        </p>
+        <div>
+          <p class="leading-5 text-lg font-bold text-primary-500">
+            {{ config.public.schoolNameShort }} Portal
+          </p>
+          <p class="text-[0.6rem] text-muted uppercase hidden md:block">
+            {{ config.public.schoolNameLong }}
+          </p>
+        </div>
       </NuxtLink>
 
       <div>

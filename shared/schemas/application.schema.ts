@@ -143,7 +143,7 @@ export type Application = z.infer<typeof applicationSchema>;
 export const applicationQuerySchema = z.object({
   schoolSessionName: z.string().nonempty(),
   admissionStatus: z.enum(["submitted", "accepted", "rejected"]),
-  hasPaidAdmissionFees: z.coerce.boolean(),
+  hasPaidAdmissionFee: z.coerce.boolean(),
   orderBy: z.union([z.array(z.string()), z.string()]),
   ...querySchema.shape
 });

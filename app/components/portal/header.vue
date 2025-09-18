@@ -6,14 +6,6 @@ const config = useRuntimeConfig();
 const authStore = useAuthStore();
 const { logout } = useLogout();
 
-const appName = computed(() => {
-  const [first, ...rest] = config.public.app.name.split(" ");
-  return {
-    val1: first,
-    val2: rest.join(" ")
-  };
-});
-
 /* Dropdown Menu Items */
 const items: DropdownMenuItem[][] = [
   [
@@ -52,20 +44,18 @@ const items: DropdownMenuItem[][] = [
 </script>
 
 <template>
-  <header
-    class="px-5 py-2.5"
-  >
+  <header class="px-5 py-2.5">
     <div class="flex items-center justify-between">
-      <NuxtLink to="/" class="flex items-end gap-2">
+      <NuxtLink class="flex items-center gap-2">
         <AppLogo :width="28" />
-        <p class="font-extrabold text-xl hidden md:block">
-          <span class="text-primary-500">
-            {{ appName.val1 }}
-          </span>
-          <span class="text-muted">
-            {{ appName.val2 }}
-          </span>
-        </p>
+        <div>
+          <p class="leading-5 text-lg font-bold text-primary-500">
+            {{ config.public.schoolNameShort }} Portal
+          </p>
+          <p class="text-[0.6rem] text-muted uppercase hidden md:block">
+            {{ config.public.schoolNameLong }}
+          </p>
+        </div>
       </NuxtLink>
 
       <div>

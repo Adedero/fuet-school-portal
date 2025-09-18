@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { BadgeProps } from "@nuxt/ui";
+const config = useRuntimeConfig();
 const { applicationId = "" } = useRouteParams();
 
 const {
@@ -22,6 +23,8 @@ const badgeColor = computed<BadgeProps["color"]>(() => {
       return "neutral";
   }
 });
+
+const print = () => window.print()
 </script>
 
 <template>
@@ -52,7 +55,9 @@ const badgeColor = computed<BadgeProps["color"]>(() => {
             <NuxtIcon name="lucide:clock" size="5rem" class="text-muted" />
             <div class="text-center">
               <p class="text-sm font-semibold">Application Pending</p>
-              <small> Your application has not been submitted. </small>
+              <small class="block max-w-80 text-center">
+                Your application has not been submitted.
+              </small>
             </div>
           </div>
 
@@ -63,7 +68,7 @@ const badgeColor = computed<BadgeProps["color"]>(() => {
             <NuxtIcon name="lucide:view" size="5rem" class="text-muted" />
             <div class="text-center">
               <p class="text-sm font-semibold">Application Submitted</p>
-              <small>
+              <small class="block max-w-80 text-center">
                 Your application has been submitted and is being reviewed.
               </small>
             </div>
@@ -73,7 +78,7 @@ const badgeColor = computed<BadgeProps["color"]>(() => {
             <NuxtIcon name="lucide:circle-x" size="5rem" class="text-red-500" />
             <div class="text-center">
               <p class="font-semibold text-red-500">Application Rejected</p>
-              <small>
+              <small class="block max-w-80 text-center">
                 We regret to inform you that your application has been rejected.
               </small>
             </div>
@@ -81,16 +86,48 @@ const badgeColor = computed<BadgeProps["color"]>(() => {
 
           <div v-if="app.status === 'accepted'" class="flex-col-center gap-2.5">
             <NuxtIcon
-              name="lucide:circle-x"
+              name="lucide:circle-check"
               size="5rem"
               class="text-green-500"
             />
             <div class="text-center">
               <p class="font-semibold text-green-500">Congratulations</p>
-              <small>
-                You have been granted admission into the Federal University of
-                Environment and Technology (FUET)
+              <small class="block max-w-80 text-center">
+                You have been granted admission into the
+                {{ config.public.schoolNameLong }} ({{
+                  config.public.schoolNameShort
+                }})
               </small>
+            </div>
+
+            <div>
+              <NuxtButton
+                :to="`/application/portal/${applicationId}/payment`"
+                label="Pay Admission Fees"
+                icon="lucide:credit-card"
+              />
+            </div>
+
+            <div class="w-full">
+              <NuxtSeparator class="my-5" />
+
+              <div>
+                <div class="flex items-center gap-2 justify-between">
+                  <p class="font-semibold">Admission Letter</p>
+                  <NuxtButton
+                    label="Print"
+                    icon="lucide:printer"
+                    color="neutral"
+                    variant="outline"
+                    size="sm"
+                    @click="print"
+                  />
+                </div>
+
+                <div class="mt-5">
+                  <AppAdmissionLetter :application-id="applicationId" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
