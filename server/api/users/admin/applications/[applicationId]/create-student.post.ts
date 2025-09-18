@@ -1,4 +1,5 @@
 import { db } from "~~/server/database/connection";
+import { student } from "~~/server/database/schema";
 
 export default defineEventHandler(async (event) => {
   const { applicationId = "" } = getRouterParams(event);
@@ -13,6 +14,10 @@ export default defineEventHandler(async (event) => {
         }
       },
       admissionFeePayment: true
+    },
+    columns: {
+      id: true,
+      status: true
     }
   });
 
@@ -36,4 +41,12 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Applicant has not paid the admission fee"
     });
   }
+
+  const newStudent = await db.insert(student).values({
+    regNumber: "sdsds",
+    applicationId: application.id,
+    studentClassId: "dfdf",
+    departmentId: "sdsd",
+    facultyId: "sdsds"
+  });
 });

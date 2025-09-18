@@ -346,6 +346,12 @@ export const student = sqliteTable("student", {
   studentClassId: text("student_class_id")
     .notNull()
     .references(() => studentClass.id),
+  departmentId: text("department_id")
+    .notNull()
+    .references(() => department.id),
+  facultyId: text("faculty_id")
+    .notNull()
+    .references(() => faculty.id),
   ...timestamps
 });
 
@@ -357,5 +363,13 @@ export const studentRelations = relations(student, ({ one }) => ({
   studentClass: one(studentClass, {
     fields: [student.studentClassId],
     references: [studentClass.id]
+  }),
+  department: one(department, {
+    fields: [student.departmentId],
+    references: [department.id]
+  }),
+  faculty: one(faculty, {
+    fields: [student.facultyId],
+    references: [faculty.id]
   })
 }));

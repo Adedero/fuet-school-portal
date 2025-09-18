@@ -101,7 +101,7 @@ const handleDelete = async () => {
                 <div class="w-40 grid gap-1">
                   <ApplicationAccepter
                     v-if="
-                      application.status === 'pending' ||
+                      application.status === 'submitted' ||
                       application.status === 'rejected'
                     "
                     :application-id="applicationId"
@@ -118,7 +118,7 @@ const handleDelete = async () => {
 
                   <ApplicationRejecter
                     v-if="
-                      application.status === 'pending' ||
+                      application.status === 'submitted' ||
                       application.status === 'accepted'
                     "
                     :application-id="applicationId"
