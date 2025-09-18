@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `staff_is_active` ON `staff` (`is_active`);

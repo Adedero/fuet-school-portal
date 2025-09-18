@@ -1,0 +1,1 @@
+ALTER TABLE `student` ADD `is_expelled` integer DEFAULT false;

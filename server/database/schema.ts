@@ -121,7 +121,7 @@ export const course = sqliteTable("course", {
   ...timestamps
 });
 
-export const courseRelations = relations(course, ({ one }) => ({
+export const courseRelations = relations(course, ({ one, many }) => ({
   department: one(department, {
     fields: [course.departmentId],
     references: [department.id]
@@ -129,7 +129,8 @@ export const courseRelations = relations(course, ({ one }) => ({
   faculty: one(faculty, {
     fields: [course.facultyId],
     references: [faculty.id]
-  })
+  }),
+  courseAllocations: many(courseAllocation)
 }));
 
 export const faculty = sqliteTable("faculty", {
@@ -329,8 +330,9 @@ export const student = sqliteTable("student", {
   ...id,
   userId: text("user_id")
     .notNull()
-    .references(() => user.id),
-  regNumber: text("reg_number").notNull(),
+    .references(() => user.id)
+    .unique(),
+  regNumber: text("reg_number").notNull().unique(),
   applicationId: text("application_id")
     .notNull()
     .references(() => application.id, { onDelete: "cascade" }),
@@ -343,6 +345,9 @@ export const student = sqliteTable("student", {
   facultyId: text("faculty_id")
     .notNull()
     .references(() => faculty.id),
+  isExpelled: integer("is_expelled", { mode: "boolean" })
+    .notNull()
+    .default(false),
   ...timestamps
 });
 
@@ -368,3 +373,70 @@ export const studentRelations = relations(student, ({ one }) => ({
     references: [faculty.id]
   })
 }));
+
+export const staff = sqliteTable(
+  "staff",
+  {
+    ...id,
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id)
+      .unique(),
+    staffId: text("staff_id").notNull().unique(),
+    title: text(),
+    phoneNumber: text("phone_number"),
+    departmentId: text("department_id")
+      .notNull()
+      .references(() => department.id),
+    facultyId: text("faculty_id")
+      .notNull()
+      .references(() => faculty.id),
+    isDepartmentHead: integer("is_department_head", { mode: "boolean" })
+      .notNull()
+      .default(false),
+    isActive: integer("is_active", { mode: "boolean" }).notNull().default(true),
+    ...timestamps
+  },
+  (table) => [uniqueIndex("staff_is_active").on(table.isActive)]
+);
+
+export const staffRelations = relations(staff, ({ one, many }) => ({
+  user: one(user, {
+    fields: [staff.userId],
+    references: [user.id]
+  }),
+  department: one(department, {
+    fields: [staff.departmentId],
+    references: [department.id]
+  }),
+  faculty: one(faculty, {
+    fields: [staff.facultyId],
+    references: [faculty.id]
+  }),
+  courseAllocations: many(courseAllocation)
+}));
+
+export const courseAllocation = sqliteTable("course_allocation", {
+  ...id,
+  courseId: text("course_id")
+    .notNull()
+    .references(() => course.id),
+  staffId: text("staff_id")
+    .notNull()
+    .references(() => staff.id),
+  ...timestamps
+});
+
+export const courseAllocationRelations = relations(
+  courseAllocation,
+  ({ one }) => ({
+    staff: one(staff, {
+      fields: [courseAllocation.staffId],
+      references: [staff.id]
+    }),
+    course: one(course, {
+      fields: [courseAllocation.courseId],
+      references: [course.id]
+    })
+  })
+);

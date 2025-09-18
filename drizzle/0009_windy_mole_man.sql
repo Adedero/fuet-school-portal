@@ -1,0 +1,1 @@
+ALTER TABLE `staff` ADD `is_active` integer DEFAULT true NOT NULL;
