@@ -22,8 +22,6 @@ export default defineEventHandler(async (event) => {
     offset
   } = query.data;
 
-  console.log(query.data);
-
   const currentSession = await db.query.schoolSession.findFirst({
     where: (sesh, { eq }) => eq(sesh.isCurrent, true)
   });

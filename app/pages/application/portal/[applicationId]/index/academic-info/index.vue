@@ -3,8 +3,9 @@ import { VueMultiSelectButton } from "#components";
 import handlePreviousClick from "../../utils/handle-previous-click";
 import { academicSchema } from "~~/shared/schemas/application.schema";
 import { save } from "../../utils/handle-save-click";
-import { departments, degrees } from "~/utils/data/faculties";
+import { degrees } from "~/utils/data/faculties";
 import { Calendar } from "~/utils/data/calendar";
+import type { Department } from "~/components/app/faculty-select.vue";
 
 const { applicationId = "" } = useRouteParams();
 const toast = useToast();
@@ -17,7 +18,7 @@ const {
 
 const initial = computed(() => {
   return {
-    course: app.value?.course ?? "",
+    course: app.value?.course ?? undefined,
     degreeType: app.value?.degreeType ?? "",
     jambRegNumber: app.value?.jambRegNumber ?? "",
 
@@ -35,6 +36,14 @@ const state = reactive({ ...initial.value });
 
 const hasUnsavedChanges = computed(() => {
   return JSON.stringify(state) !== JSON.stringify(initial.value);
+});
+
+const selectedCourse = ref<Department | undefined>(
+  state.course ? { label: state.course, value: "" } : undefined
+);
+
+watch(selectedCourse, (val) => {
+  state.course = val?.label;
 });
 
 const saveProgress = async (successFn: () => void) => {
@@ -107,11 +116,17 @@ const items = [
               <p class="text-lg font-semibold">Course Choice</p>
             </div>
             <NuxtFormField name="course" label="Course of Study" required>
-              <NuxtSelectMenu
+              <!--  <NuxtSelectMenu
                 v-model="state.course"
                 :items="departments.map((dept) => dept.name)"
                 class="w-full"
                 size="lg"
+              /> -->
+              <AppFacultySelect
+                v-model="selectedCourse"
+                item="department"
+                size="lg"
+                class="w-full"
               />
             </NuxtFormField>
 

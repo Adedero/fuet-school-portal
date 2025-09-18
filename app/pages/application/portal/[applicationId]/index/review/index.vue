@@ -136,7 +136,7 @@ const handleApplicationSubmit = () => {
 
         <div class="flex items-center justify-end gap-2.5">
           <ApplicationDeleter
-            v-if="!application.hasPaidAdmissionFee"
+            v-if="!app.hasPaidAdmissionFee"
             :application-id="applicationId"
             @remove="() => navigateTo('/application/portal')"
           />
