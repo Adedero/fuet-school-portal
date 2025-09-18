@@ -1,4 +1,4 @@
-import { or } from "drizzle-orm";
+import { or, like } from "drizzle-orm";
 import { db } from "~~/server/database/connection";
 import { applicationQuerySchema } from "~~/shared/schemas/application.schema";
 
@@ -19,7 +19,8 @@ export default defineEventHandler(async (event) => {
     admissionStatus,
     hasPaidAdmissionFee,
     limit,
-    offset
+    offset,
+    search
   } = query.data;
 
   const currentSession = await db.query.schoolSession.findFirst({
@@ -43,6 +44,13 @@ export default defineEventHandler(async (event) => {
             ),
         typeof hasPaidAdmissionFee !== "undefined"
           ? eq(app.hasPaidAdmissionFee, hasPaidAdmissionFee)
+          : undefined,
+        search
+          ? or(
+              like(app.applicationNumber, `%${search}%`),
+              like(app.firstName, `%${search}%`),
+              like(app.lastName, `%${search}%`)
+            )
           : undefined
       );
     },

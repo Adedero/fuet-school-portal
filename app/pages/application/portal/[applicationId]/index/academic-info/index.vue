@@ -39,7 +39,7 @@ const hasUnsavedChanges = computed(() => {
 });
 
 const selectedCourse = ref<Department | undefined>(
-  state.course ? { label: state.course, value: "" } : undefined
+  state.course ? { label: state.course, value: "", faculty: "" } : undefined
 );
 
 watch(selectedCourse, (val) => {

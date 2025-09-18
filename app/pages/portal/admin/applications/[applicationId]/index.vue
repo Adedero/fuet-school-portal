@@ -8,6 +8,8 @@ definePageMeta({
 const toast = useToast();
 const { confirmAsync } = useConfirm();
 
+const open = ref<boolean>(false);
+
 const { applicationId = "" } = useRouteParams();
 const {
   data: application,
@@ -101,7 +103,7 @@ const handleDelete = async () => {
                 <div class="w-40 grid gap-1">
                   <ApplicationAccepter
                     v-if="
-                      application.status === 'pending' ||
+                      application.status === 'submitted' ||
                       application.status === 'rejected'
                     "
                     :application-id="applicationId"
@@ -118,7 +120,7 @@ const handleDelete = async () => {
 
                   <ApplicationRejecter
                     v-if="
-                      application.status === 'pending' ||
+                      application.status === 'submitted' ||
                       application.status === 'accepted'
                     "
                     :application-id="applicationId"
@@ -163,22 +165,41 @@ const handleDelete = async () => {
 
       <div v-else-if="application">
         <div v-if="application.status === 'accepted'" class="mb-5">
-          <NuxtAlert
-            v-if="application.hasPaidAdmissionFee"
-            title="Admission fee"
-            description="Applicant has paid the admission fee"
-            icon="lucide:info"
-            color="success"
-            variant="subtle"
-            orientation="horizontal"
-            :actions="[
-              {
-                label: 'Approve',
-                icon: 'lucide:circle-check',
-                size: 'sm'
-              }
-            ]"
-          />
+          <div
+            v-if="
+              application.hasPaidAdmissionFee &&
+              application.admissionFeePaymentId
+            "
+          >
+            <NuxtAlert
+              v-if="!application.student"
+              title="Admission fee"
+              description="Applicant has paid the admission fee"
+              icon="lucide:info"
+              color="success"
+              variant="subtle"
+              orientation="horizontal"
+              :actions="[
+                {
+                  label: 'Approve',
+                  icon: 'lucide:circle-check',
+                  size: 'sm',
+                  onClick: () => {
+                    open = true;
+                  }
+                }
+              ]"
+            />
+
+            <NuxtAlert
+              v-else
+              title="Admission fee"
+              description="Applicant has paid the admission fee and has been approved as a student"
+              icon="lucide:info"
+              color="success"
+              variant="subtle"
+            />
+          </div>
           <NuxtAlert
             v-else
             title="Admission Fee"
@@ -187,6 +208,8 @@ const handleDelete = async () => {
             color="warning"
             variant="subtle"
           />
+
+          <AdminStudentsCreator v-model:open="open" :application />
         </div>
 
         <div>
