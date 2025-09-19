@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  layout: "portal-student"
+});
+
 import { VueMultiSelectButton } from "#components";
 import handlePreviousClick from "../../utils/handle-previous-click";
 import { academicSchema } from "~~/shared/schemas/application.schema";
@@ -6,6 +10,9 @@ import { save } from "../../utils/handle-save-click";
 import { degrees } from "~/utils/data/faculties";
 import { Calendar } from "~/utils/data/calendar";
 import type { Department } from "~/components/app/faculty-select.vue";
+
+
+
 
 const { applicationId = "" } = useRouteParams();
 const toast = useToast();
