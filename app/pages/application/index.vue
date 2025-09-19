@@ -2,11 +2,11 @@
 import { useDateFormat } from "@vueuse/core";
 
 definePageMeta({
-  layout: "main"
+  layout: "main",
 });
 
 const { data, error, refresh } = await useFetch("/api/general/settings", {
-  pick: ["applicationsOpen", "applicationsOpenAt", "applicationsClosedAt"]
+  pick: ["applicationsOpen", "applicationsOpenAt", "applicationsClosedAt"],
 });
 </script>
 
@@ -34,7 +34,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
         </h1>
 
         <p class="text-muted max-w-96 text-center">
-         Applications for the 2024/2025 academic session are currently closed.
+          Applications for the 2024/2025 academic session are currently closed.
         </p>
 
         <div class="flex-col-center gap-1 text-center">
@@ -83,9 +83,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
         class="min-h-dvh md:min-h-[70dvh] flex gap-5 flex-col md:flex-row md:items-center md:justify-center flex-wrap"
       >
         <div class="w-full flex-col-center gap-1 text-center">
-          <h1
-            class="text-center text-2xl md:text-3xl lg:text-4xl font-semibold"
-          >
+          <h1 class="text-center text-2xl md:text-3xl lg:text-4xl font-semibold">
             <span class="text-primary-500">Applications</span> Are Welcome!
           </h1>
 
@@ -118,9 +116,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
         <div class="w-full md:w-96">
           <NuxtCard>
             <div class="flex-col-center gap-2 text-center">
-              <div
-                class="bg-muted border border-default p-5 rounded-full flex-center"
-              >
+              <div class="bg-muted border border-default p-5 rounded-full flex-center">
                 <NuxtIcon name="lucide:user-plus" size="3.5rem" />
               </div>
               <p class="text-2xl font-semibold">
@@ -135,18 +131,10 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
                 description="Fill out the details in the form below."
                 :dismissible="false"
               >
-                <NuxtButton
-                  label="Start Now"
-                  block
-                  variant="soft"
-                  class="mt-2"
-                />
+                <NuxtButton label="Start Now" block variant="soft" class="mt-2" />
 
                 <template #body="{ close }">
-                  <ApplicationInitiationForm
-                    redirect="/login"
-                    @cancel="() => close()"
-                  />
+                  <ApplicationInitiationForm redirect="/login" @cancel="() => close()" />
                 </template>
               </NuxtModal>
             </div>
@@ -156,9 +144,7 @@ const { data, error, refresh } = await useFetch("/api/general/settings", {
         <div class="w-full md:w-96">
           <NuxtCard>
             <div class="flex-col-center gap-2 text-center">
-              <div
-                class="bg-muted border border-default p-5 rounded-full flex-center"
-              >
+              <div class="bg-muted border border-default p-5 rounded-full flex-center">
                 <NuxtIcon name="lucide:bookmark-check" size="3.5rem" />
               </div>
               <p class="text-2xl font-semibold">
