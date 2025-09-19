@@ -1,5 +1,5 @@
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'vue-bundle-renderer/runtime';
-import { y as buildAssetsURL, z as useRuntimeConfig, A as getResponseStatusText, B as getResponseStatus, C as defineRenderHandler, D as publicAssetsURL, E as getQuery, c as createError, F as destr, G as getRouteRules, H as hasProtocol, I as relative, J as joinURL, K as useNitroApp } from '../nitro/nitro.mjs';
+import { E as buildAssetsURL, u as useRuntimeConfig, F as getResponseStatusText, G as getResponseStatus, H as defineRenderHandler, I as publicAssetsURL, J as getQuery, h as createError, d as destr, K as getRouteRules, L as hasProtocol, M as relative, N as joinURL, b as useNitroApp } from '../_/nitro.mjs';
 import { renderToString } from 'vue/server-renderer';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'unhead/server';
 import { stringify, uneval } from 'devalue';
@@ -82,7 +82,7 @@ function createHead(options = {}) {
   return head;
 }
 
-const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"Federal University Of Engineering And Technology"};
+const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initial-scale=1"},{"charset":"utf-8"}],"link":[],"style":[],"script":[],"noscript":[],"title":"FUET"};
 
 const appRootTag = "div";
 
@@ -262,7 +262,7 @@ async function renderInlineStyles(usedModules) {
 
 const renderSSRHeadOptions = {"omitLineBreaks":true};
 
-const entryFileName = "BFYoCeca.js";
+const entryFileName = "DXCTPBYB.js";
 
 globalThis.__buildAssetsURL = buildAssetsURL;
 globalThis.__publicAssetsURL = publicAssetsURL;

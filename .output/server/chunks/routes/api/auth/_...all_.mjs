@@ -1,4 +1,4 @@
-import { d as defineEventHandler, a as auth, t as toWebRequest } from '../../../nitro/nitro.mjs';
+import { c as defineEventHandler, e as auth, f as toWebRequest } from '../../../_/nitro.mjs';
 import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';

@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readValidatedBody, c as createError, b as db, v as schoolSession } from '../../../../nitro/nitro.mjs';
+import { c as defineEventHandler, r as readValidatedBody, h as createError, i as db, B as schoolSession } from '../../../../_/nitro.mjs';
 import { e as extendedSessionSchema } from '../../../../_/session.schema.mjs';
 import 'nanoid';
 import 'node:path';

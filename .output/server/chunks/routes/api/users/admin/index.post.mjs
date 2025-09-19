@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as readValidatedBody, c as createError, b as db, n as course } from '../../../../nitro/nitro.mjs';
+import { c as defineEventHandler, r as readValidatedBody, h as createError, i as db, x as course } from '../../../../_/nitro.mjs';
 import { c as courseEditSchema } from '../../../../_/course.schema.mjs';
 import 'nanoid';
 import 'node:path';

@@ -1,4 +1,4 @@
-import { d as defineEventHandler, i as getRouterParams, b as db, c as createError, v as schoolSession } from '../../../../../../nitro/nitro.mjs';
+import { c as defineEventHandler, m as getRouterParams, i as db, h as createError, B as schoolSession } from '../../../../../../_/nitro.mjs';
 import { eq } from 'drizzle-orm';
 import 'nanoid';
 import 'node:path';

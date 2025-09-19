@@ -44,7 +44,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "BFYoCeca.js",
+    "file": "DXCTPBYB.js",
     "name": "entry",
     "src": "../node_modules/nuxt/dist/app/entry.js",
     "isEntry": true,
@@ -416,25 +416,6 @@ const client_manifest = {
       "../node_modules/nuxt/dist/app/entry.js"
     ]
   },
-  "_CXa_wYL7.js": {
-    "resourceType": "script",
-    "module": true,
-    "prefetch": true,
-    "preload": true,
-    "file": "CXa_wYL7.js",
-    "name": "login-form.vue",
-    "imports": [
-      "_Br_2l1z2.js",
-      "_BvPn1KVB.js",
-      "_CRVZdzxc.js",
-      "_iSq_GXOF.js",
-      "_2EICDMI2.js",
-      "_sc3yzrxI.js",
-      "../node_modules/nuxt/dist/app/entry.js",
-      "_CQ9DD0Tp.js",
-      "_Zkazc4B7.js"
-    ]
-  },
   "_CYevZm-i.js": {
     "resourceType": "script",
     "module": true,
@@ -679,6 +660,25 @@ const client_manifest = {
     "preload": true,
     "file": "HZ3APyaO.js",
     "name": "calendar"
+  },
+  "_JAhQfwfq.js": {
+    "resourceType": "script",
+    "module": true,
+    "prefetch": true,
+    "preload": true,
+    "file": "JAhQfwfq.js",
+    "name": "login-form.vue",
+    "imports": [
+      "_Br_2l1z2.js",
+      "_BvPn1KVB.js",
+      "_CRVZdzxc.js",
+      "_iSq_GXOF.js",
+      "_2EICDMI2.js",
+      "_sc3yzrxI.js",
+      "../node_modules/nuxt/dist/app/entry.js",
+      "_CQ9DD0Tp.js",
+      "_Zkazc4B7.js"
+    ]
   },
   "_OPR3eTXJ.js": {
     "resourceType": "script",
@@ -934,7 +934,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "B6yP1AEe.js",
+    "file": "BxRdvQwi.js",
     "name": "academic-progress",
     "src": "components/students/dashboard/academic-progress.vue",
     "isDynamicEntry": true,
@@ -943,8 +943,8 @@ const client_manifest = {
     ],
     "css": []
   },
-  "academic-progress.CA24dMmw.css": {
-    "file": "academic-progress.CA24dMmw.css",
+  "academic-progress.8bZ__Bw9.css": {
+    "file": "academic-progress.8bZ__Bw9.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -1360,7 +1360,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CXe0uZqg.js",
+    "file": "B3LSZ72_.js",
     "name": "index",
     "src": "pages/(auth)/email-verification/index.vue",
     "isDynamicEntry": true,
@@ -1399,12 +1399,12 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "CA7iEZb_.js",
+    "file": "DeiRiAOG.js",
     "name": "index",
     "src": "pages/(auth)/login/index.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_CXa_wYL7.js",
+      "_JAhQfwfq.js",
       "../node_modules/nuxt/dist/app/entry.js",
       "_Br_2l1z2.js",
       "_BrTgbP-L.js",
@@ -1431,12 +1431,12 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "D9Udy58Y.js",
+    "file": "D69CldAo.js",
     "name": "login-form",
     "src": "pages/(auth)/login/login-form.vue",
     "isDynamicEntry": true,
     "imports": [
-      "_CXa_wYL7.js",
+      "_JAhQfwfq.js",
       "_Br_2l1z2.js",
       "_BrTgbP-L.js",
       "../node_modules/nuxt/dist/app/entry.js",
@@ -1588,7 +1588,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "Xe0HwkcT.js",
+    "file": "TmM8C7b-.js",
     "name": "leadership",
     "src": "pages/about/leadership.vue",
     "isDynamicEntry": true,
@@ -1599,8 +1599,8 @@ const client_manifest = {
     ],
     "css": []
   },
-  "leadership.ClBnfUy3.css": {
-    "file": "leadership.ClBnfUy3.css",
+  "leadership.BdjRVGPs.css": {
+    "file": "leadership.BdjRVGPs.css",
     "resourceType": "style",
     "prefetch": true,
     "preload": true
@@ -1690,7 +1690,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "483qugLv.js",
+    "file": "0LAExHQy.js",
     "name": "index",
     "src": "pages/application/portal/[applicationId]/index/academic-info/index.vue",
     "isDynamicEntry": true,
@@ -1853,7 +1853,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "BHhg2nbj.js",
+    "file": "BXsZ9qnP.js",
     "name": "index",
     "src": "pages/application/portal/[applicationId]/index/payment/index.vue",
     "isDynamicEntry": true,
@@ -1915,7 +1915,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DKPYUw0s.js",
+    "file": "B3SRVFPv.js",
     "name": "index",
     "src": "pages/application/portal/[applicationId]/index/review/index.vue",
     "isDynamicEntry": true,
@@ -2340,7 +2340,7 @@ const client_manifest = {
     "module": true,
     "prefetch": true,
     "preload": true,
-    "file": "DiRn7EN6.js",
+    "file": "B2qxPE4y.js",
     "name": "index",
     "src": "pages/portal/student/index/index.vue",
     "isDynamicEntry": true,
