@@ -1,0 +1,1 @@
+ALTER TABLE `admission_fee_payment` ADD `string` text NOT NULL;

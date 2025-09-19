@@ -1,18 +1,23 @@
 <script setup lang="ts">
-const { data, error, pending, refresh, execute } = useFetch(
+const { data, error, status, refresh, execute } = useFetch(
   "/api/general/settings",
-  {}
+  { lazy: true }
 );
 
-onMounted(async () => {
+const loading = computed(() => status.value === "pending");
+
+const getSettings = async () => {
   await execute();
-});
+  return data;
+};
+
+defineExpose({ getSettings });
 </script>
 
 <template>
   <div>
-    <div v-if="pending">
-      <slot name="loading" :loading="pending">
+    <div v-if="loading">
+      <slot name="loading" :loading>
         <div class="flex-center">
           <NuxtIcon
             name="lucide:loader"
