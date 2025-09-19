@@ -75,7 +75,7 @@ export default defineEventHandler(async (event) => {
     if (existingApplication) {
       throw createError({
         statusCode: 400,
-        statusMessage: `You already have an application for the ${currentSchoolSession.name} academic session.`
+        statusText: `You already have an application for the ${currentSchoolSession.name} academic session.`,
       });
     }
   }
@@ -85,7 +85,7 @@ export default defineEventHandler(async (event) => {
       body: {
         name: `${body.data.firstName} ${body.data.middleName} ${body.data.otherNames} ${body.data.lastName}`,
         email: body.data.email,
-        password: body.data.password,
+        password: body.data.password!,
         role: "applicant"
       }
     });

@@ -1,6 +1,8 @@
 export default function normalizeException(exception: unknown): Error {
   let normalizedException: Error;
 
+  console.log(exception);
+
   if (exception instanceof Error) {
     normalizedException = exception;
   } else if (
