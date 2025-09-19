@@ -1,4 +1,0 @@
-const academicProgress_vue_vue_type_style_index_0_scoped_cba49f4b_lang = ".custom-progress[data-v-cba49f4b]{--track:#d1fae5;--bar:#059669;background-color:var(--track);border-radius:.5rem;height:.85rem;overflow:hidden;width:100%}.custom-progress[data-v-cba49f4b]::-webkit-progress-bar{background-color:var(--track);border-radius:.5rem}.custom-progress[data-v-cba49f4b]::-webkit-progress-value{background-color:var(--bar);border-radius:.5rem;-webkit-transition:width .3s;transition:width .3s}.custom-progress[data-v-cba49f4b]::-moz-progress-bar{background-color:var(--bar);border-radius:.5rem}.custom-progress[data-v-cba49f4b]::-ms-fill{background-color:var(--bar);border-radius:.5rem}";
-
-export { academicProgress_vue_vue_type_style_index_0_scoped_cba49f4b_lang as a };
-//# sourceMappingURL=academic-progress-styles-1.mjs-3b1KKqPD.mjs.map

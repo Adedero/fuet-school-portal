@@ -1,5 +1,6 @@
-import { c as defineEventHandler, r as readValidatedBody, h as createError, i as db, z as schoolSession } from '../../../../_/nitro.mjs';
+import { d as defineEventHandler, r as readValidatedBody, c as createError, b as db, v as schoolSession } from '../../../../nitro/nitro.mjs';
 import { e as extendedSessionSchema } from '../../../../_/session.schema.mjs';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

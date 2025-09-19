@@ -1,5 +1,5 @@
 import process from 'node:process';globalThis._importMeta_=globalThis._importMeta_||{url:"file:///_entry.js",env:process.env};import { defineComponent, inject, computed, provide, mergeModels, useModel, unref, mergeProps, withCtx, renderSlot, createVNode, createBlock, createCommentVNode, openBlock, createTextVNode, toDisplayString, ref, h, Suspense, hasInjectionContext, shallowRef, resolveComponent, useSlots, toRef, toHandlers, toValue, watch, resolveDynamicComponent, isRef, getCurrentInstance, onServerPrefetch, shallowReactive, Fragment, useAttrs, nextTick, defineAsyncComponent, createElementBlock, cloneVNode, useSSRContext, createApp, renderList, useId, onErrorCaptured, reactive, effectScope, isReadonly, isShallow, isReactive, toRaw, withModifiers, getCurrentScope, markRaw } from 'vue';
-import { O as serialize, P as isEqual, Q as defu, R as parseQuery, h as createError$1, S as klona, T as defuFn, I as hasProtocol, U as isScriptProtocol, K as joinURL, V as withQuery, W as sanitizeStatusCode, X as getContext, Y as withTrailingSlash, Z as withoutTrailingSlash, _ as withLeadingSlash, $ as parseURL, a0 as $fetch$1, a1 as baseURL, a2 as createHooks, a3 as executeAsync, a4 as encodeParam, a5 as encodePath, a6 as toRouteMatcher, a7 as createRouter$1 } from '../_/nitro.mjs';
+import { O as serialize, P as isEqual, Q as defu, R as parseQuery, c as createError$1, S as klona, T as defuFn, H as hasProtocol, U as isScriptProtocol, J as joinURL, V as withQuery, W as sanitizeStatusCode, X as getContext, Y as withTrailingSlash, Z as withoutTrailingSlash, _ as withLeadingSlash, $ as parseURL, a0 as $fetch$1, a1 as baseURL, a2 as createHooks, a3 as executeAsync, a4 as encodeParam, a5 as encodePath, a6 as toRouteMatcher, a7 as createRouter$1 } from '../nitro/nitro.mjs';
 import { RouterView, useRoute as useRoute$1, createMemoryHistory, createRouter, START_LOCATION } from 'vue-router';
 import { createAuthClient } from 'better-auth/vue';
 import { adminClient, inferAdditionalFields } from 'better-auth/client/plugins';
@@ -10,7 +10,9 @@ import { Primitive, Slot, useForwardProps, useForwardPropsEmits, DialogRoot, Dia
 import { reactiveOmit, reactivePick, useDebounceFn, createSharedComposable } from '@vueuse/core';
 import { createTV } from 'tailwind-variants';
 import { getIconCSS } from '@iconify/utils/lib/css/icon';
+import { debounce } from 'perfect-debounce';
 import { h as headSymbol, u as useSeoMeta$1, a as useHead$1 } from '../routes/renderer.mjs';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';
@@ -122,93 +124,6 @@ class DiffHashedObject {
     }
     return `${k}(${this.value})`;
   }
-}
-
-//#region src/index.ts
-const DEBOUNCE_DEFAULTS = { trailing: true };
-/**
-Debounce functions
-@param fn - Promise-returning/async function to debounce.
-@param wait - Milliseconds to wait before calling `fn`. Default value is 25ms
-@returns A function that delays calling `fn` until after `wait` milliseconds have elapsed since the last time it was called.
-@example
-```
-import { debounce } from 'perfect-debounce';
-const expensiveCall = async input => input;
-const debouncedFn = debounce(expensiveCall, 200);
-for (const number of [1, 2, 3]) {
-console.log(await debouncedFn(number));
-}
-//=> 1
-//=> 2
-//=> 3
-```
-*/
-function debounce(fn, wait = 25, options = {}) {
-	options = {
-		...DEBOUNCE_DEFAULTS,
-		...options
-	};
-	if (!Number.isFinite(wait)) throw new TypeError("Expected `wait` to be a finite number");
-	let leadingValue;
-	let timeout;
-	let resolveList = [];
-	let currentPromise;
-	let trailingArgs;
-	const applyFn = (_this, args) => {
-		currentPromise = _applyPromised(fn, _this, args);
-		currentPromise.finally(() => {
-			currentPromise = null;
-			if (options.trailing && trailingArgs && !timeout) {
-				const promise = applyFn(_this, trailingArgs);
-				trailingArgs = null;
-				return promise;
-			}
-		});
-		return currentPromise;
-	};
-	const debounced = function(...args) {
-		if (options.trailing) trailingArgs = args;
-		if (currentPromise) return currentPromise;
-		return new Promise((resolve) => {
-			const shouldCallNow = !timeout && options.leading;
-			clearTimeout(timeout);
-			timeout = setTimeout(() => {
-				timeout = null;
-				const promise = options.leading ? leadingValue : applyFn(this, args);
-				trailingArgs = null;
-				for (const _resolve of resolveList) _resolve(promise);
-				resolveList = [];
-			}, wait);
-			if (shouldCallNow) {
-				leadingValue = applyFn(this, args);
-				resolve(leadingValue);
-			} else resolveList.push(resolve);
-		});
-	};
-	const _clearTimeout = (timer) => {
-		if (timer) {
-			clearTimeout(timer);
-			timeout = null;
-		}
-	};
-	debounced.isPending = () => !!timeout;
-	debounced.cancel = () => {
-		_clearTimeout(timeout);
-		resolveList = [];
-		trailingArgs = null;
-	};
-	debounced.flush = () => {
-		_clearTimeout(timeout);
-		if (!trailingArgs || currentPromise) return;
-		const args = trailingArgs;
-		trailingArgs = null;
-		return applyFn(this, args);
-	};
-	return debounced;
-}
-async function _applyPromised(fn, _this, args) {
-	return await fn.apply(_this, args);
 }
 
 if (!globalThis.$fetch) {
@@ -582,267 +497,284 @@ async function getRouteRules(arg) {
     return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
   }
 }
-const __nuxt_page_meta$k = {
+const __nuxt_page_meta$n = {
   layout: "main"
 };
-const __nuxt_page_meta$j = {
+const __nuxt_page_meta$m = {
   layout: "main"
+};
+const __nuxt_page_meta$l = {
+  layout: "auth"
+};
+const __nuxt_page_meta$k = {
+  layout: "application"
+};
+const __nuxt_page_meta$j = {
+  layout: "portal-admin"
 };
 const __nuxt_page_meta$i = {
   layout: "auth"
 };
 const __nuxt_page_meta$h = {
-  layout: "application"
-};
-const __nuxt_page_meta$g = {
   layout: "portal-admin"
 };
+const __nuxt_page_meta$g = { layout: "portal-student" };
 const __nuxt_page_meta$f = {
   layout: "auth"
 };
 const __nuxt_page_meta$e = {
-  layout: "portal-admin"
-};
-const __nuxt_page_meta$d = { layout: "portal-student" };
-const __nuxt_page_meta$c = {
   layout: "auth"
 };
-const __nuxt_page_meta$b = {
+const __nuxt_page_meta$d = {
   layout: "auth"
 };
+const __nuxt_page_meta$c = { layout: "portal-hod" };
+const __nuxt_page_meta$b = { layout: "portal-student" };
 const __nuxt_page_meta$a = {
   layout: "auth"
 };
-const __nuxt_page_meta$9 = { layout: "portal-student" };
+const __nuxt_page_meta$9 = {
+  layout: "auth"
+};
 const __nuxt_page_meta$8 = {
-  layout: "auth"
-};
-const __nuxt_page_meta$7 = {
-  layout: "auth"
-};
-const __nuxt_page_meta$6 = {
   layout: "portal-admin"
 };
-const __nuxt_page_meta$5 = { layout: "portal-student" };
+const __nuxt_page_meta$7 = { layout: "portal-student" };
+const __nuxt_page_meta$6 = { layout: "portal-lecturer" };
+const __nuxt_page_meta$5 = {
+  layout: "portal-admin"
+};
 const __nuxt_page_meta$4 = {
-  layout: "portal-admin"
-};
-const __nuxt_page_meta$3 = {
   layout: "portal-student"
 };
-const __nuxt_page_meta$2 = {
+const __nuxt_page_meta$3 = {
   layout: "application"
 };
-const __nuxt_page_meta$1 = { layout: "portal-student" };
-const __nuxt_page_meta = {
+const __nuxt_page_meta$2 = { layout: "portal-student" };
+const __nuxt_page_meta$1 = {
   layout: "portal-admin"
+};
+const __nuxt_page_meta = {
+  layout: "portal-student"
 };
 const _routes = [
   {
     name: "index",
     path: "/",
-    meta: __nuxt_page_meta$k || {},
-    component: () => import('./index-dibUOKXL.mjs')
+    meta: __nuxt_page_meta$n || {},
+    component: () => import('./index-D6UuGbh9.mjs')
   },
   {
     name: "about",
     path: "/about",
-    component: () => import('./index-DtiNLzkY.mjs')
+    component: () => import('./index-DHw2ZywH.mjs')
   },
   {
     name: "about-contact",
     path: "/about/contact",
-    component: () => import('./contact-Bb6MkxWj.mjs')
+    component: () => import('./contact--3awLMNl.mjs')
   },
   {
     name: "contact",
     path: "/contact",
-    component: () => import('./index-CEKsLRwf.mjs')
+    component: () => import('./index-BTc_hqZ4.mjs')
   },
   {
     name: "about-facilities",
     path: "/about/facilities",
-    component: () => import('./facilities-U3b_W-U0.mjs')
+    component: () => import('./facilities-Dh_Xlr0R.mjs')
   },
   {
     name: "about-leadership",
     path: "/about/leadership",
-    component: () => import('./leadership-Cvyjd09l.mjs')
+    component: () => import('./leadership-CVsJbh1V.mjs')
   },
   {
     name: "application",
     path: "/application",
-    meta: __nuxt_page_meta$j || {},
-    component: () => import('./index-Co1v60yZ.mjs')
+    meta: __nuxt_page_meta$m || {},
+    component: () => import('./index-Dx2kWbJs.mjs')
   },
   {
     name: "login",
     path: "/login",
-    meta: __nuxt_page_meta$i || {},
-    component: () => import('./index-D2xvkqMt.mjs')
+    meta: __nuxt_page_meta$l || {},
+    component: () => import('./index-Dk30wiLn.mjs')
   },
   {
     name: "about-accreditation",
     path: "/about/accreditation",
-    component: () => import('./accreditation-K0I-jnaC.mjs')
+    component: () => import('./accreditation-CaUy6Zpw.mjs')
   },
   {
     name: "login-login-form",
     path: "/login/login-form",
-    component: () => import('./login-form-C1Gx7oA9.mjs')
+    component: () => import('./login-form-CjlFMtlE.mjs')
   },
   {
     name: "academics-undergraduate",
     path: "/academics/undergraduate",
-    component: () => import('./undergraduate-76k5sqSf.mjs')
+    component: () => import('./undergraduate-Y7oN6nBg.mjs')
   },
   {
     name: "application-portal",
     path: "/application/portal",
-    meta: __nuxt_page_meta$h || {},
-    component: () => import('./index-BTlkVPT3.mjs')
+    meta: __nuxt_page_meta$k || {},
+    component: () => import('./index-Bapny-KM.mjs')
   },
   {
     name: "portal-admin-index",
     path: "/portal/admin",
-    meta: __nuxt_page_meta$g || {},
-    component: () => import('./index-Z4jylWTx.mjs')
+    meta: __nuxt_page_meta$j || {},
+    component: () => import('./index-BPhjfpUE.mjs')
   },
   {
     name: "change-email",
     path: "/change-email",
-    meta: __nuxt_page_meta$f || {},
-    component: () => import('./index-BE3CEh0R.mjs')
+    meta: __nuxt_page_meta$i || {},
+    component: () => import('./index-e09LBVIw.mjs')
   },
   {
     name: "portal-admin-courses",
     path: "/portal/admin/courses",
-    meta: __nuxt_page_meta$e || {},
-    component: () => import('./index-B0uw9sqP.mjs')
+    meta: __nuxt_page_meta$h || {},
+    component: () => import('./index-YPLglm1C.mjs')
   },
   {
     name: "portal-student-index",
     path: "/portal/student",
-    meta: __nuxt_page_meta$d || {},
-    component: () => import('./index-D9pxpVr9.mjs')
+    meta: __nuxt_page_meta$g || {},
+    component: () => import('./index-CcSGkDPN.mjs')
   },
   {
     name: "reset-password",
     path: "/reset-password",
-    meta: __nuxt_page_meta$c || {},
-    component: () => import('./index-91ZK1Mhr.mjs')
+    meta: __nuxt_page_meta$f || {},
+    component: () => import('./index-Bn5xWyxB.mjs')
   },
   {
     name: "change-password",
     path: "/change-password",
-    meta: __nuxt_page_meta$b || {},
-    component: () => import('./index-Xk0B9fnX.mjs')
+    meta: __nuxt_page_meta$e || {},
+    component: () => import('./index-DX-6lg99.mjs')
   },
   {
     name: "forgot-password",
     path: "/forgot-password",
-    meta: __nuxt_page_meta$a || {},
-    component: () => import('./index-CELEPCB0.mjs')
+    meta: __nuxt_page_meta$d || {},
+    component: () => import('./index-BwpX0mtE.mjs')
+  },
+  {
+    name: "portal-staff-hod-index",
+    path: "/portal/staff/hod",
+    meta: __nuxt_page_meta$c || {},
+    component: () => import('./index-RCPP8_Xa.mjs')
   },
   {
     name: "portal-student-courses",
     path: "/portal/student/courses",
-    meta: __nuxt_page_meta$9 || {},
-    component: () => import('./index-B8Z3pORE.mjs')
+    meta: __nuxt_page_meta$b || {},
+    component: () => import('./index-oRxtDmBT.mjs')
   },
   {
     name: "token-validation",
     path: "/token-validation",
-    meta: __nuxt_page_meta$8 || {},
-    component: () => import('./index-gpfCeflF.mjs')
+    meta: __nuxt_page_meta$a || {},
+    component: () => import('./index-DMNzHsjV.mjs')
   },
   {
     name: "email-verification",
     path: "/email-verification",
-    meta: __nuxt_page_meta$7 || {},
-    component: () => import('./index-Bq4djgzW.mjs')
+    meta: __nuxt_page_meta$9 || {},
+    component: () => import('./index-C0gwqOs1.mjs')
   },
   {
     name: "portal-admin-applications",
     path: "/portal/admin/applications",
-    meta: __nuxt_page_meta$6 || {},
-    component: () => import('./index-Bn8MFXI7.mjs')
+    meta: __nuxt_page_meta$8 || {},
+    component: () => import('./index-BqtxcHW-.mjs')
   },
   {
     name: "portal-student-courses-register",
     path: "/portal/student/courses/register",
-    meta: __nuxt_page_meta$5 || {},
-    component: () => import('./register-BdKHFh9i.mjs')
+    meta: __nuxt_page_meta$7 || {},
+    component: () => import('./register-DEt5optg.mjs')
+  },
+  {
+    name: "portal-staff-lecturer-index",
+    path: "/portal/staff/lecturer",
+    meta: __nuxt_page_meta$6 || {},
+    component: () => import('./index-DwP16FiF.mjs')
   },
   {
     name: "portal-admin-academic-sessions",
     path: "/portal/admin/academic-sessions",
-    meta: __nuxt_page_meta$4 || {},
-    component: () => import('./index-Cwi0GnTw.mjs')
+    meta: __nuxt_page_meta$5 || {},
+    component: () => import('./index-DFu7zVw5.mjs')
   },
   {
     name: "change-email-change-email-form",
     path: "/change-email/change-email-form",
-    component: () => import('./change-email-form-D2KG81zx.mjs')
+    component: () => import('./change-email-form-Br3NC9n0.mjs')
   },
   {
-    name: __nuxt_page_meta$2?.name,
+    name: __nuxt_page_meta$3?.name,
     path: "/application/portal/:applicationId()",
-    meta: __nuxt_page_meta$2 || {},
-    component: () => import('./index-CouH9Qbv.mjs'),
+    meta: __nuxt_page_meta$3 || {},
+    component: () => import('./index-du54fzI4.mjs'),
     children: [
       {
         name: "application-portal-applicationId-index",
         path: "",
-        component: () => import('./index-FDxDaVIj.mjs')
+        component: () => import('./index-yE4tORUC.mjs')
       },
       {
         name: "application-portal-applicationId-index-review",
         path: "review",
-        component: () => import('./index-BEJyyCEu.mjs')
+        component: () => import('./index-CqRexYqt.mjs')
       },
       {
         name: "application-portal-applicationId-index-payment",
         path: "payment",
-        component: () => import('./index-DBBQhKzx.mjs')
+        component: () => import('./index-DmgheBeq.mjs')
       },
       {
         name: "application-portal-applicationId-index-documents",
         path: "documents",
-        component: () => import('./index-B0dvBGEU.mjs')
+        component: () => import('./index-UxAOGK7q.mjs')
       },
       {
         name: "application-portal-applicationId-index-family-info",
         path: "family-info",
-        component: () => import('./index-BCtS0DkX.mjs')
+        component: () => import('./index-t0beNg2s.mjs')
       },
       {
         name: "application-portal-applicationId-index-academic-info",
         path: "academic-info",
-        meta: __nuxt_page_meta$3 || {},
-        component: () => import('./index-Bj227jsf.mjs')
+        meta: __nuxt_page_meta$4 || {},
+        component: () => import('./index-B32uems8.mjs')
       },
       {
         name: "application-portal-applicationId-index-personal-info",
         path: "personal-info",
-        component: () => import('./index-lFTKd28q.mjs')
+        component: () => import('./index-BCF2GZJJ.mjs')
       },
       {
         name: "application-portal-applicationId-index-admission-status",
         path: "admission-status",
-        component: () => import('./index-BZuh0vDv.mjs')
+        component: () => import('./index-WlFiONMs.mjs')
       }
     ]
   },
   {
     name: "reset-password-reset-password-form",
     path: "/reset-password/reset-password-form",
-    component: () => import('./reset-password-form-BWbpRZZD.mjs')
+    component: () => import('./reset-password-form-069WPOUf.mjs')
   },
   {
     name: "change-password-change-password-form",
     path: "/change-password/change-password-form",
-    component: () => import('./change-password-form-B61zwRJm.mjs')
+    component: () => import('./change-password-form-DnNNJrWq.mjs')
   },
   {
     name: "portal-admin-applications-utils-table-columns",
@@ -852,24 +784,35 @@ const _routes = [
   {
     name: "portal-student-courses-registration-id",
     path: "/portal/student/courses/registration/:id()",
-    meta: __nuxt_page_meta$1 || {},
-    component: () => import('./index-BeDTDacP.mjs')
+    meta: __nuxt_page_meta$2 || {},
+    component: () => import('./index-bw-CLL1a.mjs')
   },
   {
     name: "portal-admin-applications-applicationId",
     path: "/portal/admin/applications/:applicationId()",
+    meta: __nuxt_page_meta$1 || {},
+    component: () => import('./index-DpKJ_UE6.mjs')
+  },
+  {
+    name: "portal-student-course-registration-history",
+    path: "/portal/student/course-registration/history",
     meta: __nuxt_page_meta || {},
-    component: () => import('./index-6DqykCTE.mjs')
+    component: () => import('./index-DvqccPmq.mjs')
+  },
+  {
+    name: "portal-student-course-registration-register",
+    path: "/portal/student/course-registration/register",
+    component: () => import('./index-C1jf5ksC.mjs')
   },
   {
     name: "application-portal-applicationId-utils-handle-save-click",
     path: "/application/portal/:applicationId()/utils/handle-save-click",
-    component: () => import('./handle-save-click-Cv2jAMIv.mjs')
+    component: () => import('./handle-save-click-d4tY2V9Z.mjs')
   },
   {
     name: "application-portal-applicationId-utils-handle-previous-click",
     path: "/application/portal/:applicationId()/utils/handle-previous-click",
-    component: () => import('./handle-previous-click-oUBgE_RY.mjs')
+    component: () => import('./handle-previous-click-DL4mIMND.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {
@@ -2839,7 +2782,7 @@ const getImage = (src, { modifiers = {}, baseURL: baseURL2 } = {}, ctx) => {
 };
 const validateDomains = true;
 const supportsAlias = true;
-const ipxRuntime$bK7wbzGLDgdt_45ICc3Yw0PHnCfr8bQbKkvF1IEdm13QE = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
+const ipxRuntime$xzyJ5Fbf38CdRSy0J0TEZcwQSIsLKfuJ4udbz5w1VNk = /* @__PURE__ */ Object.freeze(/* @__PURE__ */ Object.defineProperty({
   __proto__: null,
   getImage,
   operationsGenerator,
@@ -2870,7 +2813,7 @@ const imageOptions = {
     ]
   },
   providers: {
-    ["ipx"]: { provider: ipxRuntime$bK7wbzGLDgdt_45ICc3Yw0PHnCfr8bQbKkvF1IEdm13QE, defaults: {} }
+    ["ipx"]: { provider: ipxRuntime$xzyJ5Fbf38CdRSy0J0TEZcwQSIsLKfuJ4udbz5w1VNk, defaults: {} }
   }
 };
 const useImage = (event) => {
@@ -6890,13 +6833,15 @@ _sfc_main$3.setup = (props, ctx) => {
 };
 const __nuxt_component_3 = Object.assign(_sfc_main$3, { __name: "VueConfirmDialog" });
 const layouts = {
-  academics: defineAsyncComponent(() => import('./academics-CIpgNxuw.mjs').then((m) => m.default || m)),
-  application: defineAsyncComponent(() => import('./application-BK-vj6p9.mjs').then((m) => m.default || m)),
-  auth: defineAsyncComponent(() => import('./auth-7mHzctoG.mjs').then((m) => m.default || m)),
-  default: defineAsyncComponent(() => import('./default-C3qzN7pR.mjs').then((m) => m.default || m)),
-  main: defineAsyncComponent(() => import('./main-BznW_Tcc.mjs').then((m) => m.default || m)),
-  "portal-admin": defineAsyncComponent(() => import('./admin-4Gi6MyWE.mjs').then((m) => m.default || m)),
-  "portal-student": defineAsyncComponent(() => import('./student-DUX1IQZ9.mjs').then((m) => m.default || m))
+  academics: defineAsyncComponent(() => import('./academics-CHInaNZP.mjs').then((m) => m.default || m)),
+  application: defineAsyncComponent(() => import('./application-HfD1fTZb.mjs').then((m) => m.default || m)),
+  auth: defineAsyncComponent(() => import('./auth-DoA7l9-3.mjs').then((m) => m.default || m)),
+  default: defineAsyncComponent(() => import('./default-CzdwwuvG.mjs').then((m) => m.default || m)),
+  main: defineAsyncComponent(() => import('./main-BaZVdKiX.mjs').then((m) => m.default || m)),
+  "portal-admin": defineAsyncComponent(() => import('./admin-hA6WnmSJ.mjs').then((m) => m.default || m)),
+  "portal-hod": defineAsyncComponent(() => import('./hod-DshpcSrK.mjs').then((m) => m.default || m)),
+  "portal-lecturer": defineAsyncComponent(() => import('./lecturer-jbGq9bYO.mjs').then((m) => m.default || m)),
+  "portal-student": defineAsyncComponent(() => import('./student-2CvMRbno.mjs').then((m) => m.default || m))
 };
 const LayoutLoader = defineComponent({
   name: "LayoutLoader",
@@ -7186,8 +7131,8 @@ const _sfc_main$1 = {
     const statusMessage = _error.statusMessage ?? (is404 ? "Page Not Found" : "Internal Server Error");
     const description = _error.message || _error.toString();
     const stack = void 0;
-    const _Error404 = defineAsyncComponent(() => import('./error-404-CL_ofRDj.mjs'));
-    const _Error = defineAsyncComponent(() => import('./error-500-BptJ-SWm.mjs'));
+    const _Error404 = defineAsyncComponent(() => import('./error-404-BFGBcT8M.mjs'));
+    const _Error = defineAsyncComponent(() => import('./error-500-DJ4vDwFU.mjs'));
     const ErrorTemplate = is404 ? _Error404 : _Error;
     return (_ctx, _push, _parent, _attrs) => {
       _push(ssrRenderComponent(unref(ErrorTemplate), mergeProps({ statusCode: unref(statusCode), statusMessage: unref(statusMessage), description: unref(description), stack: unref(stack) }, _attrs), null, _parent));

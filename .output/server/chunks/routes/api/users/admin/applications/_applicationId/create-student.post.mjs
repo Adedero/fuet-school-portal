@@ -1,6 +1,7 @@
-import { c as defineEventHandler, m as getRouterParams, i as db, h as createError, r as readValidatedBody, n as student, o as user } from '../../../../../../_/nitro.mjs';
+import { d as defineEventHandler, i as getRouterParams, b as db, c as createError, r as readValidatedBody, s as student, u as user } from '../../../../../../nitro/nitro.mjs';
 import { eq } from 'drizzle-orm';
 import { s as studentCreationSchema } from '../../../../../../_/student.schema.mjs';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

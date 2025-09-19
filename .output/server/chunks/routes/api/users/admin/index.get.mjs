@@ -1,6 +1,7 @@
-import { c as defineEventHandler, q as getValidatedQuery, h as createError, i as db } from '../../../../_/nitro.mjs';
+import { d as defineEventHandler, m as getValidatedQuery, c as createError, b as db } from '../../../../nitro/nitro.mjs';
 import { or, like } from 'drizzle-orm';
 import { a as applicationQuerySchema } from '../../../../_/application.schema.mjs';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

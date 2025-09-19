@@ -1,5 +1,6 @@
-import { c as defineEventHandler, r as readValidatedBody, h as createError, i as db, e as auth, j as generateApplicationNumber, k as application } from '../../../../_/nitro.mjs';
+import { d as defineEventHandler, r as readValidatedBody, c as createError, b as db, a as auth, e as generateApplicationNumber, f as application } from '../../../../nitro/nitro.mjs';
 import { a as applicationInitiationSchema } from '../../../../_/application-initiation.schema.mjs';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

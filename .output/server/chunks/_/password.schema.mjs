@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { L as MIN_PASSWORD_LENGTH } from './nitro.mjs';
+import { L as MIN_PASSWORD_LENGTH } from '../nitro/nitro.mjs';
 
 const passwordSchema = z.string().min(MIN_PASSWORD_LENGTH, {
   message: `Password must be at least ${MIN_PASSWORD_LENGTH} characters long`

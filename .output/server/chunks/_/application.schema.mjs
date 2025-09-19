@@ -1,5 +1,5 @@
 import z from 'zod';
-import { N as formatBytes } from './nitro.mjs';
+import { N as formatBytes } from '../nitro/nitro.mjs';
 
 const querySchema = z.object({
   search: z.string("Invalid search value"),
