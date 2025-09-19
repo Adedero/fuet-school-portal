@@ -36,8 +36,8 @@ const state = reactive<ApplicationInitiationSchema>({
   otherNames: "",
   lastName: "",
   email: authStore.user.value?.email ?? "",
-  password: "",
-  confirmPassword: "",
+  /* password: "",
+  confirmPassword: "", */
   birthDay: 1,
   birthMonth: "January",
   birthYear: new Date().getFullYear() - MIN_AGE
@@ -46,6 +46,16 @@ const state = reactive<ApplicationInitiationSchema>({
 const handleSubmit = async (
   event: FormSubmitEvent<ApplicationInitiationSchema>
 ) => {
+  if (!authStore.user.value) {
+    if (!state.password || !state.confirmPassword) {
+      toast.add({
+        color: "error",
+        title: "Error",
+        description: "Password is required"
+      });
+      return;
+    }
+  }
   try {
     await $fetch("/api/general/applications/initiate", {
       method: "POST",

@@ -6,7 +6,6 @@ import {
   real
 } from "drizzle-orm/sqlite-core";
 import { relations, sql } from "drizzle-orm";
-import { ulid } from "ulid";
 import { id, timestamps } from "./mixins";
 
 /**

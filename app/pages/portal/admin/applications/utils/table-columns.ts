@@ -43,6 +43,7 @@ export const columns: TableColumn<ApplicationItem>[] = [
     header: "Course"
   },
   {
+    accessorKey: "hasPaidAdmissionFee",
     header: "Admission fee",
     cell: ({ row }) => {
       const hasPaid: boolean = row.getValue("hasPaidAdmissionFee");

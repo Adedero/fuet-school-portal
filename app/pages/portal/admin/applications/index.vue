@@ -96,6 +96,7 @@ function onSelect(row: TableRow<ApplicationItem>) {
           @retry="refresh"
         />
       </div>
+      
 
       <div v-else-if="applications">
         <NuxtTable :data="applications" :columns="columns" @select="onSelect" />

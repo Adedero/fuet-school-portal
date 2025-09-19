@@ -9,8 +9,8 @@ export const applicationInitiationSchema = z
     otherNames: z.string().trim().optional(),
     lastName: z.string().trim().nonempty("Last name is required."),
     email: z.email("Email is not valid"),
-    password: passwordSchema,
-    confirmPassword: z.string(),
+    password: passwordSchema.optional(),
+    confirmPassword: z.string().optional(),
     birthDay: z.number("Birth day is required."),
     birthMonth: z.string().nonempty("Birth month is required."),
     birthYear: z
