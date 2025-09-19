@@ -1,0 +1,1 @@
+import{z as s,I as e}from"#entry";function u(){const t=s(),n={applicant:"/application/portal",student:"/portal/student",admin:"/portal/admin",staff:"/portal/staff"},o=t.user.value;function r(){if(!t.isLoggedIn()||!o?.role){e("/login");return}const a=n[o.role];a&&e(a)}return r}export{u as n};
