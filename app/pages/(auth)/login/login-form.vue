@@ -28,6 +28,7 @@ const error = ref<Error | null>(null);
 
 async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
   error.value = null;
+  const submittedEmail = event.data.email; // captured the email here
 
   await authClient.signIn.email(event.data, {
     onError(ctx) {
@@ -56,8 +57,7 @@ async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
       }
 
       if (!sessionData.data?.user.emailVerified) {
-        const encodedEmail = btoa(event.data.email);
-
+        const encodedEmail = btoa(submittedEmail);
         await navigateTo({
           name: "email-verification",
           query: { email: encodedEmail }
@@ -140,9 +140,7 @@ async function onSubmit(event: FormSubmitEvent<LoginSchema>) {
           <NuxtCheckbox v-model="state.rememberMe" label="Remember me" />
         </NuxtFormField>
 
-        <NuxtLink to="/forgot-password" class="link text-sm">
-          Forgot password
-        </NuxtLink>
+        <NuxtLink to="/forgot-password" class="link text-sm"> Forgot password </NuxtLink>
       </div>
 
       <NuxtButton

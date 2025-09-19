@@ -1,8 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-  layout: "portal-student"
-});
-
 import { VueMultiSelectButton } from "#components";
 import handlePreviousClick from "../../utils/handle-previous-click";
 import { academicSchema } from "~~/shared/schemas/application.schema";
@@ -11,17 +7,12 @@ import { degrees } from "~/utils/data/faculties";
 import { Calendar } from "~/utils/data/calendar";
 import type { Department } from "~/components/app/faculty-select.vue";
 
-
-
-
 const { applicationId = "" } = useRouteParams();
 const toast = useToast();
 
-const {
-  data: app,
-  error,
-  refresh
-} = await useFetch(`/api/users/applicant/applications/${applicationId}`);
+const { data: app, error, refresh } = await useFetch(
+  `/api/users/applicant/applications/${applicationId}`
+);
 
 const initial = computed(() => {
   return {
@@ -31,10 +22,8 @@ const initial = computed(() => {
 
     secondarySchoolName: app.value?.secondarySchoolName ?? "",
     secondarySchoolAddress: app.value?.secondarySchoolAddress ?? "",
-    secondarySchoolGraduationMonth:
-      app.value?.secondarySchoolGraduationMonth ?? "",
-    secondarySchoolGraduationYear:
-      app.value?.secondarySchoolGraduationYear ?? undefined
+    secondarySchoolGraduationMonth: app.value?.secondarySchoolGraduationMonth ?? "",
+    secondarySchoolGraduationYear: app.value?.secondarySchoolGraduationYear ?? undefined,
   };
 });
 type State = typeof initial.value;
@@ -61,7 +50,7 @@ const saveProgress = async (successFn: () => void) => {
     toast,
     onSuccess: () => {
       successFn();
-    }
+    },
   });
 };
 
@@ -72,7 +61,7 @@ const items = [
       await saveProgress(() => {
         navigateTo(`/application/portal/${applicationId}/documents`);
       });
-    }
+    },
   },
   {
     label: "Save Only",
@@ -80,7 +69,7 @@ const items = [
       await saveProgress(() => {
         refresh();
       });
-    }
+    },
   },
   {
     label: "Save and Exit",
@@ -88,8 +77,8 @@ const items = [
       await saveProgress(() => {
         navigateTo(`/application/portal`);
       });
-    }
-  }
+    },
+  },
 ];
 </script>
 
@@ -99,16 +88,26 @@ const items = [
       <header>
         <h1 class="text-xl font-bold">Academic Information</h1>
         <p class="text-sm muted">
-          Please provide accurate academic information. You can save your
-          progress and return later to complete the application.</p>
+          Please provide accurate academic information. You can save your progress and
+          return later to complete the application.
+        </p>
       </header>
 
       <section class="my-5">
         <div v-if="error">
-          <FetchErrorAlert :message="normalizeException(error).message" show-retry @retry="refresh" />
+          <FetchErrorAlert
+            :message="normalizeException(error).message"
+            show-retry
+            @retry="refresh"
+          />
         </div>
 
-        <NuxtForm v-else-if="app" :state :schema="academicSchema" :disabled="app.status !== 'pending'">
+        <NuxtForm
+          v-else-if="app"
+          :state
+          :schema="academicSchema"
+          :disabled="app.status !== 'pending'"
+        >
           <div class="grid md:grid-cols-2 gap-2.5">
             <div class="md:col-span-2">
               <p class="text-lg font-semibold">Course Choice</p>
@@ -120,12 +119,21 @@ const items = [
                 class="w-full"
                 size="lg"
               /> -->
-              <AppFacultySelect v-model="selectedCourse" item="department" size="lg" class="w-full" />
+              <AppFacultySelect
+                v-model="selectedCourse"
+                item="department"
+                size="lg"
+                class="w-full"
+              />
             </NuxtFormField>
 
             <NuxtFormField name="degreeType" label="Degree" required>
-              <NuxtSelect v-model="state.degreeType" :items="degrees.map((degree) => degree.code)" class="w-full"
-                size="lg" />
+              <NuxtSelect
+                v-model="state.degreeType"
+                :items="degrees.map((degree) => degree.code)"
+                class="w-full"
+                size="lg"
+              />
             </NuxtFormField>
 
             <div class="mt-5 md:col-span-2">
@@ -135,39 +143,77 @@ const items = [
               <NuxtInput v-model="state.jambRegNumber" class="w-full" size="lg" />
             </NuxtFormField>
 
-            <NuxtFormField name="secondarySchoolName" label="Name of Secondary Institution" required>
+            <NuxtFormField
+              name="secondarySchoolName"
+              label="Name of Secondary Institution"
+              required
+            >
               <NuxtInput v-model="state.secondarySchoolName" class="w-full" size="lg" />
             </NuxtFormField>
 
-            <NuxtFormField name="secondarySchoolAddress" label="Address of Secondary Institution" required
-              class="md:col-span-2">
-              <NuxtInput v-model="state.secondarySchoolAddress" class="w-full" size="lg" />
+            <NuxtFormField
+              name="secondarySchoolAddress"
+              label="Address of Secondary Institution"
+              required
+              class="md:col-span-2"
+            >
+              <NuxtInput
+                v-model="state.secondarySchoolAddress"
+                class="w-full"
+                size="lg"
+              />
             </NuxtFormField>
 
-            <NuxtFormField name="secondarySchoolGraduationMonth" label="Month of Graduation" required>
-              <NuxtSelectMenu v-model="state.secondarySchoolGraduationMonth" :items="Calendar.months().long"
-                class="w-full" size="lg" />
+            <NuxtFormField
+              name="secondarySchoolGraduationMonth"
+              label="Month of Graduation"
+              required
+            >
+              <NuxtSelectMenu
+                v-model="state.secondarySchoolGraduationMonth"
+                :items="Calendar.months().long"
+                class="w-full"
+                size="lg"
+              />
             </NuxtFormField>
 
-            <NuxtFormField name="secondarySchoolGraduationYear" label="Year of Graduation" required>
-              <NuxtInputNumber v-model="state.secondarySchoolGraduationYear" class="w-full" size="lg"
-                orientation="vertical" :format-options="{
-                  useGrouping: 'false'
-                }" />
+            <NuxtFormField
+              name="secondarySchoolGraduationYear"
+              label="Year of Graduation"
+              required
+            >
+              <NuxtInputNumber
+                v-model="state.secondarySchoolGraduationYear"
+                class="w-full"
+                size="lg"
+                orientation="vertical"
+                :min="1900"
+                :max="2099"
+                :step="1"
+                :format-options="{ useGrouping: false }"
+              />
             </NuxtFormField>
           </div>
         </NuxtForm>
       </section>
 
       <footer v-if="app" class="flex items-center gap-2.5 justify-between">
-        <NuxtButton label="Previous" color="neutral" variant="soft" @click="
-          handlePreviousClick(
-            hasUnsavedChanges,
-            `/application/portal/${applicationId}/family-info`
-          )
-          " />
-        <NuxtButton v-if="app.status !== 'pending'" :to="`/application/portal/${applicationId}/documents`"
-          label="Next" />
+        <NuxtButton
+          label="Previous"
+          color="neutral"
+          variant="soft"
+          @click="
+            handlePreviousClick(
+              hasUnsavedChanges,
+              `/application/portal/${applicationId}/family-info`
+            )
+          "
+        />
+        <NuxtButton
+          v-if="app.status !== 'pending'"
+          :to="`/application/portal/${applicationId}/documents`"
+          label="Next"
+        />
         <VueMultiSelectButton v-else :items />
       </footer>
     </div>
