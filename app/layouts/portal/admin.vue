@@ -69,7 +69,8 @@ const items: NavigationMenuItem[][] = [
     },
     {
       label: "Courses",
-      icon: "lucide:book-a"
+      icon: "lucide:book-a",
+      to: "/portal/admin/courses"
     },
     {
       label: "Faculties",

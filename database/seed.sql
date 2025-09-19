@@ -81,8 +81,7 @@ VALUES
   ('01K5E7T3Z60GJXED5MHSNCYWVJ', 'rain', 'CSC102', 100, 'Programming Fundamentals', 'Basic programming with C language', '01K5E7T3YZC9229CTPAWVGAZ05', '01K5E7T3YYTV9YAMFMA4MDHXCV'),
 
   -- Physics
-  ('01K5E7T3Z5P101BRJ21KTV7Y36
-', 'harmattan', 'PHY101', 100, 'General Physics I', 'Mechanics, heat and properties of matter', '01K5E7T3YZ2JCMV0XQZF4B5PXV', '01K5E7T3YYTV9YAMFMA4MDHXCV'),
+  ('01K5E7T3Z5P101BRJ21KTV7Y36', 'harmattan', 'PHY101', 100, 'General Physics I', 'Mechanics, heat and properties of matter', '01K5E7T3YZ2JCMV0XQZF4B5PXV', '01K5E7T3YYTV9YAMFMA4MDHXCV'),
   ('01K5E7T3Z588SR9XMPMPQ05NWM', 'rain', 'PHY102', 100, 'General Physics II', 'Electricity, magnetism and modern physics', '01K5E7T3YZ2JCMV0XQZF4B5PXV', '01K5E7T3YYTV9YAMFMA4MDHXCV'),
 
   -- Chemistry

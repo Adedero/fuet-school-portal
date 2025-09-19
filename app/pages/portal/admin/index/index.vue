@@ -15,7 +15,11 @@ const quickActions = [
     icon: "lucide:user-check"
   },
   { label: "Process Payments", icon: "lucide:credit-card" },
-  { label: "Manage Courses", icon: "lucide:book-open" },
+  {
+    label: "Manage Courses",
+    to: "/portal/admin/courses",
+    icon: "lucide:book-open"
+  },
   { label: "Add Events", icon: "lucide:calendar" }
 ];
 
