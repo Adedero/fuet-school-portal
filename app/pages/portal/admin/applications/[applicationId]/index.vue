@@ -200,14 +200,19 @@ const handleDelete = async () => {
               variant="subtle"
             />
           </div>
-          <NuxtAlert
-            v-else
-            title="Admission Fee"
-            description="Applicant has not paid the admission fee"
-            icon="lucide:info"
-            color="warning"
-            variant="subtle"
-          />
+          <div v-else class="space-y-5">
+            <NuxtAlert
+              title="Admission Fee"
+              description="Applicant has not paid the admission fee"
+              icon="lucide:info"
+              color="warning"
+              variant="subtle"
+            />
+
+            <AdminStudentPaymentCreator :application-id="applicationId">
+              <NuxtButton label="Manual Validation" />
+            </AdminStudentPaymentCreator>
+          </div>
 
           <AdminStudentsCreator v-model:open="open" :application />
         </div>

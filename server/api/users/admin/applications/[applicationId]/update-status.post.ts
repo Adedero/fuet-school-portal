@@ -39,7 +39,11 @@ export default defineEventHandler(async (event) => {
 
   await db
     .update(application)
-    .set({ status, updatedAt: new Date() })
+    .set({
+      status,
+      approvedAt: status === "accepted" ? new Date() : null,
+      updatedAt: new Date()
+    })
     .where(eq(application.id, currentApplication.id));
 
   return {

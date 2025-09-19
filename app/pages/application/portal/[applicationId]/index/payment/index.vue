@@ -1,23 +1,58 @@
 <script setup lang="ts">
-useScript("https://newwebpay.qa.interswitchng.com/inline-checkout.js", {
-  tagPosition: "bodyClose"
-});
+import { useAuthStore } from "~/stores/auth.store";
 
-const initiatePayment = () => {
-  if (!window.webpayCheckout) return;
+const config = useRuntimeConfig();
+const authStore = useAuthStore();
+const { checkout } = useAdmissionFeePayment();
+const toast = useToast();
+const appSettings = useTemplateRef("app-settings");
+const { applicationId = "" } = useRouteParams();
 
-  const request = {
-    merchant_code: "MX104269",
-    pay_item_id: "MX104269_MERCHANT_APP",
-    txn_ref: "1ytjOnt8eASgS8+WSLZUlSn8FtPW/qpL4mg2iYIdc9s=",
-    site_redirect_url: "https://google.com/",
-    amount: 10000,
-    currency: 566,
-    onComplete: () => {},
-    mode: "LIVE"
-  };
+const initiatePayment = async () => {
+  try {
+    const email = authStore.user.value?.email;
+    if (!email) {
+      throw new Error("Log in session expired. Please, log in to conitnue");
+    }
+    const settings = await appSettings.value?.getSettings();
+    if (!settings?.value) {
+      throw new Error(
+        "Something happened and we're working on it. Please, try again later"
+      );
+    }
+    const amount = (settings.value.admissionFee ?? 0) * 100;
 
-  window.webpayCheckout(request);
+    const checkoutResponse = await checkout({
+      customerEmail: email,
+      amount: 1000
+    });
+
+    const { transactionStatus, response } = await $fetch(
+      `/api/users/applicant/applications/${applicationId}/process-admission-fee`,
+      {
+        method: "POST",
+        body: {
+          merchantCode: config.public.interswitch.merchantCode,
+          transactionRef: checkoutResponse.txnref,
+          amount: checkoutResponse.amount
+        }
+      }
+    );
+    if (transactionStatus === "failed") {
+      throw new Error(`Transaction failed with response: ${response}`);
+    }
+    toast.add({
+      color: transactionStatus === "successful" ? "success" : "warning",
+      title: transactionStatus === "successful" ? "Success" : "Pending",
+      description: `Transaction is ${transactionStatus}: ${response}`
+    });
+  } catch (error) {
+    toast.add({
+      color: "error",
+      title: "Error",
+      description: normalizeException(error).message
+    });
+  }
 };
 </script>
 
@@ -33,7 +68,7 @@ const initiatePayment = () => {
           <div class="flex items-baseline gap-2.5 justify-between">
             <p>Total</p>
 
-            <AppSettings>
+            <AppSettings ref="app-settings">
               <template #default="{ data }">
                 <p class="text-2xl font-semibold">
                   ₦ {{ data.admissionFee?.toLocaleString() }}

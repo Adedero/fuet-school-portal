@@ -1,6 +1,7 @@
-import { c as defineEventHandler, m as getRouterParams, r as readValidatedBody, h as createError, i as db, p as deleteFileFromLocal, k as application } from '../../../../../../_/nitro.mjs';
+import { d as defineEventHandler, i as getRouterParams, r as readValidatedBody, c as createError, b as db, l as deleteFileFromLocal, f as application } from '../../../../../../nitro/nitro.mjs';
 import z from 'zod';
 import { and, eq } from 'drizzle-orm';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

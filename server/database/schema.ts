@@ -180,10 +180,44 @@ export const level = sqliteTable("level", {
 export const admissionFeePayment = sqliteTable("admission_fee_payment", {
   ...id,
   applicationId: text("application_id").notNull().notNull(),
+  schoolSessionName: text("string").notNull(),
   amount: real().notNull(),
   transactionRef: text("transaction_ref").notNull(),
+  paymentRef: text("payment_ref").notNull(),
+  status: text({
+    enum: ["successful", "pending", "cancelled", "failed"]
+  }).notNull(),
   ...timestamps
 });
+
+export const admissionFeePaymentComplaint = sqliteTable(
+  "admission_fee_payment_complaint",
+  {
+    ...id,
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id),
+    applicationId: text("application_id")
+      .notNull()
+      .references(() => user.id),
+    admissionFeePaymentId: text("admission_fee_payment_id")
+      .notNull()
+      .references(() => admissionFeePayment.id),
+    description: text().notNull(),
+    supportDocumentUrl: text("support_document_url"),
+    ...timestamps
+  }
+);
+
+export const admissionFeePaymentComplaintRelations = relations(
+  admissionFeePaymentComplaint,
+  ({ one }) => ({
+    paymentRecord: one(admissionFeePayment, {
+      fields: [admissionFeePaymentComplaint.admissionFeePaymentId],
+      references: [admissionFeePayment.id]
+    })
+  })
+);
 
 export const application = sqliteTable(
   "application",
@@ -208,6 +242,8 @@ export const application = sqliteTable(
     })
       .notNull()
       .default("pending"),
+
+    approvedAt: integer("approved_at", { mode: "timestamp" }),
 
     admissionFeePaymentId: text("admission_fee_payment_id").references(
       () => admissionFeePayment.id,

@@ -7,8 +7,6 @@ const RecentGrades = defineAsyncComponent(() => import("@/components/students/da
 const UpcomingDeadlines = defineAsyncComponent(() => import("@/components/students/dashboard/upcoming-deadlines.vue"));
 const AcademicProgress = defineAsyncComponent(() => import("@/components/students/dashboard/academic-progress.vue"));
 
-import { ref } from "vue"; 
-import { useSeoMeta } from "#imports"; 
 definePageMeta({ layout: "portal-student" });
 // ✅ SEO 
 useSeoMeta({ title: "FUET - Student Dashboard", description: "Overview of academic performance and upcoming deadlines.", ogImage: "/images/global/fuet_logo.png", ogUrl: "https://fuet.edu.ng/dashboard", });

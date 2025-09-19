@@ -1,4 +1,5 @@
-import { l as eventHandler, m as getRouterParams, i as db, h as createError } from '../../../../../_/nitro.mjs';
+import { h as eventHandler, i as getRouterParams, b as db, c as createError } from '../../../../../nitro/nitro.mjs';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

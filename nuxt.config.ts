@@ -16,6 +16,11 @@ export default defineNuxtConfig({
       app: {
         name: process.env.APP_NAME
       },
+      interswitch: {
+        merchantCode: process.env.INTERSWITCH_MERHCANT_CODE,
+        admissionFeeItemId: process.env.INTERSWITCH_ADMISSION_FEE_ITEM_ID,
+        admissionFeeItemName: process.env.INTERSWITCH_ADMISSION_FEE_ITEM_NAME
+      },
       schoolNameLong: process.env.SCHOOL_NAME_LONG,
       schoolNameShort: process.env.SCHOOL_NAME_SHORT,
       schoolLocation: process.env.SCHOOL_LOCATION,

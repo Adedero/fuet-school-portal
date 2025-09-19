@@ -1,4 +1,5 @@
-import { c as defineEventHandler, i as db, h as createError } from '../../../../../_/nitro.mjs';
+import { d as defineEventHandler, b as db, c as createError } from '../../../../../nitro/nitro.mjs';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';

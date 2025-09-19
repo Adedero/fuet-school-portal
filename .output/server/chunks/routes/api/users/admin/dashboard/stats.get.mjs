@@ -1,5 +1,6 @@
-import { c as defineEventHandler, i as db, n as student, w as studentClass, x as staff, y as department, k as application } from '../../../../../_/nitro.mjs';
+import { d as defineEventHandler, b as db, s as student, o as studentClass, p as staff, q as department, f as application } from '../../../../../nitro/nitro.mjs';
 import { count, eq } from 'drizzle-orm';
+import 'nanoid';
 import 'node:path';
 import 'node:fs/promises';
 import 'node:crypto';
